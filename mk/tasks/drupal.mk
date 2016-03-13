@@ -34,3 +34,5 @@ kill-server:
 	@echo "Stopping PHP server."
 	@ps aux|grep [p]hp > /dev/null || pkill -f php
 	@sleep 3
+
+# vi:syntax=makefile

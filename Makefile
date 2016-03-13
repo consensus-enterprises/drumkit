@@ -1,8 +1,6 @@
-MK_DIR       ?= .
+MK_DIR       ?= $(shell pwd)
 SHELL        := /bin/bash
 project_root ?= /vagrant
-BIN_DIR       = $(MK_DIR)/.local/bin
-SRC_DIR       = $(MK_DIR)/.local/src
 
 up:
 	@vagrant up
@@ -11,5 +9,5 @@ rebuild:
 make:
 	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
 
-include $(MK_DIR)/mk/*.mk
+include $(MK_DIR)/mk/*/*.mk
 

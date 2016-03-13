@@ -1,4 +1,4 @@
-deps_hooks   = $(shell grep "^deps-[^:]*" $(mk_dir)/mk -rho)
+deps_hooks = $(shell grep "^deps-[^:]*" $(MK_DIR)/mk -rho)
 
 deps: aptitude-update mysql-server $(deps_hooks)
 
@@ -16,3 +16,4 @@ aptitude-update: vagrant
 	@echo Updating apt
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
 
+# vi:syntax=makefile

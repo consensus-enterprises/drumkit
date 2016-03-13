@@ -7,3 +7,4 @@ test: behat-config
 wip: behat-config
 	@source behat_params.sh && bin/behat --tags=wip
 
+# vi:syntax=makefile
