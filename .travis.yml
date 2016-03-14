@@ -9,4 +9,5 @@ install:
   - make behat
 
 script:
+  - . scripts/hacking.sh
   - behat
