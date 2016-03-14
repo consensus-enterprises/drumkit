@@ -35,14 +35,14 @@ $(BEHAT_SRC)/composer.json: $(MK_DIR)/behat.composer.json
 	@cp $(MK_DIR)/behat.composer.json $(BEHAT_SRC)/composer.json
 
 $(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json 
-	rm -f $(BEHAT_SRC)/composer.lock
+	@rm -f $(BEHAT_SRC)/composer.lock
 	@cd $(BEHAT_SRC) && \
 	$(composer) install
 
 $(BEHAT_EXEC): $(BEHAT_SRC)/composer.lock
 
 $(BEHAT_BIN): $(BEHAT_EXEC)
-	rm $(BEHAT_BIN)
+	@rm -f $(BEHAT_BIN)
 	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
 
 # vi:syntax=makefile
