@@ -1,7 +1,7 @@
 behat      ?= $(BEHAT_BIN)
 BEHAT_BIN  ?= $(BIN_DIR)/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
-BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat
+BEHAT_EXEC ?= $(BEHAT_SRC)/vendor/behat/behat/bin/behat
 BDE_DIR    ?= $(DRUSH_DIR)/drush-bde-env
 BDE_EXISTS ?= $(shell if [[ -d $(BDE_DIR) ]]; then echo 1; fi)
 
@@ -35,11 +35,14 @@ $(BEHAT_SRC)/composer.json: $(MK_DIR)/behat.composer.json
 	@cp $(MK_DIR)/behat.composer.json $(BEHAT_SRC)/composer.json
 
 $(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json 
-	@rm -f $(BEHAT_SRC)/composer.lock
+	rm -f $(BEHAT_SRC)/composer.lock
 	@cd $(BEHAT_SRC) && \
 	$(composer) install
 
-$(BEHAT_BIN): $(BEHAT_SRC)/composer.lock $(BEHAT_SRC)/bin/behat 
-	@ln -sf $(BEHAT_SRC)/bin/behat $(BEHAT_BIN)
+$(BEHAT_EXEC): $(BEHAT_SRC)/composer.lock
+
+$(BEHAT_BIN): $(BEHAT_EXEC)
+	rm $(BEHAT_BIN)
+	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
 
 # vi:syntax=makefile
