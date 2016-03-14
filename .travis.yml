@@ -6,12 +6,7 @@ dist: trusty
 sudo: false
 
 install:
-  - .mk/bootstrap.sh
-
-before_script:
-  - . ~/.bashrc
-  # Debugging
-  - curl http://localhost:8888/
+  - make behat
 
 script:
-  - make test-on-travis
+  - behat

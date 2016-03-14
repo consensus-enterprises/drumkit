@@ -29,7 +29,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
     public function iRun($command)
     {
         $process = new Process("{$command}");
-        $process->setTimeout(10);
+        $process->setTimeout(300);
         $process->run();
 
     if (!$process->isSuccessful()) {
