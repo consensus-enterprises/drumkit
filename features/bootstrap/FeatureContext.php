@@ -211,8 +211,8 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iBootstrapDrumkit()
   {
     $this->iAmInATemporaryDirectory();
-    $this->iRun("git init");
-    $this->iExecute("scripts/install.sh");
+    $this->iRun("cp -r " . $this->getOrigDir() ." ./.mk");
+    $this->iRun("echo 'include .mk/Makefile' > Makefile");
   }
 
 }
