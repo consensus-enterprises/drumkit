@@ -4,9 +4,7 @@ Feature: Install Behat locally
   I need to be able run Behat
 
   Scenario: Remove Behat
-    Given I am in a temporary directory
-    And I run "git init"
-    And I execute "scripts/install.sh"
+    Given I bootstrap drumkit
     When I run "make clean-behat"
     Then I should get:
       """
@@ -15,9 +13,7 @@ Feature: Install Behat locally
 
   @slow
   Scenario: Run 'make behat'
-    Given I am in a temporary directory
-    And I run "git init"
-    And I execute "scripts/install.sh"
+    Given I bootstrap drumkit
     And I run "make clean"
     When I run "make behat"
     Then I should get:

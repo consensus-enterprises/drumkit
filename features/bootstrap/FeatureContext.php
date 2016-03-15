@@ -204,4 +204,15 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
       }
     }
   }
+
+  /**
+   * @Given I bootstrap drumkit
+   */
+  public function iBootstrapDrumkit()
+  {
+    $this->iAmInATemporaryDirectory();
+    $this->iRun("git init");
+    $this->iExecute("scripts/install.sh");
+  }
+
 }

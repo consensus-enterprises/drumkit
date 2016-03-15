@@ -4,6 +4,7 @@ Feature: Install Drush locally
   I need to be able run Drush
 
   Scenario: Remove Drush
+    Given I bootstrap drumkit
     When I run "make clean-drush"
     Then I should get:
       """
@@ -12,6 +13,7 @@ Feature: Install Drush locally
 
   @slow
   Scenario: Run 'make drush'
+    Given I bootstrap drumkit
     When I run "make clean"
     When I run "make drush"
     Then I should get:
@@ -20,5 +22,5 @@ Feature: Install Drush locally
       Creating binary directory.
       Downloading the 8.0.5 release of Drush.
       Installing the 8.0.5 release of Drush.
-       Drush Version   :  8.0.5 
+       Drush Version   :  8.0.5
       """
