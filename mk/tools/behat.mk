@@ -34,14 +34,17 @@ $(BEHAT_SRC)/composer.json: $(MK_DIR)/behat.composer.json
 	@mkdir -p $(BEHAT_SRC)
 	@cp $(MK_DIR)/behat.composer.json $(BEHAT_SRC)/composer.json
 
-$(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json 
-	@rm -f $(BEHAT_SRC)/composer.lock
-	@cd $(BEHAT_SRC) && \
-	$(composer) install
+$(BEHAT_SRC)/composer.lock: $(MK_DIR)/behat.composer.lock $(BEHAT_SRC)/composer.json
+	@mkdir -p $(BEHAT_SRC)
+	@cp $(MK_DIR)/behat.composer.lock $(BEHAT_SRC)/composer.lock
 
 $(BEHAT_EXEC): $(BEHAT_SRC)/composer.lock
+	@echo Downloading Behat.
+	@cd $(BEHAT_SRC) && \
+	$(composer) install --no-dev --prefer-dist -q
 
 $(BEHAT_BIN): $(BEHAT_EXEC)
+	@echo Installing Behat.
 	@rm -f $(BEHAT_BIN)
 	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
 
