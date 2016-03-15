@@ -14,4 +14,4 @@ install:
 
 script:
   - . scripts/hacking.sh
-  - behat --tags=BEHAT_TAGS
+  - behat --tags=$BEHAT_TAGS
