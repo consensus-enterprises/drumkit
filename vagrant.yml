@@ -1,0 +1,7 @@
+name: drumkit
+box: ubuntu/trusty64
+ram: 1024
+cpus: 2
+hostname: drumkit.local
+IP: 10.57.57.57
+port: 8888
