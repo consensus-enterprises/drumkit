@@ -13,12 +13,12 @@ help-drupal:
 	@echo "  Stop the server running started during site install."
 
 rebuild-platform: $(root)
-$(root): $(project_root)/$(makefile)
+$(root): $(ROOT_DIR)/$(makefile)
 
 build-platform: vm
 ifneq '$(root_exists)' '1'
-	@$(drush) -y make $(project_root)/$(makefile) $(root)
-	@ln -s $(project_root) $(root)/profiles/$(profile) 
+	@$(drush) -y make $(ROOT_DIR)/$(makefile) $(root)
+	@ln -s $(ROOT_DIR) $(root)/profiles/$(profile)
 endif
 
 drupal: kill-server build-platform

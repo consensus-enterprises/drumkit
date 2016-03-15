@@ -10,13 +10,13 @@ tools-help-behat:
 	@echo "  Install Behat."
 
 drush-bde-env: drush BDE_DIR
-	@echo Cloning Drush Behat config extension. 
+	@echo Cloning Drush Behat config extension.
 	@git clone https://github.com/pfrenssen/drush-bde-env.git $(BDE_DIR)
 	@$(drush) cc drush
 
 behat-config: behat drush-bde-env $(root)
 	@echo Generating project-specific Behat config.
-	@cd $(root) && $(drush) beg --subcontexts=profiles/$(profile)/modules --site-root=$(root) --skip-path-check --base-url=$(uri) $(project_root)/behat_params.sh
+	@cd $(root) && $(drush) beg --subcontexts=profiles/$(profile)/modules --site-root=$(root) --skip-path-check --base-url=$(uri) $(ROOT_DIR)/behat_params.sh
 
 deps-behat: aptitude-update composer
 	@echo Installing Behat dependencies.
