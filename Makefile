@@ -3,6 +3,8 @@ MK_DIR       := $(shell dirname $(call where-am-i))
 SHELL        := /bin/bash
 project_root ?= $(CURDIR)
 
+default: help
+
 check-makefile-paths:
 	$(info MK_DIR: $(MK_DIR))
 	$(info project_root: $(project_root))
