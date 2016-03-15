@@ -11,7 +11,7 @@ Feature: CLI Context
        """
        test.txt
        """ 
-     Then I should not get:
+      And I should not get:
        """
        Makefile
        """ 

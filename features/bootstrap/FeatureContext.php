@@ -27,6 +27,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    * context constructor through behat.yml.
    */
   public function __construct() {
+    $this->setOrigDir();
   }
 
   /**
@@ -34,6 +35,16 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function __destruct() {
     $this->rmdir($this->tempDir);
+  }
+
+  private function getOrigDir() {
+    return $this->orig_dir;
+  }
+
+  private function setOrigDir() {
+    if (!isset($this->orig_dir)) {
+      $this->orig_dir = getcwd();
+    }
   }
 
   /**
@@ -76,7 +87,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    * Create a temporary directory
    */
   private function makeTempDir() {
-    $tempfile = tempnam(sys_get_temp_dir(),'behat_cli_');
+    $tempfile = tempnam(sys_get_temp_dir(), 'behat_cli_');
     if (file_exists($tempfile)) {
       unlink($tempfile);
     }
@@ -90,8 +101,12 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   private function rmdir($dir) {
     if (is_dir($dir)) {
       foreach(scandir($dir) as $file) {
-        if ('.' === $file || '..' === $file) continue;
-        if (is_dir("$dir/$file")) $this->rmdir("$dir/$file");
+        if ('.' === $file || '..' === $file) {
+          continue;
+        }
+        if (is_dir("$dir/$file")) {
+          $this->rmdir("$dir/$file");
+        }
         else unlink("$dir/$file");
       }
       rmdir($dir);
@@ -105,6 +120,16 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function setDebugFlag() {
     $this->debug = TRUE;
+  }
+
+  /**
+   * In case we switched to a temporary directory, switch back to the original
+   * directory before the next scenario.
+   *
+   * @AfterScenario
+   */
+  public function returnToOrigDir() {
+    chdir($this->getOrigDir());
   }
 
   /**
@@ -144,15 +169,9 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iAmInATemporaryDirectory()
   {
-    static $orig_dir;
-    if (!isset($orig_dir)) {
-      $orig_dir = getcwd();
-    }
-    $this->orig_dir = $orig_dir;
     $this->makeTempDir();
     chdir($this->tempDir);
   }
-
 
   /**
    * Execute a script in our project, even if we've moved to a temporary directory.
@@ -161,9 +180,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iExecute($script)
   {
-    if (isset($this->orig_dir)) {
-      $script = $this->orig_dir . DIRECTORY_SEPARATOR . $script;
-    }
+    $script = $this->getOrigDir() . DIRECTORY_SEPARATOR . $script;
     $this->exec($script);
   }
 
@@ -172,9 +189,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function executingShouldFail($script)
   {
-    if (isset($this->orig_dir)) {
-      $script = $this->orig_dir . DIRECTORY_SEPARATOR . $script;
-    }
+    $script = $this->getOrigDir() . DIRECTORY_SEPARATOR . $script;
     $this->fail($script);
   }
 

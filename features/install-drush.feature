@@ -3,6 +3,7 @@ Feature: Install Drush locally
   As a Drupal developer
   I need to be able run Drush
 
+  @slow
   Scenario: Run 'make drush'
     Given I run "make clean-drush"
     When I run "make drush"

@@ -5,9 +5,13 @@ dist: trusty
 
 sudo: false
 
+env:
+  - BEHAT_TAGS="~@slow"
+  - BEHAT_TAGS="@slow"
+
 install:
   - make behat
 
 script:
   - . scripts/hacking.sh
-  - behat
+  - behat --tags=BEHAT_TAGS
