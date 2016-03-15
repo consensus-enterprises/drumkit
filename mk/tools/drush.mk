@@ -21,8 +21,8 @@ deps-drush: aptitude-update mysql-server
 	@echo Installing Drush dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git php5-mysql php5-cli php5-gd
 
-install-drush: drush
-drush: $(DRUSH_BIN)
+install-drush: init $(DRUSH_BIN)
+drush: install-drush
 
 $(DRUSH_BIN): $(DRUSH_PHAR)
 	@echo Installing the $(DRUSH_REL) release of Drush.

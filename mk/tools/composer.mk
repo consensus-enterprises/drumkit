@@ -22,10 +22,10 @@ install-composer: init $(COMPOSER_BIN)
 
 $(COMPOSER_BIN): $(COMPOSER_PHAR)
 	@echo Installing the $(COMPOSER_REL) release of Composer.
-	mkdir -p $(SRC_DIR)
-	ln -sf $(COMPOSER_PHAR) $(COMPOSER_BIN)
+	@mkdir -p $(SRC_DIR)
+	@ln -sf $(COMPOSER_PHAR) $(COMPOSER_BIN)
 	@chmod a+x $(COMPOSER_BIN)
-	$(composer) --version
+	@$(composer) --version
 
 $(COMPOSER_PHAR):
 	@echo Downloading the $(COMPOSER_REL) release of Composer.
