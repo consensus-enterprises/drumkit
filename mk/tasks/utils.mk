@@ -1,5 +1,16 @@
 user   = $(shell whoami)
 utils  = screen htop strace tree
+bashrc = export PATH="$(BIN_DIR):$$PATH"
+
+bashrc:
+	@grep -q -F '$(bashrc)' ~/.bashrc || echo '$(bashrc)' >> ~/.bashrc
+
+check: check-paths list-help list-install list-deps
+
+check-paths:
+	$(info ROOT_DIR: $(ROOT_DIR))
+	$(info MK_DIR: $(MK_DIR))
+	$(info FILES_DIR: $(FILES_DIR))
 
 fix-time:
 	@sudo ntpdate -s time.nist.gov

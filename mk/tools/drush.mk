@@ -17,7 +17,7 @@ clean-drush:
 	@rm -f $(DRUSH_BIN)
 	@rm -rf $(DRUSH_SRC)
 
-deps-drush: aptitude-update mysql-server
+deps-drush: apt-update mysql-server
 	@echo Installing Drush dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git php5-mysql php5-cli php5-gd
 

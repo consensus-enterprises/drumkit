@@ -35,4 +35,10 @@ kill-server:
 	@ps aux|grep [p]hp > /dev/null || pkill -f php
 	@sleep 3
 
+
+make:
+	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
+
+
+
 # vi:syntax=makefile
