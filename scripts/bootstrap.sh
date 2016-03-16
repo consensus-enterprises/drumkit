@@ -1,19 +1,13 @@
 #!/bin/bash
 
-# Set different project roots depending on Vagrant or TravisCI environments.
-if [ -z ${TRAVIS_BUILD_DIR+x} ]; then
-  cd /vagrant
-  make deps
-else
-  export project_root=$TRAVIS_BUILD_DIR
-fi
+cd /vagrant
 
-make init
-source ~/.bashrc
+sudo make deps
 
-make drush
+make bashrc
+. ~/.bashrc
+
+make install
 
 make drupal
-
-make behat
 

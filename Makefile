@@ -1,10 +1,10 @@
-# Find the path to the orignally called Makefile.
-orig-mk    = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+# Find the path to the originally called Makefile.
+orig-mk       = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 # Set the absolute path to the directory in which `make` was called.
-MK_DIR    := $(shell dirname $(call orig-mk))
-ROOT_DIR  ?= $(CURDIR)
-FILES_DIR ?= $(ROOT_DIR)/files
-SHELL     := /bin/bash
+MK_DIR       := $(shell dirname $(call orig-mk))
+PROJECT_ROOT ?= $(CURDIR)
+FILES_DIR    ?= $(MK_DIR)/files
+SHELL        := /bin/bash
 
 default: help
 

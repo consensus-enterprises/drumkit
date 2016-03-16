@@ -8,7 +8,7 @@ bashrc:
 check: check-paths list-help list-install list-deps
 
 check-paths:
-	$(info ROOT_DIR: $(ROOT_DIR))
+	$(info PROJECT_ROOT: $(PROJECT_ROOT))
 	$(info MK_DIR: $(MK_DIR))
 	$(info FILES_DIR: $(FILES_DIR))
 

@@ -39,6 +39,9 @@ kill-server:
 make:
 	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
 
+drupal-behat-config: drush-bde-env $(root)
+	@echo Generating project-specific Behat config.
+	@cd $(root) && $(drush) beg --subcontexts=profiles/$(PROFILE)/modules --site-root=$(root) --skip-path-check --base-url=$(uri) $(PROJECT_ROOT)/behat_params.sh
 
 
 # vi:syntax=makefile

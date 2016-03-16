@@ -26,7 +26,7 @@ Vagrant.configure(2) do |config|
     end
 
     d.vm.provision "shell",
-      path: ".mk/bootstrap.sh",
+      path: ".mk/scripts/bootstrap.sh",
       privileged: false,
       keep_color: true
   end
