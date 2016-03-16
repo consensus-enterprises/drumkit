@@ -1,0 +1,24 @@
+h1 > a {
+  float: right;
+}
+
+.wy-side-nav-search {
+  background-color: black;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a.icon.icon-home:before {
+  background:url('../_images/drumkit-white.png');
+  content: '';
+  background-size: 220px;
+  background-repeat: no-repeat;
+  height: 180px;
+  width: 220px;
+  margin-bottom: -15px;
+}
+
+a.icon.icon-home {
+  font-size: 0;
+}
+

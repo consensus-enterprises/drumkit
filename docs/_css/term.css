@@ -1,0 +1,7 @@
+div.codehilite > pre {
+  background-color: black;
+  padding: 1em;
+  border-radius: 5px;
+  font-size: 110%;
+  overflow: auto;
+}

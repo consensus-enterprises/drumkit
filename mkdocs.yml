@@ -1,0 +1,18 @@
+site_name: Drumkit
+repo_url: https://github.com/ergonlogic/drumkit
+theme: readthedocs
+#site_favicon: '_images/favicon.ico'
+site_dir: '/tmp/drumkit_docs/_site'
+markdown_extensions:
+  - codehilite:
+      noclasses: True
+      pygments_style: emacs
+extra_css:
+  - '_css/menu.css'
+  - '_css/term.css'
+  - '_css/style.css'
+pages:
+- 'Home': 'index.md'
+- 'Install': 'install.md'
+- 'Usage': 'usage.md'
+- 'Documentation': 'documentation.md'
