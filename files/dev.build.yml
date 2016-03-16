@@ -1,0 +1,8 @@
+---
+core: 8.x
+api: 2
+
+projects:
+  drupal: { version: ~ }
+  features: { version: ~ }
+  config_update: { version: ~ }
