@@ -18,11 +18,12 @@ Feature: Install Behat locally
     When I run "make behat"
     Then I should get:
       """
-      Creating source directory.
-      Creating binary directory.
-      Downloading the 1.0.0-beta1 release of Composer.
-      Installing the 1.0.0-beta1 release of Composer.
-      Composer version 1.0.0-beta1 2016-03-03 15:15:10
       Downloading Behat.
       Installing Behat.
+      behat version 3.0.15
+      """
+    When I run "make behat"
+    Then I should get:
+      """
+      make: Nothing to be done for `behat'.
       """

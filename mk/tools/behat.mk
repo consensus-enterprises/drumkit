@@ -1,7 +1,7 @@
 behat      ?= $(BEHAT_BIN)
 BEHAT_BIN  ?= $(BIN_DIR)/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
-BEHAT_EXEC ?= $(BEHAT_SRC)/vendor/behat/behat/bin/behat
+BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat
 BDE_DIR    ?= $(DRUSH_DIR)/drush-bde-env
 BDE_EXISTS ?= $(shell if [[ -d $(BDE_DIR) ]]; then echo 1; fi)
 
@@ -26,22 +26,19 @@ clean-behat:
 install-behat: init composer $(BEHAT_BIN)
 behat: install-behat
 
-$(BEHAT_SRC)/composer.json: $(MK_DIR)/behat.composer.json
+$(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
 	@mkdir -p $(BEHAT_SRC)
-	@cp $(MK_DIR)/behat.composer.json $(BEHAT_SRC)/composer.json
+	@cp $(FILES_DIR)/behat/composer.* $(BEHAT_SRC)/
 
-$(BEHAT_SRC)/composer.lock: $(MK_DIR)/behat.composer.lock $(BEHAT_SRC)/composer.json
-	@mkdir -p $(BEHAT_SRC)
-	@cp $(MK_DIR)/behat.composer.lock $(BEHAT_SRC)/composer.lock
-
-$(BEHAT_EXEC): $(BEHAT_SRC)/composer.lock
+$(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json
 	@echo Downloading Behat.
 	@cd $(BEHAT_SRC) && \
 	$(composer) install --no-dev --prefer-dist -q
 
-$(BEHAT_BIN): $(BEHAT_EXEC)
+$(BEHAT_BIN): $(BEHAT_SRC)/composer.lock
 	@echo Installing Behat.
-	@rm -f $(BEHAT_BIN)
 	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
+	@touch $(BEHAT_BIN)
+	@$(behat) --version
 
 # vi:syntax=makefile
