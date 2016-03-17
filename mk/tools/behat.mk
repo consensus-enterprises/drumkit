@@ -2,6 +2,7 @@ behat      ?= $(BEHAT_BIN)
 BEHAT_BIN  ?= $(BIN_DIR)/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
 BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat
+BEHAT_DEPS ?= php5-curl
 BDE_DIR    ?= $(DRUSH_DIR)/drush-bde-env
 BDE_EXISTS ?= $(shell if [[ -d $(BDE_DIR) ]]; then echo 1; fi)
 
@@ -16,7 +17,7 @@ drush-bde-env: drush BDE_DIR
 
 deps-behat: apt-update composer
 	@echo Installing Behat dependencies.
-	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install php5-curl
+	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(BEHAT_DEPS)
 
 clean-behat:
 	@echo Removing Behat.
