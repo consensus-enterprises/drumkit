@@ -1,6 +1,7 @@
 drush      ?= $(DRUSH_BIN) --include=$(DRUSH_DIR)
 DRUSH_REL  ?= 8.0.5
 DRUSH_URL  ?= https://github.com/drush-ops/drush/releases/download/$(DRUSH_REL)/drush.phar
+DRUSH_DEPS ?= git php5-mysql php5-cli php5-gd
 DRUSH_DIR  ?= $(MK_DIR)/.local/drush
 DRUSH_SRC  ?= $(SRC_DIR)/drush
 DRUSH_BIN  ?= $(BIN_DIR)/drush
@@ -19,7 +20,7 @@ clean-drush:
 
 deps-drush: apt-update mysql-server
 	@echo Installing Drush dependencies.
-	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git php5-mysql php5-cli php5-gd
+	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(DRUSH_DEPS)
 
 install-drush: init $(DRUSH_BIN)
 drush: install-drush

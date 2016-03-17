@@ -18,9 +18,12 @@ Feature: Install Drush locally
     When I run "make drush"
     Then I should get:
       """
-      Creating source directory.
-      Creating binary directory.
       Downloading the 8.0.5 release of Drush.
       Installing the 8.0.5 release of Drush.
        Drush Version   :  8.0.5
+      """
+    When I run "make drush"
+    Then I should get:
+      """
+      make: Nothing to be done for `drush'.
       """
