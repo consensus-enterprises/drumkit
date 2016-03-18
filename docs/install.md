@@ -5,7 +5,7 @@ One-liner
 ---------
 
     :::console
-    wget https://raw.githubusercontent.com/ergonlogic/drumkit/master/scripts/install.sh | /bin/bash
+    wget -O - https://raw.githubusercontent.com/ergonlogic/drumkit/master/scripts/install.sh | /bin/bash
 
 
 Install Tools
