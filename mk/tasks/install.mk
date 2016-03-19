@@ -4,6 +4,8 @@ help-install:
 	@echo "make install"
 	@echo "  Install all tools."
 
+phars: drush composer
+
 install: $(INSTALL_HOOKS)
 
 list-install:
