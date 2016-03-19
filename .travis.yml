@@ -6,7 +6,7 @@ dist: trusty
 sudo: false
 
 env:
-  - BEHAT_TAGS="~@slow"
+  - BEHAT_TAGS="~@slow&&~@disabled&&~@wip"
   - BEHAT_TAGS="@slow"
 
 install:
