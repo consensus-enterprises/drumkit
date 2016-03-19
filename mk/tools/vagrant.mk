@@ -1,3 +1,5 @@
+.PHONY: help-vagrant vagrant up rebuild
+
 help-vagrant:
 	@echo "make vagrant"
 	@echo "  Add a Vagrantfile."
@@ -11,9 +13,9 @@ vagrant: Vagrantfile
 Vagrantfile:
 	@ln -s $(MK_DIR)/Vagrantfile .
 
-up:
-	@vagrant up
+up: vagrant
+	@vagrant up --provision
 
-rebuild:
+rebuild: vagrant
 	@vagrant destroy -f && vagrant up
 
