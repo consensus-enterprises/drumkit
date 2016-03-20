@@ -48,7 +48,7 @@ Feature: Bootstrap Drupal development
      #When I type "My Theme"
      #Then I should get:
      # """
-     # This will create a new module ('My Theme'/my_theme) in the current directory.
+     # This will create a new theme ('My Theme'/my_theme) in the current directory.
      # Proceed? (y/n)
      # """
      #When I type "y"
@@ -71,18 +71,41 @@ Feature: Bootstrap Drupal development
       "name": "drupal/my_theme",
       """
 
-  @wip
   Scenario: Bootstrap profile development
     Given I bootstrap drumkit
-      And I run "make drupal-profile"
+      And I run "make drupal-profile NAME=my_profile"
+      #And I run "make drupal-profile NAME=my_profile CONFIRM=y"
+     #Then I should get:
+     # """
+     # Enter profile name:
+     # """
+     #When I type "My Profile"
+     #Then I should get:
+     # """
+     # This will create a new profile ('My Profile'/my_profile) in the current directory.
+     # Proceed? (y/n)
+     # """
+     #When I type "y"
      Then I should get:
       """
+      Bootstrapping Drupal profile development.
+      Creating skeleton for 'my_profile' profile.
       """
       And the following files should exist:
       """
+      my_profile.info.yml
+      composer.json
+      """
+      And the file "my_profile.info.yml" should contain:
+      """
+      name: my_profile
+      """
+      And the file "composer.json" should contain:
+      """
+      "name": "drupal/my_profile",
       """
 
-  @disabled
+  @wip
   Scenario: Bootstrap site development
     Given I bootstrap drumkit
       And I run "make drupal-site"

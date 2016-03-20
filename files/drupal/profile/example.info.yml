@@ -1,0 +1,6 @@
+name: example
+description: example profile.
+package: Custom
+
+type: profile
+core: 8.x
