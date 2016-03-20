@@ -1,0 +1,6 @@
+{
+    "name": "drupal/example",
+    "description": "example module.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+"
+}

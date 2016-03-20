@@ -215,4 +215,17 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->iRun("echo 'include .mk/Makefile' > Makefile");
   }
 
+
+  /**
+   * @Then the file :file should contain:
+   */
+  public function theFileShouldContain($file, PyStringNode $lines)
+  {
+    foreach ($lines->getStrings() as $line) {
+      $contents = file_get_contents($file);
+      if (strpos($contents, $line) === FALSE) {
+        throw new \RuntimeException("'$line' was not found in '$file'.");
+      }
+    }
+  }
 }

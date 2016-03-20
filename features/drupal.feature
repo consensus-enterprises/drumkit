@@ -6,13 +6,38 @@ Feature: Bootstrap Drupal development
   @wip
   Scenario: Bootstrap module development
     Given I bootstrap drumkit
-      And I run "make drupal-module"
+     When I run "make drupal-module NAME=my_module"
+     #When I run "make drupal-module NAME=my_module CONFIRM=y"
+     #Then I should get:
+     # """
+     # Enter module name:
+     # """
+     #When I type "My Module"
+     #Then I should get:
+     # """
+     # This will create a new module ('My Module'/my_module) in the current directory.
+     # Proceed? (y/n)
+     # """
+     #When I type "y"
      Then I should get:
       """
+      Bootstrapping Drupal module development.
+      Creating skeleton for 'my_module' module.
       """
-      And the following files should exist
+      And the following files should exist:
       """
+      my_module.info.yml
+      composer.json
       """
+      And the file "my_module.info.yml" should contain:
+      """
+      name: my_module
+      """
+      And the file "composer.json" should contain:
+      """
+      "name": "drupal/my_module",
+      """
+
 
   @disabled
   Scenario: Bootstrap theme development
@@ -21,7 +46,7 @@ Feature: Bootstrap Drupal development
      Then I should get:
       """
       """
-      And the following files should exist
+      And the following files should exist:
       """
       """
 
@@ -32,7 +57,7 @@ Feature: Bootstrap Drupal development
      Then I should get:
       """
       """
-      And the following files should exist
+      And the following files should exist:
       """
       """
 
@@ -43,7 +68,7 @@ Feature: Bootstrap Drupal development
      Then I should get:
       """
       """
-      And the following files should exist
+      And the following files should exist:
       """
       """
 
