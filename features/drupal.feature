@@ -37,7 +37,6 @@ Feature: Bootstrap Drupal development
       "name": "drupal/my_module",
       """
 
-  @wip
   Scenario: Bootstrap theme development
     Given I bootstrap drumkit
       And I run "make drupal-theme NAME=my_theme"
@@ -56,7 +55,7 @@ Feature: Bootstrap Drupal development
      Then I should get:
       """
       Bootstrapping Drupal theme development.
-      Creating skeleton for 'my_theme' module.
+      Creating skeleton for 'my_theme' theme.
       """
       And the following files should exist:
       """
@@ -69,10 +68,10 @@ Feature: Bootstrap Drupal development
       """
       And the file "composer.json" should contain:
       """
-      "name": "drupal/theme",
+      "name": "drupal/my_theme",
       """
 
-  @disabled
+  @wip
   Scenario: Bootstrap profile development
     Given I bootstrap drumkit
       And I run "make drupal-profile"
