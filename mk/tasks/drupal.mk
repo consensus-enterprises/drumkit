@@ -15,7 +15,7 @@ help-drupal:
 	@echo "make drupal"
 	@echo "  Build a Drupal codebase, install a site and start a web server."
 	@echo "make kill-server"
-	@echo "  Stop the server running started dSITE_URIng site install."
+	@echo "  Stop the server running started during site install."
 
 build-platform: $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE)
