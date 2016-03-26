@@ -3,5 +3,10 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   exit 1
 else
   CWD=`pwd`
-  export PATH="$CWD/.mk/.local/bin:$PATH"
+  if [[ -d .mk/ ]]; then
+    BIN_PATH="$CWD/.mk/.local/bin"
+  else
+    BIN_PATH="$CWD/.local/bin"
+  fi
+  export PATH="$BIN_PATH:$PATH"
 fi
