@@ -3,5 +3,5 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   exit 1
 else
   CWD=`pwd`
-  export PATH="$CWD/.local/bin:$PATH"
+  export PATH="$CWD/.mk/.local/bin:$PATH"
 fi
