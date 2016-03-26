@@ -147,7 +147,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   {
     foreach ($output->getStrings() as $string) {
       if (strpos($this->output, $string) === FALSE) {
-        throw new \RuntimeException("'$string' was not found in command output.");
+        throw new \RuntimeException("'$string' was not found in command output:\n------\n" . $this->output . "------");
       }
     }
   }
@@ -159,7 +159,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   {
     foreach ($output->getStrings() as $string) {
       if (strpos($this->output, $string) !== FALSE) {
-        throw new \RuntimeException("'$string' was found in command output.");
+        throw new \RuntimeException("'$string' was found in command output:\n------\n" . $this->output . "------");
       }
     }
   }
