@@ -5,7 +5,7 @@ bashrc = export PATH="$(BIN_DIR):$$PATH"
 bashrc:
 	@grep -q -F '$(bashrc)' ~/.bashrc || echo '$(bashrc)' >> ~/.bashrc
 
-check: check-paths list-help list-install list-deps
+check: check-paths list-help list-install
 
 check-paths:
 	$(info PROJECT_ROOT: $(PROJECT_ROOT))
@@ -15,6 +15,7 @@ check-paths:
 fix-time:
 	@sudo ntpdate -s time.nist.gov
 
+deps: deps-utils
 deps-utils:
 	@echo Installing some utilities
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(utils)

@@ -26,8 +26,9 @@ Vagrant.configure(2) do |config|
     end
 
     d.vm.provision "shell",
-      path: ".mk/scripts/bootstrap.sh",
+      inline: "cd /vagrant && sudo make deps && make bashrc && . ~/.bashrc && make install && make drupal",
       privileged: false,
       keep_color: true
   end
 end
+

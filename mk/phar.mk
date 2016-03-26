@@ -4,7 +4,10 @@ include $(MK_DIR)/mk/phar/$(1).mk
 
 $(1) ?= $(BIN_DIR)/$(1) $$(OPTIONS)
 
-$(1)-debug:
+phars: $(1)
+
+debug-phars: debug-$(1)
+debug-$(1):
 	@echo NAME: $$($(1)_NAME)
 	@echo RELEASE: $$($(1)_RELEASE)
 	@echo DOWNLOAD_URL: $$($(1)_DOWNLOAD_URL)
@@ -28,6 +31,7 @@ clean-$(1):
 	@rm -f $(BIN_DIR)/$(1)
 	@rm -rf $(SRC_DIR)/$(1)
 
+deps: deps-$(1)
 deps-$(1): apt-update mysql-server
 	@echo Installing $$($(1)_NAME) dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $$($(1)_DEPENDENCIES)
@@ -48,8 +52,6 @@ $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE).phar:
 endef
 
 PHARS = box composer drush
-phars: $(PHARS)
-phars-debug: box-debug composer-debug drush-debug
 
 $(foreach phar,$(PHARS),$(eval $(call PHAR_template,$(phar))))
 

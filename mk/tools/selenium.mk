@@ -6,6 +6,7 @@ tools-help-selenium:
 	@echo "make selenium"
 	@echo "  Install Selenium."
 
+deps: deps-selenium
 deps-selenium: apt-update
 	@echo Installing Selenium dependencies
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install openjdk-7-jre-headless

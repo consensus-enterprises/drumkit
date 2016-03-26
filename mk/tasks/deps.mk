@@ -1,10 +1,4 @@
-deps_hooks = $(shell grep "^deps-[^:]*" $(MK_DIR)/mk -rho)
-
-deps: apt-update mysql-server $(deps_hooks)
-
-list-deps:
-	@echo The following 'dependency' hooks are defined:
-	@echo '   '$(deps_hooks)
+deps: apt-update mysql-server
 
 mysql-server: apt-update
 	@echo Installing MySQL server

@@ -15,6 +15,7 @@ drush-bde-env: drush BDE_DIR
 	@git clone https://github.com/pfrenssen/drush-bde-env.git $(BDE_DIR)
 	@$(drush) cc drush
 
+deps: deps-behat
 deps-behat: apt-update composer
 	@echo Installing Behat dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(BEHAT_DEPS)
