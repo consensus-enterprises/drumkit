@@ -18,8 +18,6 @@ debug-$(1):
 	@echo command w/options: $(1) $$($(1)_OPTIONS)
 	@echo
 
-#undefine NAME
-
 tools-help-$(1):
 	@echo "make $(1)"
 	@echo "  Install $$($(1)_NAME)."
