@@ -1,7 +1,12 @@
 div.codehilite > pre {
   background-color: black;
+  color: #808080;
   padding: 1em;
   border-radius: 5px;
   font-size: 110%;
   overflow: auto;
+}
+
+div.codehilite > pre > span[style*="color: #AA22FF"] {
+  color: #808080 !important;
 }

@@ -21,6 +21,7 @@ server, and start editing. Find the page you’d like to edit; everything is in
 the docs/ directory. Make your changes, commit and push them, and start a pull
 request:
 
+    :::console
     $ git checkout -b fix_typo
     $ vim docs/index.md                     # Add/edit/remove whatever you see fit. Be bold!
     $ mkdocs build --clean; mkdocs serve    # Go check your changes. We’ll wait...
