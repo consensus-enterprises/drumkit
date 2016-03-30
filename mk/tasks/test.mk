@@ -1,15 +1,23 @@
 help-test:
-	@echo "make test"
-	@echo "  Run tests."
+	@echo "make test-drupal"
+	@echo "  Run Behat tests against dev Drupal site."
+	@echo "make test-drupal-wip"
+	@echo "  Run work-in-progress Behat tests against dev Drupal site."
+	@echo "make test-drumkit"
+	@echo "  Run Behat tests for Drumkit."
+	@echo "make test-drumkit-wip"
+	@echo "  Run work-in-progress Behat tests for Drumkit."
 
-test: behat-config
+test-drupal: behat-config
 	@source behat_params.sh && bin/behat
-wip: behat-config
+test-drupal-wip: behat-config
 	@source behat_params.sh && bin/behat --tags=wip
 
-self-test: behat
-	@behat
-self-wip: behat
-	@behat --tags=wip --append-snippets
+test-drumkit: behat
+	@cd $(MK_DIR) && \
+	behat
+test-drumkit-wip: behat
+	@cd $(MK_DIR) && \
+	behat --tags=wip --append-snippets
 
 # vi:syntax=makefile
