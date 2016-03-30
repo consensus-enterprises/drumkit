@@ -9,9 +9,6 @@ SHELL        := /bin/bash
 
 default: help
 
-include $(MK_DIR)/mk/tools/*.mk
 include $(MK_DIR)/mk/tasks/*.mk
-include $(MK_DIR)/mk/phar.mk
-
-
+include $(MK_DIR)/mk/tools/*.mk
 

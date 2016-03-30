@@ -23,5 +23,5 @@ Feature: Install drumkit
       And the following files should exist:
        """
        Makefile
-       .mk/Makefile
+       .mk/GNUmakefile
        """

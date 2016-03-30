@@ -1,6 +1,6 @@
 define PHAR_template 
 
-include $(MK_DIR)/mk/phar/$(1).mk
+include $(MK_DIR)/mk/tools/phar/$(1).mk
 
 $(1) ?= $(BIN_DIR)/$(1) $$(OPTIONS)
 
@@ -50,7 +50,7 @@ $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE).phar:
 	@curl -SsL $$($(1)_DOWNLOAD_URL) -z $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE).phar -o $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE).phar
 endef
 
-PHARS = box composer drush
+PHARS ?= box composer drush
 
 $(foreach phar,$(PHARS),$(eval $(call PHAR_template,$(phar))))
 

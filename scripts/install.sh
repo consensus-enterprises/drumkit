@@ -14,4 +14,4 @@ if [[ ! -d .git ]]; then
 fi
 
 git submodule add https://github.com/ergonlogic/drumkit .mk
-echo "include .mk/Makefile" > Makefile
+echo "include .mk/GNUmakefile" > Makefile
