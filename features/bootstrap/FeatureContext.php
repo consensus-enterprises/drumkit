@@ -146,7 +146,8 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iShouldGet(PyStringNode $output)
   {
     foreach ($output->getStrings() as $string) {
-      if (strpos($this->output, $string) === FALSE) {
+      $string = trim($string);
+      if (!empty($string) && strpos($this->output, $string) === FALSE) {
         throw new \RuntimeException("'$string' was not found in command output:\n------\n" . $this->output . "------");
       }
     }
@@ -158,7 +159,8 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iShouldNotGet(PyStringNode $output)
   {
     foreach ($output->getStrings() as $string) {
-      if (strpos($this->output, $string) !== FALSE) {
+      $string = trim($string);
+      if (!empty($string) && strpos($this->output, $string) !== FALSE) {
         throw new \RuntimeException("'$string' was found in command output:\n------\n" . $this->output . "------");
       }
     }
