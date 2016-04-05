@@ -5,9 +5,13 @@ dist: trusty
 
 sudo: false
 
+os:
+  - linux
+  - osx
+
 env:
   - BEHAT_TAGS="~@slow&&~@disabled&&~@wip"
-  - BEHAT_TAGS="@slow"
+  - BEHAT_TAGS="@slow&&~@disabled&&~@wip"
 
 install:
   - make behat
