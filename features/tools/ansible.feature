@@ -17,7 +17,7 @@ Feature: Install Ansible and related tools locally
       Removing Ansible. 
       """
 
-  @slow @wip
+  @very-slow @wip
   Scenario: Download and Install Ansible
     Given I bootstrap drumkit
     When I run "make ansible"
