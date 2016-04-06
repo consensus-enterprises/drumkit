@@ -52,19 +52,19 @@ $(BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)/$$(
 	@chmod a+x $(BIN_DIR)/$(1)
 ifeq ($(1), $$($(1)_PARENT))
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
-	$$($(1)_COMMAND) 2&>1 > /dev/null
-	@. $(MK_DIR)/scripts/hacking.sh && $(1) --version
+	$$($(1)_COMMAND) 2&>1 > /dev/null && \
+	. $(MK_DIR)/scripts/hacking.sh && \
+  $(1) --version
 endif
 
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)/$$($(1)_BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 
 ifeq ($(1), $$($(1)_PARENT))
-$(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE):
+$(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): init
 	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
-	@mkdir -p $(SRC_DIR)/$$($(1)_PARENT)
-	@git clone --quiet --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) 2> /dev/null 
+	@git clone --quiet --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
-	git fetch --quiet --tags --depth 1 && \
+	git fetch --quiet --tags && \
 	git checkout --quiet $$($(1)_RELEASE) && \
 	git submodule update --quiet --init
 endif
