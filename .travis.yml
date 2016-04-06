@@ -7,15 +7,15 @@ sudo: false
 
 os:
   - linux
-  - osx
+#  - osx
 
 env:
-  - BEHAT_TAGS="~@slow&&~@disabled&&~@wip"
-  - BEHAT_TAGS="@slow&&~@disabled&&~@wip"
+  - BEHAT_TAGS="~@slow"
+  - BEHAT_TAGS="@slow"
 
 install:
   - make behat
 
 script:
   - . scripts/hacking.sh
-  - behat --tags=$BEHAT_TAGS
+  - behat --tags="~@disabled&&~@wip&&$BEHAT_TAGS"
