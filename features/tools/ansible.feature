@@ -10,31 +10,26 @@ Feature: Install Ansible and related tools locally
       """
       Removing Ansible Playbook.
       Removing Ansible Vault.
-      Removing Ansible Console.
       Removing Ansible Galaxy.
       Removing Ansible Pull.
       Removing Ansible Doc.
-      Removing Ansible. 
+      Removing Ansible.
       """
 
-  @slow @disabled
+  @slow
   Scenario: Download and Install Ansible
     Given I bootstrap drumkit
     When I run "make ansible"
     Then I should get:
       """
-      Submodule 'lib/ansible/modules/core' (https://github.com/ansible/ansible-modules-core) registered for path 'lib/ansible/modules/core'
-      Submodule 'lib/ansible/modules/extras' (https://github.com/ansible/ansible-modules-extras) registered for path 'lib/ansible/modules/extras'
-      Submodule path 'lib/ansible/modules/core': checked out
-      Submodule path 'lib/ansible/modules/extras': checked out
+      Downloading the v2.0.1.0-1 release of Ansible via Git.
       Installing Ansible.
       ansible 2.0.1.0
-        config file = 
+        config file =
         configured module search path = Default w/o overrides
       Installing Ansible Doc.
       Installing Ansible Playbook.
       Installing Ansible Vault.
-      Installing Ansible Console.
       Installing Ansible Galaxy.
       Installing Ansible Pull.
       """
