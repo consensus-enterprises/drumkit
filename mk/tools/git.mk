@@ -14,8 +14,7 @@ debug-$(1):
 	@echo DEPENDENCIES: $$($(1)_DEPENDENCIES)
 	@echo PARENT: $$($(1)_PARENT)
 	@echo EXECUTABLE: $(BIN_DIR)/$(1)
-	@echo SOURCE: $(SRC_DIR)/$(1)
-	@echo git: $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE).git
+	@echo SOURCE: $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 	@echo command w/options: $(1) $$($(1)_OPTIONS)
 	@echo
 
@@ -52,6 +51,8 @@ $(BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)/$$(
 	@ln -sf $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)/$$($(1)_BIN_DIR)/$(1) $(BIN_DIR)/$(1)
 	@chmod a+x $(BIN_DIR)/$(1)
 ifeq ($(1), $$($(1)_PARENT))
+	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
+	$$($(1)_COMMAND) 2&>1 > /dev/null
 	@. $(MK_DIR)/scripts/hacking.sh && $(1) --version
 endif
 
@@ -59,14 +60,18 @@ $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)/$$($(1)_BIN_DIR)/$(1
 
 ifeq ($(1), $$($(1)_PARENT))
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE):
-	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME).
+	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
 	@mkdir -p $(SRC_DIR)/$$($(1)_PARENT)
-	@git clone --quiet --recursive --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) 2> /dev/null 
+	@git clone --quiet --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) 2> /dev/null 
+	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
+	git fetch --quiet --tags --depth 1 && \
+	git checkout --quiet $$($(1)_RELEASE) && \
+	git submodule update --quiet --init
 endif
 
 endef
 
-GITS ?= ansible ansible-doc ansible-playbook ansible-vault ansible-console ansible-galaxy ansible-pull
+GITS ?= ansible ansible-doc ansible-playbook ansible-vault ansible-galaxy ansible-pull
 $(foreach git,$(GITS),$(eval $(call git_template,$(git))))
 
 # vi:syntax=makefile
