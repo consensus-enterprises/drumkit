@@ -99,18 +99,7 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
    * Recursively delete a directory and its contents.
    */
   private function rmdir($dir) {
-    if (is_dir($dir)) {
-      foreach(scandir($dir) as $file) {
-        if ('.' === $file || '..' === $file) {
-          continue;
-        }
-        if (is_dir("$dir/$file")) {
-          $this->rmdir("$dir/$file");
-        }
-        else unlink("$dir/$file");
-      }
-      rmdir($dir);
-    }
+    $this->iRun('rm -rf ' . $dir);
   }
 
   /**
