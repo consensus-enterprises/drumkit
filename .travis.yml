@@ -13,9 +13,9 @@ addons:
   apt:
     packages:
     - python-yaml
+    - python-jinja2
     #- python-paramiko
     #- python-pip
-    #- python-jinja2
     #- python-pycurl
 
 env:
