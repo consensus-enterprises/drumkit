@@ -39,7 +39,7 @@ deps-$(1): apt-update
 
 gits: $$($(1)_COMMANDS)
 
-$(1): $(BIN_DIR)/$(1)
+$(1): $(BIN_DIR)/$(1) init
 
 ifneq ($(1), $$($(1)_PARENT))
 $$($(1)_PARENT): $(1)
@@ -60,7 +60,7 @@ endif
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)/$$($(1)_BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 
 ifeq ($(1), $$($(1)_PARENT))
-$(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): init
+$(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE):
 	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
 	@git clone --quiet --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
