@@ -25,10 +25,24 @@ git-rm-submodule-help:
 	@echo "  Completely remove the git submodule registered at <git submodule path>"
 
 git-rm-submodule:
-	@echo Removing git submodule at $(SUBMODULE)
-	if git submodule status "$(SUBMODULE)" >/dev/null 2>&1; then git submodule deinit $(SUBMODULE); git rm -f $(SUBMODULE); fi
-	if [ -d .git/modules/$(SUBMODULE) ]; then rm -rf .git/modules/$(SUBMODULE); fi
-	git config -f .gitmodules --remove-section "submodule.$(SUBMODULE)"
-	if [ -z "$$(cat .gitmodules)" ]; then git rm -f .gitmodules; else git add .gitmodules; fi
+	@if git submodule status "$(SUBMODULE)" >/dev/null 2>&1; then \
+    echo "Beginning removal of git submodule at $(SUBMODULE)."; \
+    echo "De-initializing submodule."; \
+    git submodule deinit $(SUBMODULE); \
+    echo "Removing submodule code."; \
+    git rm -f $(SUBMODULE); \
+  fi
+	@if [ -d .git/modules/$(SUBMODULE) ]; then \
+    echo "Removing submodule directory."; \
+    rm -rf .git/modules/$(SUBMODULE); \
+  fi
+	@#git config -f .gitmodules --remove-section "submodule.$(SUBMODULE)" # No longer needed?
+	@if [ -z "$$(cat .gitmodules)" ]; then \
+    echo "Removing empty .gitmodules file." \
+    git rm -f .gitmodules; \
+  else \
+    echo "Registering changes to .gitmodules file."; \
+    git add .gitmodules; \
+  fi
 
 # vi:syntax=makefile
