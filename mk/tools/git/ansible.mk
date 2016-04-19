@@ -6,7 +6,4 @@ ansible_BIN_DIR      = bin
 ansible_PARENT       = ansible
 ansible_COMMAND      = . hacking/env-setup
 
-ansible-roles:
-	ansible-galaxy install -r ansible/requirements.yml
-
 # vi:syntax=makefile
