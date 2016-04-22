@@ -6,4 +6,8 @@ ansible_BIN_DIR      = bin
 ansible_PARENT       = ansible
 ansible_COMMAND      = . hacking/env-setup
 
+ansible: ansible.cfg
+ansible.cfg:
+	@ln -s .mk/files/ansible/ansible.cfg .
+
 # vi:syntax=makefile

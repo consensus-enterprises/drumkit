@@ -5,10 +5,16 @@ ansible-galaxy_DEPENDENCIES = python-paramiko python-pip python-yaml python-jinj
 ansible-galaxy_BIN_DIR      = bin
 ansible-galaxy_PARENT       = ansible
 
-ansible-roles:
-	ansible-galaxy install -r ansible/requirements.yml
+ANSIBLE_REQUIREMENTS       ?= roles/requirements.yml
 
-ansible-roles-quiet:
-	@ansible-galaxy install -r ansible/requirements.yml > /dev/null
+$(ANSIBLE_REQUIREMENTS):
+	@mkdir -p $(dir $(ANSIBLE_REQUIREMENTS))
+	echo "---" >> $(ANSIBLE_REQUIREMENTS)
+
+ansible-roles: $(ANSIBLE_REQUIREMENTS)
+	ansible-galaxy install -i -r $(ANSIBLE_REQUIREMENTS)
+
+ansible-roles-quiet: $(ANSIBLE_REQUIREMENTS)
+	@ansible-galaxy install -i -r $(ANSIBLE_REQUIREMENTS) > /dev/null
 
 # vi:syntax=makefile
