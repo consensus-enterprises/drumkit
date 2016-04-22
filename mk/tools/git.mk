@@ -71,7 +71,7 @@ $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest: $(SRC_DIR)/$$($(1)_PARENT)/$$
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/ && \
   ln -s $$($(1)_PARENT)-$$($(1)_RELEASE) $$($(1)_PARENT)-latest
 
-$(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): git
+$(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): $(GIT_EXECUTABLE)
 	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
 	@git clone --quiet --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
@@ -83,14 +83,12 @@ endif
 
 endef
 
-GIT_INSTALLED=$(shell which git; echo $?)
+GIT_EXECUTABLE = /usr/bin/git
 
-git: git-deps
-git-deps: apt-update
-ifneq ($(GIT_INSTALLED), '0')
+$(GIT_EXECUTABLE):
 	@echo Installing Git.
+	@sudo apt-get update
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git
-endif
 
 GITS ?= ansible ansible-doc ansible-playbook ansible-vault ansible-galaxy ansible-pull
 $(foreach git,$(GITS),$(eval $(call git_template,$(git))))
