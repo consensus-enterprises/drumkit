@@ -5,10 +5,13 @@ ansible-playbook_DEPENDENCIES = python-paramiko python-pip python-yaml python-ji
 ansible-playbook_BIN_DIR      = bin
 ansible-playbook_PARENT       = ansible
 
+# Below are helpers for development and testing of Ansible roles.
+ifdef ANSIBLE_ROLE_NAME
+
 ANSIBLE_PLAYBOOK  ?= tests/playbook.yml
 ANSIBLE_INVENTORY ?= tests/inventory
 
-ansible-playbook-test: ansible-roles
+ansible-playbook-test: ansible-roles $(ANSIBLE_ROLES_PATH)/$(ANSIBLE_ROLE_NAME)
 	@echo "Check the role/playbook's syntax."
 	ansible-playbook -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --syntax-check
 	@echo "Run the role/playbook with ansible-playbook."
@@ -18,5 +21,13 @@ ansible-playbook-test: ansible-roles
   | grep -q 'changed=0.*failed=0' \
   && (echo 'Idempotence test: pass' && exit 0) \
   || (echo 'Idempotence test: fail' && exit 1)
+
+$(ANSIBLE_ROLES_PATH)/$(ANSIBLE_ROLE_NAME): $(ANSIBLE_ROLES_PATH)
+	@echo "Creating symlink to include this role for tests."
+	rm -f $(ANSIBLE_ROLES_PATH)/$(ANSIBLE_ROLE_NAME)
+	cd $(ANSIBLE_ROLES_PATH) && \
+  ln -f -s ../.. $(ANSIBLE_ROLE_NAME)
+
+endif
 
 # vi:syntax=makefile
