@@ -8,16 +8,19 @@ ansible-playbook_PARENT       = ansible
 # Below are helpers for development and testing of Ansible roles.
 ifdef ANSIBLE_ROLE_NAME
 
-ANSIBLE_PLAYBOOK  ?= tests/playbook.yml
-ANSIBLE_INVENTORY ?= tests/inventory
+ANSIBLE_PLAYBOOK     ?= tests/playbook.yml
+ANSIBLE_INVENTORY    ?= tests/inventory
+ifdef START_AT_TASK
+ANSIBLE_START_AT_TASK = --start-at-task="$(START_AT_TASK)"
+endif
 
 ansible-playbook-test: ansible-roles $(ANSIBLE_ROLES_PATH)/$(ANSIBLE_ROLE_NAME)
 	@echo "Check the role/playbook's syntax."
-	ansible-playbook -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --syntax-check
+	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --syntax-check
 	@echo "Run the role/playbook with ansible-playbook."
-	ansible-playbook -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo
+	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo
 	@echo "Run the role/playbook again, checking to make sure it's idempotent."
-	ansible-playbook -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo \
+	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo \
   | grep -q 'changed=0.*failed=0' \
   && (echo 'Idempotence test: pass' && exit 0) \
   || (echo 'Idempotence test: fail' && exit 1)
