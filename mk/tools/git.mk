@@ -77,7 +77,7 @@ $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): $(GIT_EXECUTABLE)
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
 	git fetch --quiet --tags && \
 	git checkout --quiet $$($(1)_RELEASE) && \
-	git submodule update --quiet --init
+	git submodule update --quiet --init --recursive
 
 endif
 
@@ -85,9 +85,8 @@ endef
 
 GIT_EXECUTABLE = /usr/bin/git
 
-$(GIT_EXECUTABLE):
+$(GIT_EXECUTABLE): apt-update
 	@echo Installing Git.
-	@sudo apt-get update
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git
 
 GITS ?= ansible ansible-doc ansible-playbook ansible-vault ansible-galaxy ansible-pull
