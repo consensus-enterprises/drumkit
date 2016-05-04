@@ -85,8 +85,9 @@ endef
 
 GIT_EXECUTABLE = /usr/bin/git
 
-$(GIT_EXECUTABLE): apt-update
+$(GIT_EXECUTABLE):
 	@echo Installing Git.
+	@sudo apt-get update
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git
 
 GITS ?= ansible ansible-doc ansible-playbook ansible-vault ansible-galaxy ansible-pull
