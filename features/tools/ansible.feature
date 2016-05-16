@@ -22,9 +22,7 @@ Feature: Install Ansible and related tools locally
     When I run "make ansible"
     Then I should get:
       """
-      Downloading the v2.0.1.0-1 release of Ansible via Git.
       Installing Ansible.
-      ansible 2.0.1.0
         config file =
         configured module search path = Default w/o overrides
       Installing Ansible Doc.
