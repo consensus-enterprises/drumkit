@@ -69,7 +69,7 @@ ifeq ($(1), $$($(1)_PARENT))
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest: $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
 	@echo Symlinking the $$($(1)_RELEASE) release of $$($(1)_NAME) to $$($(1)_PARENT)-latest.
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/ && \
-  ln -s $$($(1)_PARENT)-$$($(1)_RELEASE) $$($(1)_PARENT)-latest
+  ln -sf $$($(1)_PARENT)-$$($(1)_RELEASE) $$($(1)_PARENT)-latest
 
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): $(GIT_EXECUTABLE)
 	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
