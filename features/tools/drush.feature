@@ -18,9 +18,10 @@ Feature: Install Drush locally
     When I run "make drush"
     Then I should get:
       """
-      Downloading the 8.0.5 release of Drush.
-      Installing the 8.0.5 release of Drush.
-       Drush Version   :  8.0.5
+      Downloading the
+      Installing the
+			release of Drush.
+       Drush Version   :
       """
     When I run "make drush"
     Then I should get:
