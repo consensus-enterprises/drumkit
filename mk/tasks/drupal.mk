@@ -36,12 +36,12 @@ clean-drupal: drupal-kill-server
 
 drupal: drupal-kill-server drupal-install drupal-start-server drupal-user-login drush-alias
 
-drupal-install: $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
+drupal-install: drush $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
 $(PLATFORM_ROOT)/sites/$(SITE)/settings.php: drupal-build-platform drupal-create-sqlite-db
 	cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd
 	touch $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
 
-drupal-build-platform: $(PLATFORM_ROOT)
+drupal-build-platform: drush $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE) $(DRUPAL_DIR)
 	@echo "Building platform using $(DRUSH_MAKEFILE)."
 	@mkdir -p $(PLATFORM_ROOT)
