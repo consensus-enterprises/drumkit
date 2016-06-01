@@ -31,7 +31,7 @@ clean-drupal: drupal-kill-server
 	@echo "Deleting '$(SITE)' site database."
 	@rm -rf $(SQLITE_DIR)/$(SITE)
 	@echo "Deleting '$(SITE)' site platform."
-	@chmod 700 $(PLATFORM_ROOT) -R
+	@if [ -d $(PLATFORM_ROOT) ]; then chmod -f -R 700 $(PLATFORM_ROOT); fi
 	@rm -rf $(PLATFORM_ROOT)
 
 drupal: drupal-kill-server drupal-install drupal-start-server drupal-user-login drush-alias
