@@ -1,15 +1,22 @@
-BIN_DIR       = $(MK_DIR)/.local/bin
-SRC_DIR       = $(MK_DIR)/.local/src
+LOCAL_DIR     = $(MK_DIR)/.local
+BIN_DIR       = $(LOCAL_DIR)/bin
+SRC_DIR       = $(LOCAL_DIR)/src
 
 init: $(SRC_DIR) $(BIN_DIR)
 
-$(SRC_DIR):
-	@echo Creating source directory.
+$(LOCAL_DIR):
+	@echo Creating .local directory.
 	@mkdir -p $(SRC_DIR)
 
-$(BIN_DIR):
-	@echo Creating binary directory.
+$(SRC_DIR): $(LOCAL_DIR)
+	@echo Creating local source directory.
+	@mkdir -p $(SRC_DIR)
+	@touch $(SRC_DIR)
+
+$(BIN_DIR): $(LOCAL_DIR)
+	@echo Creating local binary directory.
 	@mkdir -p $(BIN_DIR)
+	@touch $(BIN_DIR)
 
 clean:
 	@rm -rf $(BIN_DIR)
