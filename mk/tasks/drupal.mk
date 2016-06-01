@@ -38,8 +38,8 @@ drupal: drupal-kill-server drupal-install drupal-start-server drupal-user-login 
 
 drupal-install: drush $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
 $(PLATFORM_ROOT)/sites/$(SITE)/settings.php: drupal-build-platform drupal-create-sqlite-db
-	cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd
-	touch $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
+	@cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd
+	@touch $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
 
 drupal-build-platform: drush $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE) $(DRUPAL_DIR)
@@ -81,13 +81,14 @@ drupal-start-server: drupal-install
 	@sleep 3
 
 drupal-kill-server:
-	@echo "Stopping PHP server."
+	@echo "Stopping any running PHP servers."
 	@ps aux|grep "[p]hp -S" > /dev/null || pkill -f "php -S"
-	@echo "Giving PHP server a chance to stop."
+	@echo "Giving PHP servers a chance to stop."
 	@sleep 3
 
 drupal-user-login: drupal-install drupal-start-server
-	drush @$(SITE) uli admin admin
+	@echo "A browser window should open on your new site. If not, use the following URL:"
+	@drush @$(SITE) uli admin admin
 
 make:
 	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
