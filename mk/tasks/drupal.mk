@@ -39,7 +39,7 @@ clean-drupal: drupal-kill-server
 	@if [ -d $(PLATFORM_ROOT) ]; then chmod -f -R 700 $(PLATFORM_ROOT); fi
 	@rm -rf $(PLATFORM_ROOT)
 
-drupal: drupal-kill-server drupal-install drupal-start-server drupal-user-login drush-alias
+drupal: drupal-kill-server drupal-install drupal-start-server drush-alias drupal-user-login
 
 drupal-install: drush $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
 $(PLATFORM_ROOT)/sites/$(SITE)/settings.php: drupal-build-platform drupal-create-sqlite-db
