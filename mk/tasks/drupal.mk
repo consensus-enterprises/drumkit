@@ -13,25 +13,22 @@ SITE_URI        ?= http://localhost:$(PHP_SERVER_PORT)
 
 .PHONY: help-drupal drupal-behat-config
 
-help-drupal:
-	@echo "make drupal"
-	@echo "  Build a Drupal codebase, install a site and start a web server."
+help-drupal: drupal-help drupal-tests-help clean-drupal-help drupal-user-login-help drush-alias-help
+	@echo "make help-drupal-all"
+	@echo "  Display help for additional Drupal targets."
+
+help-drupal-all: help-drupal debug-drupal-help drupal-start-server-help drupal-kill-server-help
+
+debug-drupal-help:
+	@echo "make debug-drupal"
+	@echo "  Print some variables for debugging."
+debug-drupal:
+	@echo "PROJECT_ROOT: $(PROJECT_ROOT)"
+	@echo "PLATFORM_ROOT: $(PLATFORM_ROOT)"
+
+clean-drupal-help:
 	@echo "make clean-drupal"
 	@echo "  Delete the Drupal codebase and database, and stop the PHP server."
-	@echo "make drupal-start-server"
-	@echo "  Start an embedded PHP server."
-	@echo "make drupal-kill-server"
-	@echo "  Stop the PHP server."
-	@echo "make drupal-user-login"
-	@echo "  Open a browser and login to the dev site."
-	@echo "make drush-alias"
-	@echo "  Generate a Drush alias for the dev site."
-	@echo "make drupal-tests"
-	@echo "  Run Behat tests against dev Drupal site."
-	@echo "make drupal-tests-wip"
-	@echo "  Run work-in-progress Behat tests against dev Drupal site."
-
-
 clean-drupal: drupal-kill-server
 	@echo "Deleting '$(SITE)' site database."
 	@rm -rf $(SQLITE_DIR)/$(SITE)
@@ -39,6 +36,9 @@ clean-drupal: drupal-kill-server
 	@if [ -d $(PLATFORM_ROOT) ]; then chmod -f -R 700 $(PLATFORM_ROOT); fi
 	@rm -rf $(PLATFORM_ROOT)
 
+drupal-help:
+	@echo "make drupal"
+	@echo "  Build a Drupal codebase, install a site and start a web server."
 drupal: drupal-kill-server drupal-install drupal-start-server drush-alias drupal-user-login
 
 drupal-install: drush $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
@@ -50,8 +50,7 @@ drupal-build-platform: drush $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE) $(DRUPAL_DIR)
 	@echo "Building platform using $(DRUSH_MAKEFILE)."
 	@mkdir -p $(PLATFORM_ROOT)
-	@cd $(PLATFORM_ROOT) && \
-  $(drush_make) $(DRUSH_MAKEFILE)
+	@cd $(PLATFORM_ROOT) && $(drush_make) $(DRUSH_MAKEFILE)
 	@ln -sf $(PROJECT_ROOT) $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME)
 	@touch $(PLATFORM_ROOT)
 $(DRUSH_MAKEFILE):
@@ -73,24 +72,36 @@ $(SQLITE_DIR): $(DRUPAL_DIR)
 	@mkdir -p $(SQLITE_DIR)
 	@touch $(SQLITE_DIR)
 
+drush-alias-help:
+	@echo "make drush-alias"
+	@echo "  Generate a Drush alias for the dev site."
 drush-alias: $(HOME)/.drush/$(SITE).alias.drushrc.php
 $(HOME)/.drush/$(SITE).alias.drushrc.php:
 	@echo "Creating Drush alias @$(SITE)."
 	@echo "<?php" > $(HOME)/.drush/$(SITE).alias.drushrc.php
 	@echo "  \$$aliases['$(SITE)'] = array('root' => '$(PLATFORM_ROOT)','uri' => '$(SITE_URI)');" >> ~/.drush/$(SITE).alias.drushrc.php
 
+drupal-start-server-help:
+	@echo "make drupal-start-server"
+	@echo "  Start an embedded PHP server."
 drupal-start-server: drupal-install
 	@echo "Starting PHP server."
 	@cd $(PLATFORM_ROOT) && php -S 0.0.0.0:$(PHP_SERVER_PORT) &> runserver.log &
 	@echo "Giving PHP server a chance to start."
 	@sleep 3
 
+drupal-kill-server-help:
+	@echo "make drupal-kill-server"
+	@echo "  Stop the PHP server."
 drupal-kill-server:
 	@echo "Stopping any running PHP servers."
 	@ps aux|grep "[p]hp -S" > /dev/null || pkill -f "php -S"
 	@echo "Giving PHP servers a chance to stop."
 	@sleep 3
 
+drupal-user-login-help:
+	@echo "make drupal-user-login"
+	@echo "  Open a browser and login to the dev site."
 drupal-user-login: drupal-install drupal-start-server
 	@echo "A browser window should open on your new site. If not, use the following URL:"
 	@drush @$(SITE) uli admin admin
@@ -102,6 +113,11 @@ drupal-behat-config: drush-bde-env
 	@echo Generating project-specific Behat config.
 	@cd $(PLATFORM_ROOT) && $(drush) beg --subcontexts=profiles/$(PROFILE)/modules --site-root=$(PLATFORM_ROOT) --skip-path-check --base-url=$(SITE_URI) $(PROJECT_ROOT)/behat_params.sh
 
+drupal-tests-help:
+	@echo "make drupal-tests"
+	@echo "  Run Behat tests against dev Drupal site."
+	@echo "make drupal-tests-wip"
+	@echo "  Run work-in-progress Behat tests against dev Drupal site."
 drupal-tests: drupal-behat-config
 	@source behat_params.sh && $(behat) $(CURRENT_TEST)
 drupal-tests-wip: drupal-behat-config
