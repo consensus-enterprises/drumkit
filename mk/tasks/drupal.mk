@@ -108,7 +108,7 @@ drupal-user-login: drupal-install drupal-start-server
 make:
 	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
 
-drupal-behat-config: drush-bde-env
+drupal-behat-config: behat drush-bde-env
 	@echo Generating project-specific Behat config.
 	@cd $(PLATFORM_ROOT) && $(drush) beg --subcontexts=profiles/$(PROFILE)/modules --site-root=$(PLATFORM_ROOT) --skip-path-check --base-url=$(SITE_URI) $(PROJECT_ROOT)/behat_params.sh
 
