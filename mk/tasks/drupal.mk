@@ -11,7 +11,7 @@ PROFILE         ?= $(shell if [[ '$(PROJECT_TYPE)' == 'profile' ]]; then echo '$
 PHP_SERVER_PORT ?= 8888
 SITE_URI        ?= http://localhost:$(PHP_SERVER_PORT)
 
-.PHONY: help-drupal drupal-behat-config
+.PHONY: help-drupal drupal-behat-config drush-alias
 
 help-drupal: drupal-help drupal-tests-help clean-drupal-help drupal-user-login-help drush-alias-help
 	@echo "make help-drupal-all"
@@ -75,8 +75,7 @@ $(SQLITE_DIR): $(DRUPAL_DIR)
 drush-alias-help:
 	@echo "make drush-alias"
 	@echo "  Generate a Drush alias for the dev site."
-drush-alias: $(HOME)/.drush/$(SITE).alias.drushrc.php
-$(HOME)/.drush/$(SITE).alias.drushrc.php:
+drush-alias:
 	@echo "Creating Drush alias @$(SITE)."
 	@echo "<?php" > $(HOME)/.drush/$(SITE).alias.drushrc.php
 	@echo "  \$$aliases['$(SITE)'] = array('root' => '$(PLATFORM_ROOT)','uri' => '$(SITE_URI)');" >> ~/.drush/$(SITE).alias.drushrc.php
@@ -84,7 +83,7 @@ $(HOME)/.drush/$(SITE).alias.drushrc.php:
 drupal-start-server-help:
 	@echo "make drupal-start-server"
 	@echo "  Start an embedded PHP server."
-drupal-start-server: drupal-install
+drupal-start-server:
 	@echo "Starting PHP server."
 	@cd $(PLATFORM_ROOT) && php -S 0.0.0.0:$(PHP_SERVER_PORT) &> runserver.log &
 	@echo "Giving PHP server a chance to start."
@@ -95,7 +94,7 @@ drupal-kill-server-help:
 	@echo "  Stop the PHP server."
 drupal-kill-server:
 	@echo "Stopping any running PHP servers."
-	@ps aux|grep "[p]hp -S" > /dev/null || pkill -f "php -S"
+	@ps aux|grep "[p]hp -S" > /dev/null; if [ "$?" == 0 ]; then pkill -f "php -S"; fi
 	@echo "Giving PHP servers a chance to stop."
 	@sleep 3
 
