@@ -11,7 +11,7 @@ PROFILE         ?= $(shell if [[ '$(PROJECT_TYPE)' == 'profile' ]]; then echo '$
 PHP_SERVER_PORT ?= 8888
 SITE_URI        ?= http://localhost:$(PHP_SERVER_PORT)
 
-.PHONY: help-drupal drupal-behat-config drush-alias
+.PHONY: help-drupal drush-alias
 
 help-drupal: drupal-help drupal-tests-help clean-drupal-help drupal-user-login-help drush-alias-help
 	@echo "make help-drupal-all"
@@ -107,19 +107,5 @@ drupal-user-login: drupal-install drupal-start-server
 
 make:
 	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
-
-drupal-behat-config: behat drush-bde-env
-	@echo Generating project-specific Behat config.
-	@cd $(PLATFORM_ROOT) && $(drush) beg --subcontexts=profiles/$(PROFILE)/modules --site-root=$(PLATFORM_ROOT) --skip-path-check --base-url=$(SITE_URI) $(PROJECT_ROOT)/behat_params.sh
-
-drupal-tests-help:
-	@echo "make drupal-tests"
-	@echo "  Run Behat tests against dev Drupal site."
-	@echo "make drupal-tests-wip"
-	@echo "  Run work-in-progress Behat tests against dev Drupal site."
-drupal-tests: drupal-behat-config
-	@source behat_params.sh && $(behat) $(CURRENT_TEST)
-drupal-tests-wip: drupal-behat-config
-	@source behat_params.sh && $(behat) $(CURRENT_TEST) --tags=wip
 
 # vi:syntax=makefile
