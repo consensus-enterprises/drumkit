@@ -49,9 +49,9 @@ $(PLATFORM_ROOT)/sites/$(SITE)/settings.php: drupal-build-platform drupal-create
 drupal-build-platform: drush $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE) $(DRUPAL_DIR)
 	@echo "Building platform using $(DRUSH_MAKEFILE)."
-	@mkdir -p $(PLATFORM_ROOT)
-	@cd $(PLATFORM_ROOT) && $(drush_make) $(DRUSH_MAKEFILE)
+	@mkdir -p $(PLATFORM_ROOT)/$(PROJECT_TYPE)s
 	@ln -sf $(PROJECT_ROOT) $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME)
+	@cd $(PLATFORM_ROOT) && $(drush_make) $(DRUSH_MAKEFILE)
 	@touch $(PLATFORM_ROOT)
 $(DRUSH_MAKEFILE):
 	@echo "Initializing build makefile."
