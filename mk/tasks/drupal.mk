@@ -4,7 +4,8 @@ SQLITE_DIR      ?= $(DRUPAL_DIR)/sqlite
 DRUSH_MAKEFILE  ?= $(PROJECT_ROOT)/dev.build.yml
 SITE            ?= default
 PLATFORM_ROOT   ?= $(DRUPAL_DIR)/drupal-$(SITE)
-site_exists     ?= $(shell if [[ -f $(PLATFORM_ROOT)/sites/$(SITE)/settings.php ]]; then echo 1; fi)
+SITE_DIR        ?= $(PLATFORM_ROOT)/sites/$(SITE)
+site_exists     ?= $(shell if [[ -f $(SITE_DIR)/settings.php ]]; then echo 1; fi)
 PROJECT_NAME    ?= example
 PROJECT_TYPE    ?= module
 PROFILE         ?= $(shell if [[ '$(PROJECT_TYPE)' == 'profile' ]]; then echo '$(PROJECT_NAME)'; else echo 'minimal'; fi)
@@ -13,7 +14,7 @@ SITE_URI        ?= http://localhost:$(PHP_SERVER_PORT)
 
 .PHONY: help-drupal drush-alias
 
-help-drupal: drupal-help drupal-tests-help clean-drupal-help drupal-user-login-help drush-alias-help
+help-drupal: drupal-help drupal-reinstall-help drupal-rebuild-help drupal-tests-help clean-drupal-help drupal-user-login-help drush-alias-help
 	@echo "make help-drupal-all"
 	@echo "  Display help for additional Drupal targets."
 
@@ -26,12 +27,28 @@ debug-drupal:
 	@echo "PROJECT_ROOT: $(PROJECT_ROOT)"
 	@echo "PLATFORM_ROOT: $(PLATFORM_ROOT)"
 
+drupal-rebuild-help:
+	@echo "make drupal-rebuild"
+	@echo "  Destroy the current Drupal site and rebuild it from scratch."
+drupal-rebuild: clean-drupal drupal
+
+drupal-reinstall-help:
+	@echo "make drupal-reinstall"
+	@echo "  Re-install the current Drupal site."
+drupal-reinstall: clean-drupal-site drupal-install drupal-start-server drupal-user-login
+
 clean-drupal-help:
 	@echo "make clean-drupal"
 	@echo "  Delete the Drupal codebase and database, and stop the PHP server."
-clean-drupal: drupal-kill-server
+clean-drupal: clean-drupal-platform
+clean-drupal-site: drupal-kill-server
 	@echo "Deleting '$(SITE)' site database."
 	@rm -rf $(SQLITE_DIR)/$(SITE)
+	@echo "Deleting '$(SITE)' site settings.php."
+	@if [ -d $(SITE_DIR) ]; then chmod 755 $(SITE_DIR); fi
+	@if [ -f $(SITE_DIR)/settings.php ]; then chmod 644 $(SITE_DIR)/settings.php; fi
+	@rm -f $(SITE_DIR)/settings.php
+clean-drupal-platform: clean-drupal-site
 	@echo "Deleting '$(SITE)' site platform."
 	@if [ -d $(PLATFORM_ROOT) ]; then chmod -f -R 700 $(PLATFORM_ROOT); fi
 	@rm -rf $(PLATFORM_ROOT)
@@ -41,16 +58,16 @@ drupal-help:
 	@echo "  Build a Drupal codebase, install a site and start a web server."
 drupal: drupal-kill-server drupal-install drupal-start-server drush-alias drupal-user-login
 
-drupal-install: drush $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
-$(PLATFORM_ROOT)/sites/$(SITE)/settings.php: drupal-build-platform drupal-create-sqlite-db
-	@cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd
-	@touch $(PLATFORM_ROOT)/sites/$(SITE)/settings.php
+drupal-install: drush $(SITE_DIR)/settings.php
+$(SITE_DIR)/settings.php: drupal-build-platform drupal-create-sqlite-db
+	@cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd --sites-subdir=$(SITE)
+	@touch $(SITE_DIR)/settings.php
 
 drupal-build-platform: drush $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE) $(DRUPAL_DIR)
 	@echo "Building platform using $(DRUSH_MAKEFILE)."
 	@mkdir -p $(PLATFORM_ROOT)/$(PROJECT_TYPE)s
-	@ln -sf $(PROJECT_ROOT) $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME)
+	@ln -s $(PROJECT_ROOT) $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME)
 	@cd $(PLATFORM_ROOT) && $(drush_make) $(DRUSH_MAKEFILE)
 	@touch $(PLATFORM_ROOT)
 $(DRUSH_MAKEFILE):
@@ -64,7 +81,7 @@ $(DRUPAL_DIR): $(LOCAL_DIR)
 
 drupal-create-sqlite-db: $(SQLITE_DIR)/$(SITE)
 $(SQLITE_DIR)/$(SITE): $(SQLITE_DIR)
-	@echo Creating SQLite directory for $(SITE).
+	@echo Creating SQLite directory for '$(SITE)'.
 	@mkdir -p $(SQLITE_DIR)/$(SITE)
 	@touch $(SQLITE_DIR)/$(SITE)
 $(SQLITE_DIR): $(DRUPAL_DIR)
@@ -104,8 +121,5 @@ drupal-user-login-help:
 drupal-user-login: drupal-install drupal-start-server
 	@echo "A browser window should open on your new site. If not, use the following URL:"
 	@drush @$(SITE) uli admin admin
-
-make:
-	@vagrant ssh -c"cd /var/www/html/d8 && sudo drush -y make /vagrant/dev.build.yml"
 
 # vi:syntax=makefile
