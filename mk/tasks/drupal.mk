@@ -60,7 +60,7 @@ drupal: drupal-kill-server drupal-install drupal-start-server drush-alias drupal
 
 drupal-install: drush $(SITE_DIR)/settings.php
 $(SITE_DIR)/settings.php: drupal-build-platform drupal-create-sqlite-db
-	@cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd --sites-subdir=$(SITE)
+	@cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd --sites-subdir=$(SITE) install_configure_form.update_status_module='array(FALSE,FALSE)'
 	@touch $(SITE_DIR)/settings.php
 
 drupal-build-platform: drush $(PLATFORM_ROOT)
