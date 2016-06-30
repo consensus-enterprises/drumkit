@@ -67,7 +67,7 @@ drupal-build-platform: drush $(PLATFORM_ROOT)
 $(PLATFORM_ROOT): $(DRUSH_MAKEFILE) $(DRUPAL_DIR)
 	@echo "Building platform using $(DRUSH_MAKEFILE)."
 	@mkdir -p $(PLATFORM_ROOT)/$(PROJECT_TYPE)s
-	@if [ ! -L $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME)]; then ln -s $(PROJECT_ROOT) $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME); fi
+	@if [ ! -L $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME) ]; then ln -s $(PROJECT_ROOT) $(PLATFORM_ROOT)/$(PROJECT_TYPE)s/$(PROJECT_NAME); fi
 	@cd $(PLATFORM_ROOT) && $(drush_make) $(DRUSH_MAKEFILE)
 	@touch $(PLATFORM_ROOT)
 $(DRUSH_MAKEFILE):
