@@ -56,10 +56,10 @@ clean-drupal-platform: clean-drupal-site
 drupal-help:
 	@echo "make drupal"
 	@echo "  Build a Drupal codebase, install a site and start a web server."
-drupal: drupal-kill-server drupal-install drupal-start-server drush-alias drupal-user-login
+drupal: drupal-kill-server drupal-build-platform drupal-install drupal-start-server drush-alias drupal-user-login
 
 drupal-install: drush $(SITE_DIR)/settings.php
-$(SITE_DIR)/settings.php: drupal-build-platform drupal-create-sqlite-db
+$(SITE_DIR)/settings.php: drupal-create-sqlite-db
 	@cd $(PLATFORM_ROOT) && $(drush) -y site-install $(PROFILE) --db-url=sqlite://$(SQLITE_DIR)/$(SITE)/db.sqlite --account-pass=pwd --sites-subdir=$(SITE) install_configure_form.update_status_module='array(FALSE,FALSE)'
 	@touch $(SITE_DIR)/settings.php
 
