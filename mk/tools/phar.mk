@@ -2,7 +2,7 @@ define PHAR_template
 
 include $(MK_DIR)/mk/tools/phar/$(1).mk
 
-$(1) ?= $(BIN_DIR)/$(1) $$(OPTIONS)
+$(1) ?= $(BIN_DIR)/$(1) $$($(1)_OPTIONS)
 
 phars: $(1)
 
