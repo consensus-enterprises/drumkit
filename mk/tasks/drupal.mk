@@ -12,7 +12,9 @@ PROFILE         ?= $(shell if [[ '$(PROJECT_TYPE)' == 'profile' ]]; then echo '$
 PHP_SERVER_PORT ?= 8888
 SITE_URI        ?= http://localhost:$(PHP_SERVER_PORT)
 
-.PHONY: help-drupal drush-alias
+.PHONY: help-drupal help-drupal-all debug-drupal-help debug-drupal clean-drupal-help clean-drupal drupal-help drupal
+
+include $(MK_DIR)/mk/tasks/drupal/*.mk
 
 help-drupal: drupal-help drupal-reinstall-help drupal-rebuild-help drupal-tests-help clean-drupal-help drupal-user-login-help drush-alias-help
 	@echo "make help-drupal-all"

@@ -1,8 +1,8 @@
 .PHONY: drupal-behat-config drupal-tests drupal-tests-wip
 
-drupal-behat-config: behat drush-bde-env
+drupal-behat-config: behat drush-bde-env drush-alias
 	@echo Generating project-specific Behat config.
-	@cd $(PLATFORM_ROOT) && $(drush) beg --subcontexts=profiles/$(PROFILE)/modules --site-root=$(PLATFORM_ROOT) --skip-path-check --base-url=$(SITE_URI) $(PROJECT_ROOT)/behat_params.sh
+	@cd $(PLATFORM_ROOT) && $(drush) @$(SITE) beg --subcontexts=profiles/$(PROFILE)/modules --site-root=$(PLATFORM_ROOT) --skip-path-check --base-url=$(SITE_URI) $(PROJECT_ROOT)/behat_params.sh
 
 drupal-tests-help:
 	@echo "make drupal-tests"
