@@ -14,7 +14,7 @@ drush-bde-env: drush $(BDE_DIR)
 $(BDE_DIR): $(DRUSH_DIR)
 	@echo Cloning Drush Behat config extension.
 	@git clone https://github.com/pfrenssen/drush-bde-env.git $(BDE_DIR)
-	@$(drush) cc drush
+	@$(drush) @none cc drush
 
 deps: deps-behat
 deps-behat: apt-update composer
