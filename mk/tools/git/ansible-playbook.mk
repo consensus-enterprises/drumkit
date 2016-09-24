@@ -16,7 +16,7 @@ endif
 
 ansible-playbook-test-idempotence: ansible-playbook-test
 	@echo "Run the role/playbook again, checking to make sure it's idempotent."
-	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo \
+	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo --extra-vars "$(ANSIBLE_EXTRA_VARS)" \
   | grep -q 'changed=0.*failed=0' \
   && (echo 'Idempotence test: pass' && exit 0) \
   || (echo 'Idempotence test: fail' && exit 1)
@@ -25,7 +25,7 @@ ansible-playbook-test: ansible-roles $(ANSIBLE_ROLES_PATH)/$(ANSIBLE_ROLE_NAME)
 	@echo "Check the role/playbook's syntax."
 	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --syntax-check
 	@echo "Run the role/playbook with ansible-playbook."
-	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo
+	ansible-playbook $(ANSIBLE_START_AT_TASK) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK) --connection=local --sudo --extra-vars "$(ANSIBLE_EXTRA_VARS)"
 
 $(ANSIBLE_ROLES_PATH)/$(ANSIBLE_ROLE_NAME): $(ANSIBLE_ROLES_PATH)
 	@echo "Creating symlink to include this role for tests."
