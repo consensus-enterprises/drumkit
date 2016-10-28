@@ -29,12 +29,16 @@ Feature: Install Kubernetes tools locally
       Downloading the
       Installing the
       release of minikube.
-      minikube version:
       """
     When I run "make minikube"
     Then I should get:
       """
       make: Nothing to be done for `minikube'.
+      """
+    When I run "./scripts/hacking.sh && minikube version"
+    Then I should get:
+      """
+      minikube version:
       """
 
   @slow
@@ -47,8 +51,6 @@ Feature: Install Kubernetes tools locally
       Downloading the
       Installing the
       release of kubectl.
-      Client Version:
-      Server Version:
       """
     When I run "make kubectl"
     Then I should get:

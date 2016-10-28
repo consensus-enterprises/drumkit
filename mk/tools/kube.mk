@@ -41,8 +41,6 @@ $(BIN_DIR)/$(1): $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE)
 	@echo Installing the $$($(1)_RELEASE) release of $$($(1)_NAME).
 	@ln -sf $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE) $(BIN_DIR)/$(1)
 	@chmod a+x $(BIN_DIR)/$(1)
-	@. $(MK_DIR)/scripts/hacking.sh && \
-	$(1) version
 
 $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE):
 	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME).
