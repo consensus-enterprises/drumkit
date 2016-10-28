@@ -34,14 +34,14 @@ Feature: Install Kubernetes tools locally
     When I run "make minikube"
     Then I should get:
       """
-      make: Nothing to be done for 'minikube'.
+      make: Nothing to be done for `minikube'.
       """
 
   @slow
   Scenario: Install kubectl
     Given I bootstrap drumkit
     When I run "make clean"
-    When I run "make minikube"
+    When I run "make kubectl"
     Then I should get:
       """
       Downloading the
@@ -53,5 +53,5 @@ Feature: Install Kubernetes tools locally
     When I run "make kubectl"
     Then I should get:
       """
-      make: Nothing to be done for 'kubectl'.
+      make: Nothing to be done for `kubectl'.
       """
