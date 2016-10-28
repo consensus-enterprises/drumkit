@@ -20,7 +20,25 @@ Feature: Install Kubernetes tools locally
       """
 
   @slow
-  Scenario: Run 'make minikube'
+  Scenario: Install minikube
+    Given I bootstrap drumkit
+    When I run "make clean"
+    When I run "make minikube"
+    Then I should get:
+      """
+      Downloading the
+      Installing the
+      release of minikube.
+      minikube version:
+      """
+    When I run "make minikube"
+    Then I should get:
+      """
+      make: Nothing to be done for 'minikube'.
+      """
+
+  @slow
+  Scenario: Install kubectl
     Given I bootstrap drumkit
     When I run "make clean"
     When I run "make minikube"
@@ -31,16 +49,9 @@ Feature: Install Kubernetes tools locally
       release of kubectl.
       Client Version:
       Server Version:
-      release of minikube.
-      minikube version:
       """
     When I run "make kubectl"
     Then I should get:
       """
       make: Nothing to be done for 'kubectl'.
-      """
-    When I run "make minikube"
-    Then I should get:
-      """
-      make: Nothing to be done for 'minikube'.
       """
