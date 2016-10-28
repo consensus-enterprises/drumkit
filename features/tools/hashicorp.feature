@@ -19,7 +19,7 @@ Feature: Install Hashicorp tools locally
     Then I should get:
       """
       Downloading the
-      Unzipping the
+      Unzipping packer. 
       Installing the
       release of packer.
       Packer v

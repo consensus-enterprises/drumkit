@@ -35,11 +35,6 @@ Feature: Install Kubernetes tools locally
       """
       make: Nothing to be done for `minikube'.
       """
-    When I run ". ./scripts/hacking.sh && minikube version"
-    Then I should get:
-      """
-      minikube version:
-      """
 
   @slow
   Scenario: Install kubectl
