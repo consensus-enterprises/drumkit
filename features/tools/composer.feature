@@ -20,7 +20,7 @@ Feature: Install Composer locally
       """
       Downloading the 1.4.2 release of Composer.
       Installing the 1.4.2 release of Composer.
-      Composer version 1.4.2 2017-05-07 08:17:52
+      Composer version 1.4.2 2017-05-17 08:17:52
       """
     When I run "make composer"
     Then I should get:
