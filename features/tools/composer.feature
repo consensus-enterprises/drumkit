@@ -18,9 +18,9 @@ Feature: Install Composer locally
     When I run "make composer"
     Then I should get:
       """
-      Downloading the 1.0.0-beta1 release of Composer.
-      Installing the 1.0.0-beta1 release of Composer.
-      Composer version 1.0.0-beta1 2016-03-03 15:15:10
+      Downloading the 1.4.2 release of Composer.
+      Installing the 1.4.2 release of Composer.
+      Composer version 1.4.2 2017-05-07 08:17:52
       """
     When I run "make composer"
     Then I should get:
