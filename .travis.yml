@@ -12,11 +12,7 @@ os:
 addons:
   apt:
     packages:
-    - python-yaml
-    - python-jinja2
-    #- python-paramiko
-    #- python-pip
-    #- python-pycurl
+    - python-pip
 
 env:
   - BEHAT_TAGS="~@slow"
@@ -24,6 +20,7 @@ env:
 
 install:
   - make behat
+  - pip install --user files/ansible/requirements.txt
 
 script:
   - . scripts/hacking.sh
