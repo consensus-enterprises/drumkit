@@ -20,7 +20,7 @@ env:
 
 install:
   - make behat
-  - pip install --user files/ansible/requirements.txt
+  - pip install --user -r files/ansible/requirements.txt
 
 script:
   - . scripts/hacking.sh
