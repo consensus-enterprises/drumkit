@@ -34,7 +34,7 @@ deps-$(1): apt-update mysql-server
 	@echo Installing $$($(1)_NAME) dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $$($(1)_DEPENDENCIES)
 
-install-$(1): init $(BIN_DIR)/$(1)
+install-$(1): init-mk $(BIN_DIR)/$(1)
 $(1): install-$(1)
 
 $(BIN_DIR)/$(1): $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE).phar

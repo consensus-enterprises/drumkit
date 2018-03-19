@@ -38,7 +38,7 @@ clean-$(1):
 #	@echo Installing $$($(1)_NAME) dependencies.
 #	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $$($(1)_DEPENDENCIES)
 
-install-$(1): init $(SRC_DIR)/dmg/$(1)/release/$$($(1)_RELEASE)/
+install-$(1): init-mk $(SRC_DIR)/dmg/$(1)/release/$$($(1)_RELEASE)/
 $(1): install-$(1)
 
 $(BIN_DIR)/$(1): $(SRC_DIR)/dmg/$(1)/release/$$($(1)_RELEASE)/$(1)-$$($(1)_RELEASE).dmg

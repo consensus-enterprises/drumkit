@@ -14,7 +14,7 @@ Feature: Install Behat locally
   @slow
   Scenario: Run 'make behat'
     Given I bootstrap drumkit
-    And I run "make clean"
+    And I run "make clean-mk"
     When I run "make behat"
     Then I should get:
       """

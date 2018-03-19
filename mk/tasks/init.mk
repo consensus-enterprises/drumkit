@@ -4,7 +4,7 @@ SRC_DIR   ?= $(LOCAL_DIR)/src
 MK_OS     = $(shell echo `uname -s` | tr A-Z a-z)
 MK_ARCH   = $(shell echo `uname -p` | tr A-Z a-z)
 
-init: $(SRC_DIR) $(BIN_DIR)
+init-mk: $(SRC_DIR) $(BIN_DIR)
 
 $(LOCAL_DIR):
 	@echo Creating .local directory.
@@ -20,7 +20,7 @@ $(BIN_DIR): $(LOCAL_DIR)
 	@mkdir -p $(BIN_DIR)
 	@touch $(BIN_DIR)
 
-clean:
+clean-mk:
 	@rm -rf $(BIN_DIR)
 	@rm -rf $(SRC_DIR)
 

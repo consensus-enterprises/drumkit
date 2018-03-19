@@ -26,7 +26,7 @@ clean-behat:
 	@rm -rf $(BEHAT_SRC)
 	@rm -f $(BEHAT_BIN)
 
-install-behat: init composer $(BEHAT_BIN)
+install-behat: init-mk composer $(BEHAT_BIN)
 behat: install-behat
 
 $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json

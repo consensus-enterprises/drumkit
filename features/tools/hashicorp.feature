@@ -14,12 +14,12 @@ Feature: Install Hashicorp tools locally
   @slow
   Scenario: Install packer
     Given I bootstrap drumkit
-    When I run "make clean"
+    When I run "make clean-mk"
     When I run "make packer"
     Then I should get:
       """
       Downloading the
-      Unzipping packer. 
+      Unzipping packer.
       Installing the
       release of packer.
       Packer v

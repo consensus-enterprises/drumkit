@@ -14,7 +14,7 @@ Feature: Install Drush locally
   @slow
   Scenario: Run 'make drush'
     Given I bootstrap drumkit
-    When I run "make clean"
+    When I run "make clean-mk"
     When I run "make drush"
     Then I should get:
       """

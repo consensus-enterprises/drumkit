@@ -43,7 +43,7 @@ deps-$(1): apt-update
 
 gits: $$($(1)_COMMANDS)
 
-$(1): init $(BIN_DIR)/$(1)
+$(1): init-mk $(BIN_DIR)/$(1)
 
 ifneq ($(1), $$($(1)_PARENT))
 $$($(1)_PARENT): $(1)

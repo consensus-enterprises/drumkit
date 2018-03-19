@@ -13,9 +13,9 @@ vagrant: Vagrantfile
 Vagrantfile:
 	@ln -s $(MK_DIR)/Vagrantfile .
 
-up: vagrant
+vagrant-up: vagrant
 	@vagrant up --provision
 
-rebuild: vagrant
+vagrant-rebuild: vagrant
 	@vagrant destroy -f && vagrant up
 
