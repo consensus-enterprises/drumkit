@@ -1,8 +1,8 @@
-help-install:
-	@echo "make install"
+help-install-tools:
+	@echo "make install-tools"
 	@echo "  Install all tools."
 
-install: phars
+install-tools: phars
 
 list-tools:
 	@echo "The following tools are available for install:"
