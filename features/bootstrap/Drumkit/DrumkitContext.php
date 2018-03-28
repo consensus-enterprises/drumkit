@@ -1,4 +1,5 @@
 <?php
+namespace Drumkit;
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
