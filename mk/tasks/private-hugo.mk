@@ -12,7 +12,7 @@ endif
 
 private-site:
 	@rm -rf .build public
-	@hugo --baseURL=$(SITE_URL)/$(PASSWORD_HASH) --destination=.build
+	@hugo --baseURL=$(SITE_URL)/$(PASSWORD_HASH)/ --destination=.build
 ifneq ($(PASSWORD_HASH),)
 	@mkdir public
 	@mv .build public/$(PASSWORD_HASH)
