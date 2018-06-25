@@ -2,12 +2,13 @@
 namespace Drumkit;
 
 use Behat\Behat\Tester\Exception\PendingException;
-use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-
+use Drupal\DrupalExtension\Context\RawDrupalContext;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
+
 
 /**
  * Defines application features from the specific context.
@@ -15,6 +16,8 @@ use Symfony\Component\Process\Process;
 class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext {
 
   private $debug = FALSE;
+
+  private $output = FALSE;
 
   private $tempDir;
 
@@ -57,12 +60,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $process->run();
 
     if (!$process->isSuccessful()) {
-      throw new \RuntimeException($process->getErrorOutput());
+      throw new ProcessFailedException($process);
     }
 
     $this->output = $process->getOutput();
     if ($this->debug) {
+      print_r("--- DEBUG START ---\n");
       print_r($this->output);
+      print_r("\n--- DEBUG END -----");
     }
   }
 
@@ -80,7 +85,9 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
 
     $this->output = $process->getErrorOutput();
     if ($this->debug) {
+      print_r("--- DEBUG START ---\n");
       print_r($this->output);
+      print_r("\n--- DEBUG END -----");
     }
   }
 
@@ -138,7 +145,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     foreach ($output->getStrings() as $string) {
       $string = trim($string);
       if (!empty($string) && strpos($this->output, $string) === FALSE) {
-        throw new \RuntimeException("'$string' was not found in command output:\n------\n" . $this->output . "------");
+        throw new \Exception("'$string' was not found in command output:\n------\n" . $this->output . "\n------\n");
       }
     }
   }
@@ -151,7 +158,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     foreach ($output->getStrings() as $string) {
       $string = trim($string);
       if (!empty($string) && strpos($this->output, $string) !== FALSE) {
-        throw new \RuntimeException("'$string' was found in command output:\n------\n" . $this->output . "------");
+        throw new \RuntimeException("'$string' was found in command output:\n------\n" . $this->output . "\n------\n");
       }
     }
   }
