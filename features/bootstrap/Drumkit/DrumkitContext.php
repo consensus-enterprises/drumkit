@@ -15,13 +15,16 @@ use Symfony\Component\Process\Process;
  */
 class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext {
 
-  private $debug = FALSE;
+  protected $debug = FALSE;
 
-  private $output = FALSE;
+  protected $ignoreFailures = FALSE;
+
+  private $process;
 
   private $tempDir;
 
   private $orig_dir;
+
 
   /**
    * Initializes context.
@@ -51,23 +54,29 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     }
   }
 
+  protected function getOutput() {
+    return $this->process->getOutPut();
+  }
+
   /**
    * Run a command in a sub-process, and set its output.
    */
   private function exec($command) {
-    $process = new Process("{$command}");
-    $process->setTimeout(300);
-    $process->run();
+    $this->process = new Process("{$command}");
+    $this->process->setTimeout(300);
+    $this->process->run();
 
-    if (!$process->isSuccessful()) {
-      throw new ProcessFailedException($process);
-    }
-
-    $this->output = $process->getOutput();
     if ($this->debug) {
       print_r("--- DEBUG START ---\n");
-      print_r($this->output);
+      print_r($this->getOutput());
       print_r("\n--- DEBUG END -----");
+    }
+  }
+
+  private function succeed($command) {
+    $this->exec($command);
+    if (!$this->process->isSuccessful()) {
+      throw new ProcessFailedException($process);
     }
   }
 
@@ -75,19 +84,10 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    * Run a command that is expected to fail in a sub-process, and set its output.
    */
   private function fail($command) {
-    $process = new Process("{$command}");
-    $process->setTimeout(300);
-    $process->run();
+    $this->exec($command);
 
-    if ($process->isSuccessful()) {
-      throw new \RuntimeException($process->getOutput());
-    }
-
-    $this->output = $process->getErrorOutput();
-    if ($this->debug) {
-      print_r("--- DEBUG START ---\n");
-      print_r($this->output);
-      print_r("\n--- DEBUG END -----");
+    if ($this->process->isSuccessful()) {
+      throw new \RuntimeException($this->process->getOutput());
     }
   }
 
@@ -134,18 +134,39 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iRun($command)
   {
-    $this->exec($command);
+    if ($this->ignoreFailures) {
+      return $this->exec($command);
+    } 
+    $this->succeed($command);
+  }
+
+  /**
+   * @When I run :cmd on :host
+   */
+  public function iRunOn($cmd, $host) {
+    return $this->iRun("ssh $host $cmd");
+  }
+
+  /**
+   * @Given The :pkg deb package is installed on :host
+   */
+  public function theDebPackageIsInstalledOn($pkg, $host) {
+    $this->ignoreFailures = TRUE;
+    $this->iRunOn("dpkg -l $pkg", $host);
+    if (!preg_match("/ii[ ]+$pkg/", $this->getOutput())) {
+      throw new \Exception("'$pkg' is not installed, dpkg output was:\n" . $this->getOutput());
+    }
   }
 
   /**
    * @Then I should get:
    */
-  public function iShouldGet(PyStringNode $output)
+  public function iShouldGet(PyStringNode $expectedOutput)
   {
-    foreach ($output->getStrings() as $string) {
+    foreach ($expectedOutput->getStrings() as $string) {
       $string = trim($string);
-      if (!empty($string) && strpos($this->output, $string) === FALSE) {
-        throw new \Exception("'$string' was not found in command output:\n------\n" . $this->output . "\n------\n");
+      if (!empty($string) && strpos($this->getOutput(), $string) === FALSE) {
+        throw new \Exception("'$string' was not found in command output:\n------\n" . $this->getOutput() . "\n------\n");
       }
     }
   }
@@ -153,12 +174,12 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   /**
    * @Then I should not get:
    */
-  public function iShouldNotGet(PyStringNode $output)
+  public function iShouldNotGet(PyStringNode $unexpectedOutput)
   {
-    foreach ($output->getStrings() as $string) {
+    foreach ($unexpectedOutput->getStrings() as $string) {
       $string = trim($string);
-      if (!empty($string) && strpos($this->output, $string) !== FALSE) {
-        throw new \RuntimeException("'$string' was found in command output:\n------\n" . $this->output . "\n------\n");
+      if (!empty($string) && strpos($this->getOutput(), $string) !== FALSE) {
+        throw new \RuntimeException("'$string' was found in command output:\n------\n" . $this->getOutput() . "\n------\n");
       }
     }
   }
@@ -180,7 +201,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iExecute($script)
   {
     $script = $this->getOrigDir() . DIRECTORY_SEPARATOR . $script;
-    $this->exec($script);
+    $this->succeed($script);
   }
 
   /**
