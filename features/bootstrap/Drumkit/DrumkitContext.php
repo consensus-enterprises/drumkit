@@ -76,7 +76,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   private function succeed($command) {
     $this->exec($command);
     if (!$this->process->isSuccessful()) {
-      throw new ProcessFailedException($process);
+      throw new ProcessFailedException($this->process);
     }
   }
 
@@ -144,7 +144,10 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    * @When I run :cmd on :host
    */
   public function iRunOn($cmd, $host) {
-    return $this->iRun("ssh $host $cmd");
+    $this->iRun("ssh $host $cmd");
+    if (!$this->process->isSuccessful()) {
+      throw new ProcessFailedException($this->process);
+    }
   }
 
   /**
