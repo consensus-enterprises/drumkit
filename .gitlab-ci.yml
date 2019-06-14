@@ -1,0 +1,27 @@
+image: registry.gitlab.com/pages/hugo:latest
+
+stages:
+  - publish
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+pages:
+  stage: publish
+  image: registry.gitlab.com/pages/hugo:latest
+  cache: {}
+  before_script:
+    # Check the current version of Hugo, so we can keep our local env in sync.
+    - hugo version
+  script:
+    # Build our documentation site.
+    - hugo -s docs
+    - mv docs/public .
+  artifacts:
+    paths:
+      - public
+  allow_failure: true
+  when: always
+  only:
+    - master@consensus.enterprises/drumkit
+
