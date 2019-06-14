@@ -1,0 +1,6 @@
+baseURL: "https://drumk.it"
+languageCode: "en-us"
+title: "Drumkit"
+theme: "harmony"
+params:
+  editURL: "https://gitlab.com/-/ide/project/consensus.enterprises/drumkit/edit/master/-/content/"

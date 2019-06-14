@@ -12,10 +12,10 @@ pages:
     - apk add --update make bash
   script:
     # Build our site.
-    - hugo
+    - cd docs && hugo
   artifacts:
     paths:
-      - public
+      - docs/public
   only:
     - master
 

@@ -1,5 +1,7 @@
-Drumkit [![Build status](https://travis-ci.org/ergonlogic/drumkit.svg)](https://travis-ci.org/ergonlogic/drumkit)
-=======
+---
+title: Drumkit
+
+---
 
 Drumkit is a toolkit for developing Drupal sites, modules, themes and profiles.
 
@@ -7,10 +9,11 @@ Drumkit is a toolkit for developing Drupal sites, modules, themes and profiles.
 
 Drumkit is installed on a project-by-project basis, as a git submodule. To add `drumkit` to an existing Drupal project, run the following command:
 
-    :::console
-    wget -O - https://raw.githubusercontent.com/ergonlogic/drumkit/master/scripts/install.sh | /bin/bash
+```console
+wget -O - https://raw.githubusercontent.com/ergonlogic/drumkit/master/scripts/install.sh | /bin/bash
+```
 
-For further details on installation procedures and options, see the [Install](install.md) page.
+For further details on installation procedures and options, see the [Install](install) page.
 
 ## Common Commands
 
@@ -22,4 +25,4 @@ Drumkit is built atop [GNU Make](https://www.gnu.org/software/make/), a ubiquito
 * `make test` - Run tests.
 * `make rebuild` - Destroy the current VM and re-provision a new one.
 
-Drumkit comes with lots of other commands (GNU Make targets). For more details, see the [Usage](usage.md) page.
+Drumkit comes with lots of other commands (GNU Make targets). For more details, see the [Usage](usage) page.
