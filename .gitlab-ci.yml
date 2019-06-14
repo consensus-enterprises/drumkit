@@ -15,11 +15,7 @@ pages:
     - hugo version
   script:
     # Build our documentation site.
-    - hugo -s docs
-    - mv docs/public .
-  artifacts:
-    paths:
-      - public
+    - hugo
   allow_failure: true
   when: always
   only:
