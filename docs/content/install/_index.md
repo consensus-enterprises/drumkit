@@ -8,7 +8,7 @@ One-liner
 ---------
 
 ```console
-wget -O - https://raw.githubusercontent.com/ergonlogic/drumkit/master/scripts/install.sh | /bin/bash
+wget -O - https://gitlab.com/consensus.enterprises/drumkit/raw/master/scripts/install.sh | /bin/bash
 ```
 
 Install Tools

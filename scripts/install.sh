@@ -13,6 +13,6 @@ if [[ ! -d .git ]]; then
   exit 1
 fi
 
-git submodule add https://github.com/ergonlogic/drumkit .mk
+git submodule add https://gitlab.com/consensus.enterprises/drumkit .mk
 echo "include .mk/GNUmakefile" >> Makefile
 ln -s .mk/d .
