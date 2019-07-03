@@ -2,7 +2,7 @@ behat      ?= $(BEHAT_BIN) --colors
 BEHAT_BIN  ?= $(BIN_DIR)/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
 BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat
-BEHAT_DEPS ?= php5-curl php-mbstring
+BEHAT_DEPS ?= php5-curl php-mbstring php-dom
 BDE_DIR    ?= $(DRUSH_DIR)/drush-bde-env
 BDE_EXISTS ?= $(shell if [[ -d $(BDE_DIR) ]]; then echo 1; fi)
 
