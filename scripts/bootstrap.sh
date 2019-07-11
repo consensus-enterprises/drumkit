@@ -16,4 +16,6 @@ else
 fi
 export PATH="$BIN_PATH:$PATH"
 
+export $(cat .env | xargs)
+
 export DRUMKIT=1
