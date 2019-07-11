@@ -27,7 +27,13 @@ clean-behat:
 	@rm -f $(BEHAT_BIN)
 
 install-behat: init-mk composer $(BEHAT_BIN)
-behat: install-behat
+behat: install-behat behat.yml features
+
+behat.yml:
+	@cp $(FILES_DIR)/behat/project.behat.yml $(PROJECT_ROOT)/behat.yml
+
+features:
+	@mkdir -p $(PROJECT_ROOT)/features
 
 $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
 	@mkdir -p $(BEHAT_SRC)
@@ -43,5 +49,6 @@ $(BEHAT_BIN): $(BEHAT_SRC)/composer.lock
 	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
 	@touch $(BEHAT_BIN)
 	@$(behat) --version
+
 
 # vi:syntax=makefile
