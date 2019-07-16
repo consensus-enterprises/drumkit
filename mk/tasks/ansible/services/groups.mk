@@ -9,5 +9,4 @@ $(GROUPS_PLAYBOOK_DIR):
 	mkdir -p $(GROUPS_PLAYBOOK_DIR)
 
 $(GROUPS_PLAYBOOK_FILES): ## [Full/path/to/group/playbook] Run the specified group playbook.
-	ansible-playbook $@ $(TAGS)
-
+	$(ANSIBLE_PLAYBOOK_CMD) $@

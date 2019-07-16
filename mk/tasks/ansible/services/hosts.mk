@@ -9,5 +9,4 @@ $(HOSTS_PLAYBOOK_DIR):
 	mkdir -p $(HOSTS_PLAYBOOK_DIR)
 
 $(HOSTS_PLAYBOOK_FILES): ## [Full/path/to/host/playbook] Run the specified host playbook.
-	ansible-playbook $@ $(TAGS)
-
+	$(ANSIBLE_PLAYBOOK_CMD) $@

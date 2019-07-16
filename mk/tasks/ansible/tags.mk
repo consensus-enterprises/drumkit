@@ -1,6 +1,6 @@
 ifdef tags
-    TAGS = -t $(tags)
+    ANSIBLE_TAGS = -t $(tags)
 else
-    TAGS =
+    ANSIBLE_TAGS =
 endif
 
