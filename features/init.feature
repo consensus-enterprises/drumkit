@@ -23,8 +23,6 @@ Feature: Initialize an openstack infrastructure project
       roles/consensus.cloud-openstack
       playbooks/infra.yml
       playbooks/host_vars/localhost.yml
-      playbooks/hosts
-      playbooks/groups
       inventory/openstack.yml
       inventory/openstack_inventory.py
       """
