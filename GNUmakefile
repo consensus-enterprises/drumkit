@@ -11,4 +11,3 @@ default: help
 
 include $(MK_DIR)/mk/tasks/*.mk
 include $(MK_DIR)/mk/tools/*.mk
-

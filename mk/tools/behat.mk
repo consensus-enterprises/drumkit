@@ -27,13 +27,16 @@ clean-behat:
 	@rm -f $(BEHAT_BIN)
 
 install-behat: init-mk composer $(BEHAT_BIN)
-behat: install-behat behat.yml features
+behat: install-behat behat.yml features features/testing.feature
 
 behat.yml:
 	@cp $(FILES_DIR)/behat/project.behat.yml $(PROJECT_ROOT)/behat.yml
 
 features:
 	@mkdir -p $(PROJECT_ROOT)/features
+
+features/testing.feature:
+	@cp $(FILES_DIR)/behat/testing.feature $(PROJECT_ROOT)/features
 
 $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
 	@mkdir -p $(BEHAT_SRC)

@@ -1,6 +1,7 @@
+@installer @init
 Feature: Install drumkit
   In order to use drumkit's features
-  As a Drupal developer
+  As a developer
   I need to be able to install drumkit easily
 
   Scenario: Fail if installer is not running in the root of a git repo
@@ -24,4 +25,9 @@ Feature: Install drumkit
        """
        Makefile
        .mk/GNUmakefile
+       """
+      And I run "make help"
+     Then I should get:
+       """
+       Available 'make' commands:
        """
