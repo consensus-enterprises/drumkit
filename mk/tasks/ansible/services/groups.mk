@@ -8,5 +8,5 @@ groups: $(GROUPS_PLAYBOOK_DIR) $(GROUPS_PLAYBOOK_FILES) ## Run all group playboo
 $(GROUPS_PLAYBOOK_DIR):
 	mkdir -p $(GROUPS_PLAYBOOK_DIR)
 
-$(GROUPS_PLAYBOOK_FILES): ## [Full/path/to/group/playbook] Run the specified group playbook.
+$(GROUPS_PLAYBOOK_FILES): ## [playbooks/groups/GROUP_NAME.yml] Run the specified group playbook.
 	$(ANSIBLE_PLAYBOOK_CMD) $@
