@@ -192,10 +192,6 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iAmInATemporaryDirectory()
   {
-    // Don't move to a new temporary directory if I'm already in one
-    if ($this->tempDir) {
-      return;
-    }
     $this->makeTempDir();
     chdir($this->tempDir);
   }

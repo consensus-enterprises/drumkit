@@ -4,12 +4,9 @@ Feature: Initialize an openstack infrastructure project
   As a DevOps engineer
   I need to be able to initialize a new openstack infrastructure project
 
-  @debug
   Scenario: 
-    Given I am in a temporary directory
-      When I run "git init"
-      And I execute "scripts/install.sh"
-      And I bootstrap Drumkit
+    Given I bootstrap Drumkit
+      And I run "git init"
       And I run "make init-infra-openstack"
      Then I should get:
       """
@@ -17,9 +14,6 @@ Feature: Initialize an openstack infrastructure project
       """
       Then the following files should exist:
       """
-      ansible.cfg
-      behat.yml
-      features/testing.feature
       roles/consensus.cloud-openstack
       playbooks/infra.yml
       playbooks/host_vars/localhost.yml
