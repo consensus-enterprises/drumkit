@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5938e6b0f703f86de6b83acd7905f929",
+    "content-hash": "9459abf660f14dae08fb5eb5e6989d78",
     "packages": [
         {
             "name": "behat/behat",
@@ -509,7 +509,7 @@
         },
         {
             "name": "drupal/core-render",
-            "version": "8.7.3",
+            "version": "8.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-render.git",
@@ -544,16 +544,16 @@
         },
         {
             "name": "drupal/core-utility",
-            "version": "8.7.3",
+            "version": "8.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-utility.git",
-                "reference": "dd005696113bccf23e8ea6548d909cfc0361e95e"
+                "reference": "636023f8a8e3ef0d3d7b609e02bca60199095caa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-utility/zipball/dd005696113bccf23e8ea6548d909cfc0361e95e",
-                "reference": "dd005696113bccf23e8ea6548d909cfc0361e95e",
+                "url": "https://api.github.com/repos/drupal/core-utility/zipball/636023f8a8e3ef0d3d7b609e02bca60199095caa",
+                "reference": "636023f8a8e3ef0d3d7b609e02bca60199095caa",
                 "shasum": ""
             },
             "require": {
@@ -578,7 +578,7 @@
             "keywords": [
                 "drupal"
             ],
-            "time": "2019-03-26T14:37:41+00:00"
+            "time": "2019-06-27T20:44:46+00:00"
         },
         {
             "name": "drupal/drupal-driver",
