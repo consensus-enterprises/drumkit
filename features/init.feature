@@ -14,7 +14,18 @@ Feature: Initialize an openstack infrastructure project
       """
       Then the following files should exist:
       """
+      roles/consensus.admin-users
+      roles/consensus.aegir-policy
+      roles/consensus.utils
+      roles/consensus.aegir
       roles/consensus.cloud-openstack
+      roles/geerlingguy.composer
+      roles/geerlingguy.git
+      roles/geerlingguy.nginx
+      roles/geerlingguy.apache
+      roles/geerlingguy.drush
+      roles/geerlingguy.mysql
+      roles/geerlingguy.php
       playbooks/infra.yml
       playbooks/host_vars/localhost.yml
       inventory/openstack.yml

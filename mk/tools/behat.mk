@@ -29,6 +29,7 @@ clean-behat:
 install-behat: init-mk $(BEHAT_BIN)
 behat: install-behat behat.yml features/testing.feature
 
+# TODO: probably need different behat.yml's for different project types; refactor?
 behat.yml:
 	@cp $(FILES_DIR)/behat/project.behat.yml $(PROJECT_ROOT)/behat.yml
 
