@@ -1,3 +1,6 @@
 [submodule "docs/themes/harmony"]
 	path = docs/themes/harmony
 	url = https://gitlab+deploy-token-1409:DnHZh_KXyYKQzg-cwJXq@gitlab.com/consensus.enterprises/misc/hugo-theme-harmony.git
+[submodule "lib/gmsl"]
+	path = lib/gmsl
+	url = https://git.code.sf.net/p/gmsl/gmsl
