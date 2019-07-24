@@ -229,6 +229,18 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Then the following files should not exist:
+   */
+  public function theFollowingFilesShouldNotExist(PyStringNode $files)
+  {
+    foreach ($files->getStrings() as $file) {
+      if (file_exists($file)) {
+        throw new \RuntimeException("Unxpected file '$file' was found.");
+      }
+    }
+  }
+
+  /**
    * @Given I bootstrap drumkit
    */
   public function iBootstrapDrumkit()
