@@ -9,14 +9,6 @@ $(MK_D) drumkit/mk.d:
 
 CONSENSUS_GIT_URL_BASE := https://gitlab.com/consensus.enterprises
 
-include $(SELF_DIR)project/*.mk
-
-ifeq ($(MK_D_EXISTS), 1)
-  ifeq ($(MK_D_NONEMPTY), 1)
-    include $(MK_D)/*.mk
-  endif
-endif
-
 # $1 = config file path
 # $2 = name of hash to initialize
 define get_submodules
@@ -31,3 +23,12 @@ endef
 define initialize_submodules_hash
   $(eval $(call get_submodules,$(1),$(2)))
 endef
+
+include $(SELF_DIR)project/*.mk
+
+ifeq ($(MK_D_EXISTS), 1)
+  ifeq ($(MK_D_NONEMPTY), 1)
+    include $(MK_D)/*.mk
+  endif
+endif
+
