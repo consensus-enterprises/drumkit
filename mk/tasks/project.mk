@@ -9,20 +9,46 @@ $(MK_D) drumkit/mk.d:
 
 CONSENSUS_GIT_URL_BASE := https://gitlab.com/consensus.enterprises
 
+# For a given project, we want to store the git submodule dependencies in a
+# human-readable/maintainable format. We expect a submodules config file to be
+# formatted like this (one pair per line, space-separated, git URL's and target
+# paths):
+#
+# path/where/submodule/should/go https://gitlab.com/you/git/repo/url/here
+#
+# We read these pairs in and turn them into an associative array (hash) called
+# whose name is passed to us, using the GMSL set function, so we can then add git submodules as
+# needed.  
+#
+# Calls to the set function have to look like this (make is sensitive about the
+# spacing; we canNOT add spaces): 
+#
+# $(call set,deps,path/where/submodule/should/go,https://gitlab.com/you/git/repo/url/here)
+
 # $1 = config file path
 # $2 = name of hash to initialize
-define get_submodules
+# This awk one-liner will read in the config file and return a block of calls
+# to the set function that we can then use to initialize our deps hash:
+define _get_submodules
   $(shell awk '/^[^\#]/ {OFS=""; print "$$(call set,$(2),",$$1,",",$$2,")"}' $(1))
 endef
 
 # Useful for troubleshooting
-define print_submodules
-  $(info $(call get_submodules,$(1),$(2)))
+define _print_submodules
+  $(info $(call _get_submodules,$(1),$(2)))
 endef
 
+# The function that should actually be called from outside this file:
 define initialize_submodules_hash
-  $(eval $(call get_submodules,$(1),$(2)))
+  $(eval $(call _get_submodules,$(1),$(2)))
 endef
+
+
+#project/.mk
+#project/drumkit/mk.d
+#project/roles/myrole/.mk
+#project/roles/myrole/drumkit/mk.d
+#project/roles/myrole/drumkit/submodules
 
 include $(SELF_DIR)project/*.mk
 
