@@ -3,7 +3,6 @@ Feature: Initialize various infrastructure projects
   As a DevOps engineer
   I need to be able to initialize infrastructure projects
 
-# TODO: break out ansible, cloud, aegir projex
 # TODO: test running with static inventory a la HC
 
 #   @init @openstack @project
@@ -38,8 +37,8 @@ Feature: Initialize various infrastructure projects
 #   infra
 #      Ensure all cloud resources exist and are provisioned/configured.
 #       """
-# 
-# 
+ 
+ 
 #   @init @aegirvps @project
 #   Scenario: Initialize aegir VPS project
 #     Given I bootstrap Drumkit
@@ -53,7 +52,7 @@ Feature: Initialize various infrastructure projects
 #       """
 #       roles/consensus.admin-users
 #       """
-# 
+ 
   @init @ansible @project
   Scenario: Initialize ansible project
     Given I bootstrap Drumkit
@@ -110,18 +109,4 @@ Feature: Initialize various infrastructure projects
       roles/geerlingguy.mysql
       roles/geerlingguy.php
       playbooks/groups/example-aegir-policy-group.yml
-      """
-     Then I run "make"
-      And I should get:
-      """
-        services 
-           Ensure all services and applications are installed and configured on all groups and hosts.
-        groups 
-           Run all group playbooks.
-        [playbooks/groups/GROUP_NAME.yml]
-           Run the specified group playbook.
-        hosts 
-           Run all host playbooks.
-        [playbooks/hosts/HOST_NAME.yml]
-           Run the specified host playbook.
       """

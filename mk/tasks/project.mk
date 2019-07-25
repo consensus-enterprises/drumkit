@@ -41,7 +41,7 @@ define _print_submodules
   $(info $(call _get_submodules,$(1),$(2)))
 endef
 
-# The function that should actually be called from outside this file:
+# The (only!) function that should actually be called from outside this file:
 define initialize_submodules_hash
   $(eval $(call _get_submodules,$(1),$(2)))
 endef
