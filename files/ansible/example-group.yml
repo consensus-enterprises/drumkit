@@ -1,0 +1,13 @@
+---
+- name: Example group playbook. Needs editing to work.
+  hosts: # Your group name here.
+  become: true
+  gather_facts: True
+
+  roles:
+    # Invoke some roles, e.g.:
+    #- consensus.utils
+    #- consensus.admin-users
+
+  vars:
+    # Define some vars

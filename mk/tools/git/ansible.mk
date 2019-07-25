@@ -8,6 +8,6 @@ ansible_COMMAND      = . hacking/env-setup
 
 ansible: ansible.cfg
 ansible.cfg:
-	@[[ -e $@ ]] || ln -s .mk/files/ansible/ansible.cfg .
+	@cp $(FILES_DIR)/ansible/ansible.cfg $(PROJECT_ROOT)
 
 # vi:syntax=makefile

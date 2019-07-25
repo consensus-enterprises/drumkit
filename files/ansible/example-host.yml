@@ -1,0 +1,6 @@
+---
+- name: Example host playboo. Needs editing to work.
+  hosts: # Name of a valid host here.
+  become: true
+  gather_facts: True
+

@@ -9,6 +9,9 @@ $(MK_D) drumkit/mk.d:
 
 CONSENSUS_GIT_URL_BASE := https://gitlab.com/consensus.enterprises
 
+# Dynamic submodule management in projects
+# ----------------------------------------
+#
 # For a given project, we want to store the git submodule dependencies in a
 # human-readable/maintainable format. We expect a submodules config file to be
 # formatted like this (one pair per line, space-separated, git URL's and target
