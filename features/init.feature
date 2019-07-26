@@ -5,39 +5,38 @@ Feature: Initialize various infrastructure projects
 
 # TODO: test running with static inventory a la HC
 
-#   @init @openstack @project
-#   Scenario: Initalize openstack cloud project
-#     Given I bootstrap Drumkit
-#       And I run "git init"
-#       And I run "make init-project-openstack"
-#      Then I should get:
-#       """
-#       Initializing Drumkit Openstack Infrastructure project
-#       """
-#      Then the following files should exist:
-#       """
-#       roles/consensus.admin-users
-#       roles/consensus.utils
-#       roles/consensus.cloud-openstack
-#       playbooks/infra.yml
-#       inventory/openstack.yml
-#       inventory/openstack_inventory.py
-#       """
-#      Then I run "make"
-#       And I should get:
-#       """
-#   inventory 
-#      List cloud inventory.
-#   facts
-#      Show all available cloud resources.
-#   flavors 
-#      Show all available VM flavors (sizes).
-#   images 
-#      Show all available OS images.
-#   infra
-#      Ensure all cloud resources exist and are provisioned/configured.
-#       """
- 
+   @init @openstack @project
+   Scenario: Initalize openstack cloud project
+     Given I bootstrap Drumkit
+       And I run "git init"
+       And I run "make init-project-openstack"
+      Then I should get:
+       """
+       Initializing Drumkit Openstack Infrastructure project
+       """
+      Then the following files should exist:
+       """
+       roles/consensus.admin-users
+       roles/consensus.cloud-openstack
+       playbooks/infra.yml
+       playbooks/host_vars/localhost.yml
+       inventory/openstack.yml
+       inventory/openstack_inventory.py
+       """
+      Then I run "make"
+       And I should get:
+       """
+   inventory 
+      List cloud inventory.
+   facts
+      Show all available cloud resources.
+   flavors 
+      Show all available VM flavors (sizes).
+   images 
+      Show all available OS images.
+   infra
+      Ensure all cloud resources exist and are provisioned/configured.
+       """
  
 #   @init @aegirvps @project
 #   Scenario: Initialize aegir VPS project
