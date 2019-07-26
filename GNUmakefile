@@ -11,3 +11,4 @@ default: help
 include $(MK_DIR)/lib/gmsl/gmsl
 include $(MK_DIR)/mk/tasks/*.mk
 include $(MK_DIR)/mk/tools/*.mk
+include $(MK_DIR)/mk/projects/*.mk

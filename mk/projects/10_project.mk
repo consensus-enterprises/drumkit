@@ -53,7 +53,7 @@ endef
 #project/roles/myrole/drumkit/mk.d
 #project/roles/myrole/drumkit/submodules
 
-include $(SELF_DIR)project/*.mk
+#include $(SELF_DIR)project/*.mk
 
 ifeq ($(MK_D_EXISTS), 1)
   ifeq ($(MK_D_NONEMPTY), 1)
