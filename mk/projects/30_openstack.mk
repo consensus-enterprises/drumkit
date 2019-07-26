@@ -2,7 +2,7 @@
 
 init-project-openstack-intro:
 	@echo "Initializing Drumkit Openstack Infrastructure project."
-init-project-openstack: init-project-openstack-intro init-project-ansible roles/consensus.cloud-openstack $(MK_D)/20_project_openstack.mk
+init-project-openstack: init-project-openstack-intro init-project-ansible roles/consensus.cloud-openstack $(MK_D)/20_project_openstack.mk ## Initialize a project for provisioning cloud infrastructure on an Openstack provider.
 	@make -s init-role-cloud-openstack
 	@echo "Initialized Drumkit Openstack Infrastructure project."
 

@@ -29,15 +29,15 @@ $(ANSIBLE_INVENTORY_DIR):
 	@mkdir -p $@
 	@cp $(FILES_DIR)/ansible/examples/inventory.yml $@/example_inventory.yml
 
-$(ANSIBLE_HOST_VARS_DIR): $(ANSIBLE_INVENTORY_DIR)
+$(ANSIBLE_HOST_VARS_DIR):
 	@echo "Initializing Ansible host variables directory ($@)."
 	@mkdir -p $@
 	@cp $(FILES_DIR)/ansible/examples/host_vars.yml $@/example_host.yml
 
-$(ANSIBLE_GROUP_VARS_DIR): $(ANSIBLE_INVENTORY_DIR)
+$(ANSIBLE_GROUP_VARS_DIR):
 	@echo "Initializing Ansible group variables directory ($@)."
 	@mkdir -p $@
-	@cp $(FILES_DIR)/ansible/example/group_vars.yml $@/example_group.yml
+	@cp $(FILES_DIR)/ansible/examples/group_vars.yml $@/example_group.yml
 
 README.md:
 	@cp $(FILES_DIR)/ansible/README.md $(PROJECT_ROOT)
