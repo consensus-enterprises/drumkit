@@ -107,5 +107,5 @@ Feature: Initialize various infrastructure projects
       roles/geerlingguy.git
       roles/geerlingguy.mysql
       roles/geerlingguy.php
-      playbooks/groups/example-aegir-policy-group.yml
+      playbooks/groups/aegir.yml
       """
