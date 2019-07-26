@@ -2,7 +2,7 @@
 
 init-project-ansible-intro:
 	@echo "Initializing Drumkit Ansible project."
-init-project-ansible-real: init-project-ansible-intro $(MK_D) roles/consensus.utils roles/consensus.admin-users ansible.cfg playbooks/groups/example-group.yml playbooks/hosts/example-host.yml inventory/example-inventory.yml README.md
+init-project-ansible-real: init-project-ansible-intro roles/consensus.utils roles/consensus.admin-users ansible.cfg playbooks/groups/example-group.yml playbooks/hosts/example-host.yml inventory/example-inventory.yml README.md
 	@echo "Finished initializing Drumkit Ansible project."
 init-project-ansible: init-project-ansible-real ## Initialize a project for working with Ansible.
 
