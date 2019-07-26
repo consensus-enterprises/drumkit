@@ -250,6 +250,16 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
   }
 
+  /**
+   * @Given I bootstrap this code
+   */
+  public function iBootstrapThisCode()
+  {
+    $this->iAmInATemporaryDirectory();
+    $this->iRun("cp -r " . $this->getOrigDir() . "/* .");
+    $this->iRun("cp -r " . $this->getOrigDir() . "/.mk .");
+    $this->iRun("cp -r " . $this->getOrigDir() . "/.git .");
+  }
 
   /**
    * @Then the file :file should contain:
