@@ -5,6 +5,12 @@ Feature: Initialize various infrastructure projects
 
 # TODO: test running with static inventory a la HC
 
+# TODO: reduce these to just:
+#   - checking for the intro message
+#   - checking for the presence of roles we submodule ONLY
+#   - test that the submake is getting called
+# - other tests move into the roles!
+
    @init @openstack @project
    Scenario: Initalize openstack cloud project
      Given I bootstrap Drumkit
