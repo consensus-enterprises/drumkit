@@ -1,25 +1,28 @@
 # Tasks for initializing ansible projects.
 
+HOSTS_PLAYBOOK_DIR=$(PROJECT_ROOT)/playbooks/hosts
+GROUPS_PLAYBOOK_DIR=$(PROJECT_ROOT)/playbooks/groups
+INVENTORY_DIR=$(PROJECT_ROOT)/inventory
+
 init-project-ansible-intro:
 	@echo "Initializing Drumkit Ansible project."
-init-project-ansible-real: init-project-ansible-intro roles/consensus.utils ansible.cfg playbooks/groups/example-group.yml playbooks/hosts/example-host.yml inventory/example-inventory.yml README.md
+init-project-ansible: init-project-ansible-intro roles/consensus.utils ansible.cfg $(HOSTS_PLAYBOOK_DIR) $(GROUPS_PLAYBOOK_DIR) $(INVENTORY_DIR) README.md ## Initialize a project for working with Ansible.
 	@echo "Finished initializing Drumkit Ansible project."
-init-project-ansible: init-project-ansible-real ## Initialize a project for working with Ansible.
 
 roles/consensus.utils:
-	@git submodule add $(CONSENSUS_GIT_URL_BASE)/ansible-roles/ansible-role-utils roles/consensus.utils
+	@git submodule add $(CONSENSUS_GIT_URL_BASE)/ansible-roles/ansible-role-utils $@
 
-playbooks/hosts/example-host.yml:
-	@mkdir -p $(PROJECT_ROOT)/playbooks/hosts
-	@cp $(FILES_DIR)/ansible/example-host.yml $(PROJECT_ROOT)/playbooks/hosts
+$(HOSTS_PLAYBOOK_DIR):
+	@mkdir -p $@
+	@cp $(FILES_DIR)/ansible/example-host.yml $@
 
-playbooks/groups/example-group.yml:
-	@mkdir -p $(PROJECT_ROOT)/playbooks/groups
-	@cp $(FILES_DIR)/ansible/example-group.yml $(PROJECT_ROOT)/playbooks/groups
+$(GROUPS_PLAYBOOK_DIR):
+	@mkdir -p $@
+	@cp $(FILES_DIR)/ansible/example-group.yml $@
 
-inventory/example-inventory.yml:
-	@mkdir -p $(PROJECT_ROOT)/inventory
-	@cp $(FILES_DIR)/ansible/example-inventory.yml $(PROJECT_ROOT)/inventory
+$(INVENTORY_DIR):
+	@mkdir -p $@
+	@cp $(FILES_DIR)/ansible/example-inventory.yml $@
 
 README.md:
 	@cp $(FILES_DIR)/ansible/README.md $(PROJECT_ROOT)
