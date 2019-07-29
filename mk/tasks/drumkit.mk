@@ -1,3 +1,17 @@
+MK_D = $(PROJECT_ROOT)/drumkit/mk.d
+BOOTSTRAP_D = $(PROJECT_ROOT)/drumkit/bootstrap.d
+MK_D_EXISTS ?= $(shell if [[ -d $(MK_D) ]]; then echo 1; fi)
+MK_D_NONEMPTY ?= $(shell if [[ `ls -A $(MK_D)` ]]; then echo 1; fi)
+
+drumkit $(MK_D) $(BOOTSTRAP_D):
+	@mkdir -p $@
+
+d:
+	@ln -s $(MK_DIR)/d .
+
+init-drumkit: d $(BOOTSTRAP_D) $(MK_D)
+	ln -s $(MK_DIR)/drumkit/bootstrap.d/* $(BOOTSTRAP_D)
+
 update-drumkit: update-drumkit-prompt
 	@if [ $(DRUMKIT_CONFIRM) == 'y' ]; then echo; else echo; echo "Cancelled."; exit 1; fi
 	@echo "Updating Drumkit."

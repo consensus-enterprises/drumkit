@@ -25,6 +25,11 @@ Feature: Install drumkit
        """
        Makefile
        .mk/GNUmakefile
+       drumkit/mk.d
+       drumkit/bootstrap.d
+       drumkit/bootstrap.d/99_drumkit.sh
+       drumkit/bootstrap.d/20_drumkit.sh
+       drumkit/bootstrap.d/30_dot_local.sh
        """
       And I run "make help"
      Then I should get:

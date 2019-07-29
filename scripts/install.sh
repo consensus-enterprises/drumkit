@@ -16,4 +16,6 @@ fi
 git submodule add https://gitlab.com/consensus.enterprises/drumkit .mk
 git submodule update --recursive --init
 echo "include .mk/GNUmakefile" >> Makefile
-ln -s .mk/d .
+
+make init-drumkit
+

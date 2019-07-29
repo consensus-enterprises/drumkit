@@ -12,3 +12,10 @@ include $(MK_DIR)/lib/gmsl/gmsl
 include $(MK_DIR)/mk/tasks/*.mk
 include $(MK_DIR)/mk/tools/*.mk
 include $(MK_DIR)/mk/projects/*.mk
+
+ifeq ($(MK_D_EXISTS), 1)
+  ifeq ($(MK_D_NONEMPTY), 1)
+    include $(MK_D)/*.mk
+  endif
+endif
+
