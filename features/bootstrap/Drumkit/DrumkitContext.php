@@ -55,7 +55,10 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   protected function getOutput() {
-    return $this->process->getOutPut();
+    if ($this->process->isSuccessful()) {
+      return $this->process->getOutput();
+    }
+    return $this->process->getErrorOutput();
   }
 
   /**
@@ -66,15 +69,19 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->process->setTimeout(300);
     $this->process->run();
 
-    if ($this->debug) {
-      print_r("--- DEBUG START ---\n");
-      print_r($this->getOutput());
-      print_r("\n--- DEBUG END -----");
-    }
+    $this->printDebug();
+  }
+
+  private function printDebug() {
+    if (!$this->debug) return;
+    print_r("--- DEBUG START ---\n");
+    print_r($this->getOutput());
+    print_r("\n--- DEBUG END -----");
   }
 
   private function succeed($command) {
     $this->exec($command);
+
     if (!$this->process->isSuccessful()) {
       throw new ProcessFailedException($this->process);
     }
@@ -87,7 +94,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->exec($command);
 
     if ($this->process->isSuccessful()) {
-      throw new \RuntimeException($this->process->getOutput());
+      throw new \RuntimeException($this->getOutput());
     }
   }
 

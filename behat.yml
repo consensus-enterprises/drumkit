@@ -1,4 +1,7 @@
 default:
+  autoload:
+    - "%paths.base%/features/bootstrap"
+    - "%paths.base%/.mk/features/bootstrap"
   suites:
     default:
       contexts:
