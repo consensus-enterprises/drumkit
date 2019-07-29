@@ -3,17 +3,7 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   exit 1
 fi
 
-if [[ "$DRUMKIT" -gt 0 ]]; then
-  echo "Drumkit is already bootstrapped."
-  return
-fi
-
-CWD=`pwd`
-if [[ -d .mk/ ]]; then
-  BIN_PATH="$CWD/.mk/.local/bin"
-else
-  BIN_PATH="$CWD/.local/bin"
-fi
-export PATH="$BIN_PATH:$PATH"
-
-export DRUMKIT=1
+for file in `ls ./drumkit/bootstrap.d/*.sh`; do
+  source $file
+  if  [[ $? > 0 ]]; then return; fi
+done

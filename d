@@ -1,1 +1,1 @@
-drumkit
+scripts/bootstrap.sh

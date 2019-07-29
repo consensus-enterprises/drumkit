@@ -1,0 +1,2 @@
+alias undrumkit='unset DRUMKIT'
+export DRUMKIT=1
