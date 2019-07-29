@@ -256,9 +256,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iBootstrapThisCode()
   {
     $this->iAmInATemporaryDirectory();
-    $this->iRun("cp -r " . $this->getOrigDir() . "/* .");
-    $this->iRun("cp -r " . $this->getOrigDir() . "/.mk .");
-    $this->iRun("cp -r " . $this->getOrigDir() . "/.git .");
+    $this->iRun("bash -c 'shopt -s dotglob && cp -r " . $this->getOrigDir() . "/* .'");
   }
 
   /**
