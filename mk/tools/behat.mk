@@ -26,12 +26,14 @@ clean-behat:
 	@rm -rf $(BEHAT_SRC)
 	@rm -f $(BEHAT_BIN)
 
-install-behat: init-mk $(BEHAT_BIN)
-behat: install-behat behat.yml features/testing.feature
+behat: init-mk $(BEHAT_BIN)
+init-behat: behat.yml features/testing.feature behat
 
-# TODO: probably need different behat.yml's for different project types; refactor?
+clean-init-behat:
+	@rm -f behat.yml features/testing.feature
+
 behat.yml:
-	@cp $(FILES_DIR)/behat/project.behat.yml $(PROJECT_ROOT)/behat.yml
+	@ln -s $(MK_DIR)/behat.yml $(PROJECT_ROOT)/behat.yml
 
 features:
 	@mkdir -p $(PROJECT_ROOT)/features
