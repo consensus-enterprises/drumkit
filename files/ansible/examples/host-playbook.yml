@@ -1,0 +1,6 @@
+---
+- name: Example host playbook. Needs editing to work.
+  hosts: example-host
+  become: true
+  gather_facts: True
+

@@ -75,7 +75,7 @@ Feature: Initialize various infrastructure projects
       README.md
       inventory/example-inventory.yml
       playbooks/hosts/example-host.yml
-      playbooks/groups/example-group.yml
+      playbooks/groups/example_group.yml
       """
      Then I run "make"
       And I should get:

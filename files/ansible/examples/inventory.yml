@@ -1,7 +1,7 @@
 # Example inventory. Needs editing to work.
 all:
   children:
-    example-group:
+    example_group:
       hosts:
         example-host:
           ansible_host: # IP address goes here

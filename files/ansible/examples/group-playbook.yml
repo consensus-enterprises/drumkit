@@ -1,6 +1,6 @@
 ---
 - name: Example group playbook. Needs editing to work.
-  hosts: # Your group name here.
+  hosts: example_group
   become: true
   gather_facts: True
 
