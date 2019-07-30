@@ -1,5 +1,7 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+.PHONY: inventory
+
 ifdef inventory
     ANSIBLE_INVENTORY = -i $(inventory)
 else
@@ -13,5 +15,9 @@ else
 endif
 
 ANSIBLE_PLAYBOOK_CMD = ansible-playbook $(ANSIBLE_TAGS) $(ANSIBLE_INVENTORY)
+ANSIBLE_INVENTORY_CMD = ansible-inventory $(ANSIBLE_INVENTORY)
+
+inventory: ## List cloud inventory.
+	$(ANSIBLE_INVENTORY_CMD) --list
 
 include $(SELF_DIR)ansible/*.mk
