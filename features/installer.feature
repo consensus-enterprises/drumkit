@@ -12,7 +12,6 @@ Feature: Install drumkit
        ERROR: This script must be run at the root of a git repository.
        """    
 
-  @debug
   Scenario: Succeed if installer is running in the root of a git repo
     Given I am in a temporary directory
       And I run "git init"

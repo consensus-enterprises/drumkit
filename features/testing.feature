@@ -13,6 +13,8 @@ Feature: Testing tools
        .mk/.local/bin/behat
        """
 
+  # NOTE: the @debug tag will show the entire output from tests as they run
+  @debug
   Scenario: Check that Behat sees both Drumkit and Mink contexts
      When I run "behat -di"
      Then I should get:
