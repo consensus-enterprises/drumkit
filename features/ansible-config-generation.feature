@@ -7,27 +7,17 @@ Feature: Generate Ansible config
    Scenario: Generate Ansible config
     Given I bootstrap Drumkit
       And I run "git init"
-      And I run "make generate-ansible-config host=myhost group=mygroup ipaddress=10.0.0.1"
+      And I run "make generate-ansible-config host=myhost group=mygroup"
       Then I should get:
       """
       Generating Ansible config files
       """
       Then the following files should exist:
       """
-      inventory/inventory.yml
       inventory/host_vars/myhost.yml
       inventory/group_vars/mygroup.yml
       playbooks/hosts/myhost.yml
       playbooks/groups/mygroup.yml
-      """
-      And the file "inventory/inventory.yml" should contain:
-      """
-      all:
-        children:
-          mygroup:
-            hosts:
-              myhost:
-                ansible_host: 10.0.0.1
       """
       And the file "inventory/host_vars/myhost.yml" should contain:
       """
@@ -61,17 +51,10 @@ Feature: Generate Ansible config
       """
       Then the following files should exist:
       """
-      inventory/inventory.yml
       inventory/host_vars/example-host.yml
       inventory/group_vars/example_group.yml
       playbooks/hosts/example-host.yml
       playbooks/groups/example_group.yml
-      """
-      And the file "inventory/inventory.yml" should contain:
-      """
-      example_group:
-      example-host:
-      ansible_host: IP_ADDRESS_GOES_HERE
       """
       And the file "inventory/host_vars/example-host.yml" should contain:
       """

@@ -12,7 +12,7 @@ Feature: Initialize various infrastructure projects
 # - other tests move into the roles!
 
    @init @openstack @project
-   Scenario: Initalize openstack cloud project
+   Scenario: Initialize OpenStack cloud project
      Given I bootstrap Drumkit
        And I run "git init"
        And I run "make init-project-openstack"
@@ -73,7 +73,6 @@ Feature: Initialize various infrastructure projects
       roles/consensus.utils
       ansible.cfg
       README.md
-      inventory/inventory.yml
       inventory/host_vars/example-host.yml
       inventory/group_vars/example_group.yml
       playbooks/hosts/example-host.yml

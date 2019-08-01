@@ -15,9 +15,11 @@ init-project-ansible-intro:
 init-project-ansible: init-project-ansible-intro ansible roles/consensus.utils ansible.cfg generate-ansible-config README.md ## Initialize a project for working with Ansible.
 	@echo "Finished initializing Drumkit Ansible project."
 
+generate-ansible-inventory: $(ANSIBLE_INVENTORY_DIR)/inventory.yml
+
 generate-ansible-config-intro:
 	@echo "Generating Ansible config files."
-generate-ansible-config: generate-ansible-config-intro $(ANSIBLE_HOSTS_PLAYBOOK_DIR)/$(host).yml $(ANSIBLE_GROUPS_PLAYBOOK_DIR)/$(group).yml $(ANSIBLE_INVENTORY_DIR)/inventory.yml $(ANSIBLE_HOST_VARS_DIR)/$(host).yml $(ANSIBLE_GROUP_VARS_DIR)/$(group).yml
+generate-ansible-config: generate-ansible-config-intro $(ANSIBLE_HOSTS_PLAYBOOK_DIR)/$(host).yml $(ANSIBLE_GROUPS_PLAYBOOK_DIR)/$(group).yml $(ANSIBLE_HOST_VARS_DIR)/$(host).yml $(ANSIBLE_GROUP_VARS_DIR)/$(group).yml
 	@echo "Finished generating Ansible config files."
 
 roles/consensus.utils:
@@ -36,8 +38,11 @@ $(ANSIBLE_GROUPS_PLAYBOOK_DIR)/$(group).yml: $(ANSIBLE_GROUPS_PLAYBOOK_DIR)
 	@jinja2 -D host=$(host) -D group=$(group) -o $@ $(FILES_DIR)/ansible/templates/group-playbook.yml
 
 $(ANSIBLE_INVENTORY_DIR)/inventory.yml: $(ANSIBLE_INVENTORY_DIR)
-	@echo "Generating ansible static inventory file ($@)."
+	@echo "Generating Ansible static inventory file ($@)."
 	@jinja2 -D host=$(host) -D group=$(group) -D ipaddress=$(ipaddress) -o $@ $(FILES_DIR)/ansible/templates/inventory.yml
+ifeq ($(ipaddress), IP_ADDRESS_GOES_HERE)
+	@echo 'Next, specify an IP address for $(host) in inventory/inventory.yml'
+endif
 
 $(ANSIBLE_HOST_VARS_DIR)/$(host).yml: $(ANSIBLE_HOST_VARS_DIR)
 	@echo "Generating Ansible host variables file ($@)."
