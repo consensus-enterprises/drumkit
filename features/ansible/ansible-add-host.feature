@@ -46,3 +46,34 @@ Feature: Add an Ansible host
         become: true
         gather_facts: True
       """
+
+   @ansible @ansible-clean-host
+   Scenario: Clean an Ansible host that I specify.
+    Given I bootstrap Drumkit
+      And I run "git init"
+      And I run "make ansible-add-host host=myhost"
+      And I run "make ansible-clean-host host=myhost"
+      Then I should get:
+      """
+	    Cleaning up Ansible host config files for myhost.
+      """
+      And the following files should not exist:
+      """
+      inventory/host_vars/myhost.yml
+      playbooks/hosts/myhost.yml
+      """
+
+   @ansible @ansible-clean-host
+   Scenario: Cleaning a non-existent Ansible host is idempotent and does not cause an error.
+    Given I bootstrap Drumkit
+      And I run "git init"
+      And I run "make ansible-clean-host host=myhost"
+      Then I should get:
+      """
+	    Cleaning up Ansible host config files for myhost.
+      """
+      And the following files should not exist:
+      """
+      inventory/host_vars/myhost.yml
+      playbooks/hosts/myhost.yml
+      """

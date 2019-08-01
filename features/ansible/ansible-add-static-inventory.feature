@@ -49,3 +49,32 @@ Feature: Generate Ansible static inventory
               example-host:
                 ansible_host: IP_ADDRESS_GOES_HERE
       """
+
+   @ansible @ansible-clean-static-inventory
+   Scenario: Clean up Ansible inventory.
+    Given I bootstrap Drumkit
+      And I run "git init"
+      And I run "make ansible-add-static-inventory"
+      And I run "make ansible-clean-static-inventory"
+      Then I should get:
+      """
+	    Cleaning up Ansible static inventory file.
+      """
+      And the following files should not exist:
+      """
+      inventory/inventory.yml
+      """
+
+   @ansible @ansible-clean-static-inventory
+   Scenario: Cleaning non-existent Ansible inventory is idempotent and does not cause an error.
+    Given I bootstrap Drumkit
+      And I run "git init"
+      And I run "make ansible-clean-static-inventory"
+      Then I should get:
+      """
+	    Cleaning up Ansible static inventory file.
+      """
+      And the following files should not exist:
+      """
+      inventory/inventory.yml
+      """

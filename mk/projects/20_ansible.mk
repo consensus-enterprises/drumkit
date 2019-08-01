@@ -17,15 +17,27 @@ init-project-ansible: init-project-ansible-intro ansible roles/consensus.utils a
 
 ansible-add-static-inventory: $(ANSIBLE_INVENTORY_DIR)/inventory.yml
 
+ansible-clean-static-inventory:
+	@echo "Cleaning up Ansible static inventory file."
+	@rm -f $(ANSIBLE_INVENTORY_DIR)/inventory.yml
+
 ansible-add-host-intro:
-	@echo "Generating Ansible host config files."
+	@echo "Generating Ansible host config files for $(host)."
 ansible-add-host: ansible-add-host-intro $(ANSIBLE_HOSTS_PLAYBOOK_DIR)/$(host).yml $(ANSIBLE_HOST_VARS_DIR)/$(host).yml
-	@echo "Finished generating Ansible host config files."
+	@echo "Finished generating Ansible host config files for $(host)."
+
+ansible-clean-host:
+	@echo "Cleaning up Ansible host config files for $(host)."
+	@rm -f $(ANSIBLE_HOSTS_PLAYBOOK_DIR)/$(host).yml $(ANSIBLE_HOST_VARS_DIR)/$(host).yml
 
 ansible-add-group-intro:
-	@echo "Generating Ansible group config files."
+	@echo "Generating Ansible group config files for $(group)."
 ansible-add-group: ansible-add-group-intro $(ANSIBLE_GROUPS_PLAYBOOK_DIR)/$(group).yml $(ANSIBLE_GROUP_VARS_DIR)/$(group).yml
-	@echo "Finished generating Ansible group config files."
+	@echo "Finished generating Ansible group config files for $(group)."
+
+ansible-clean-group:
+	@echo "Cleaning up Ansible group config files for $(group)."
+	@rm -f $(ANSIBLE_GROUPS_PLAYBOOK_DIR)/$(group).yml $(ANSIBLE_GROUP_VARS_DIR)/$(group).yml
 
 roles/consensus.utils:
 	@git submodule add $(CONSENSUS_GIT_URL_BASE)/ansible-roles/ansible-role-utils $@

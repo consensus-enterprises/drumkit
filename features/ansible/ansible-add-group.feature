@@ -46,3 +46,34 @@ Feature: Add an Ansible group
         become: true
         gather_facts: True
       """
+
+   @ansible @ansible-clean-group
+   Scenario: Clean an Ansible group that I specify.
+    Given I bootstrap Drumkit
+      And I run "git init"
+      And I run "make ansible-add-group group=mygroup"
+      And I run "make ansible-clean-group group=mygroup"
+      Then I should get:
+      """
+	    Cleaning up Ansible group config files for mygroup.
+      """
+      And the following files should not exist:
+      """
+      inventory/group_vars/mygroup.yml
+      playbooks/groups/mygroup.yml
+      """
+
+   @ansible @ansible-clean-group
+   Scenario: Cleaning a non-existent Ansible group is idempotent and does not cause an error.
+    Given I bootstrap Drumkit
+      And I run "git init"
+      And I run "make ansible-clean-group group=mygroup"
+      Then I should get:
+      """
+	    Cleaning up Ansible group config files for mygroup.
+      """
+      And the following files should not exist:
+      """
+      inventory/group_vars/mygroup.yml
+      playbooks/groups/mygroup.yml
+      """
