@@ -25,7 +25,7 @@ Feature: Initialize various infrastructure projects
        roles/consensus.admin-users
        roles/consensus.cloud-openstack
        playbooks/infra.yml
-       playbooks/host_vars/localhost.yml
+       inventory/host_vars/localhost.yml
        inventory/openstack.yml
        inventory/openstack_inventory.py
        """
@@ -69,7 +69,6 @@ Feature: Initialize various infrastructure projects
       """
      Then the following files should exist:
       """
-      roles/consensus.admin-users
       roles/consensus.utils
       ansible.cfg
       README.md
@@ -104,7 +103,6 @@ Feature: Initialize various infrastructure projects
      Then the following files should exist:
       """
       roles/consensus.aegir-policy
-      roles/consensus.admin-users
       roles/consensus.aegir
       roles/consensus.aegir-skynet
       roles/consensus.utils
