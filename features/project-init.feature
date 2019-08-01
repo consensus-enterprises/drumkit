@@ -66,17 +66,14 @@ Feature: Initialize various infrastructure projects
      Then I should get:
       """
       Initializing Drumkit Ansible project
-	    Finished generating Ansible config files
+	    Generating Ansible host config files
+	    Generating Ansible group config files
       """
      Then the following files should exist:
       """
       roles/consensus.utils
       ansible.cfg
       README.md
-      inventory/host_vars/example-host.yml
-      inventory/group_vars/example_group.yml
-      playbooks/hosts/example-host.yml
-      playbooks/groups/example_group.yml
       """
      Then I run "make"
       And I should get:
