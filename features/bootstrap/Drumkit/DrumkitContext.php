@@ -271,8 +271,9 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iBootstrapThisAnsibleRole()
   {
-    $this->iBootstrapDrumkit();
-    #$this->iRun("cp -r " . $this->getOrigDir() . "/.mk .");
+    $this->iAmInATemporaryDirectory();
+    $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
+    $this->iRun("cp -r " . $this->getOrigDir() ."/.mk .");
     $this->iRun("mkdir roles && cp -r " . $this->getOrigDir() . " ./roles");
   }
 
@@ -281,8 +282,8 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function theFileShouldContain($file, PyStringNode $lines)
   {
+    $contents = file_get_contents($file);
     foreach ($lines->getStrings() as $line) {
-      $contents = file_get_contents($file);
       if (strpos($contents, $line) === FALSE) {
         throw new \RuntimeException("'$line' was not found in '$file'.");
       }
