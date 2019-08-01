@@ -66,6 +66,7 @@ Feature: Initialize various infrastructure projects
      Then I should get:
       """
       Initializing Drumkit Ansible project
+	    Finished generating Ansible config files
       """
      Then the following files should exist:
       """
