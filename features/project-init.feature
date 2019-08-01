@@ -3,13 +3,12 @@ Feature: Initialize various infrastructure projects
   As a DevOps engineer
   I need to be able to initialize infrastructure projects
 
-# TODO: test running with static inventory a la HC
-
 # TODO: reduce these to just:
 #   - checking for the intro message
 #   - checking for the presence of roles we submodule ONLY
 #   - test that the submake is getting called
 # - other tests move into the roles!
+  # cloud-openstack TODO: test running with static inventory a la HC
 
    @init @openstack @project
    Scenario: Initialize OpenStack cloud project
@@ -18,7 +17,8 @@ Feature: Initialize various infrastructure projects
        And I run "make init-project-openstack"
       Then I should get:
        """
-       Initializing Drumkit Openstack Infrastructure project
+       Initializing Drumkit OpenStack infrastructure project
+       Initialized Drumkit OpenStack infrastructure project
        """
       Then the following files should exist:
        """
