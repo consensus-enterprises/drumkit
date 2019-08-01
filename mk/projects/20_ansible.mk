@@ -15,7 +15,7 @@ init-project-ansible-intro:
 init-project-ansible: init-project-ansible-intro ansible roles/consensus.utils ansible.cfg ansible-add-host ansible-add-group README.md ## Initialize a project for working with Ansible.
 	@echo "Finished initializing Drumkit Ansible project."
 
-generate-ansible-inventory: $(ANSIBLE_INVENTORY_DIR)/inventory.yml
+ansible-add-static-inventory: $(ANSIBLE_INVENTORY_DIR)/inventory.yml
 
 ansible-add-host-intro:
 	@echo "Generating Ansible host config files."

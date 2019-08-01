@@ -3,11 +3,11 @@ Feature: Generate Ansible static inventory
   As a DevOps engineer
   I want to specify a server, a group and an IP address, and have Ansible static inventory auto-generated for them.
 
-   @ansible @ansible-inventory
+   @ansible @ansible-add-static-inventory
    Scenario: Generate Ansible static inventory with arguments
     Given I bootstrap Drumkit
       And I run "git init"
-      And I run "make generate-ansible-inventory host=myhost group=mygroup ipaddress=10.0.0.1"
+      And I run "make ansible-add-static-inventory host=myhost group=mygroup ipaddress=10.0.0.1"
       Then I should get:
       """
       Generating Ansible static inventory file
@@ -26,11 +26,11 @@ Feature: Generate Ansible static inventory
                 ansible_host: 10.0.0.1
       """
 
-   @ansible @ansible-inventory
+   @ansible @ansible-add-static-inventory
    Scenario: Generate example static Ansible inventory by default
     Given I bootstrap Drumkit
       And I run "git init"
-      And I run "make generate-ansible-inventory"
+      And I run "make ansible-add-static-inventory"
       Then I should get:
       """
       Generating Ansible static inventory file
