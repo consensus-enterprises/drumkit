@@ -27,7 +27,7 @@ $(ANSIBLE_GROUPS_PLAYBOOK_DIR):
 $(ANSIBLE_INVENTORY_DIR):
 	@echo "Initializing Ansible inventory directory ($@)."
 	@mkdir -p $@
-	@cp $(FILES_DIR)/ansible/examples/inventory.yml $@/example-inventory.yml
+	@cp $(FILES_DIR)/ansible/examples/inventory.yml $@/inventory.yml
 
 $(ANSIBLE_HOST_VARS_DIR):
 	@echo "Initializing Ansible host variables directory ($@)."

@@ -72,7 +72,9 @@ Feature: Initialize various infrastructure projects
       roles/consensus.utils
       ansible.cfg
       README.md
-      inventory/example-inventory.yml
+      inventory/inventory.yml
+      inventory/host_vars/example-host.yml
+      inventory/group_vars/example_group.yml
       playbooks/hosts/example-host.yml
       playbooks/groups/example_group.yml
       """
