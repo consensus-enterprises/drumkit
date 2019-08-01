@@ -267,6 +267,16 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Given I bootstrap this Ansible role
+   */
+  public function iBootstrapThisAnsibleRole()
+  {
+    $this->iBootstrapDrumkit();
+    #$this->iRun("cp -r " . $this->getOrigDir() . "/.mk .");
+    $this->iRun("mkdir roles && cp -r " . $this->getOrigDir() . " ./roles");
+  }
+
+  /**
    * @Then the file :file should contain:
    */
   public function theFileShouldContain($file, PyStringNode $lines)
