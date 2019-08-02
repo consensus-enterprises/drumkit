@@ -1,10 +1,10 @@
-GROUPS_PLAYBOOK_FILES := $(shell if [ -d $(GROUPS_PLAYBOOK_DIR) ]; then find $(GROUPS_PLAYBOOK_DIR) -type f -name "*.yml"; fi)
+ANSIBLE_GROUPS_PLAYBOOK_FILES := $(strip $(shell if [ -d $(ANSIBLE_GROUPS_PLAYBOOK_DIR) ]; then find $(ANSIBLE_GROUPS_PLAYBOOK_DIR) -type f -name "*.yml"; fi))
 
-.PHONY: groups $(GROUPS_PLAYBOOK_FILES)
+.PHONY: groups $(ANSIBLE_GROUPS_PLAYBOOK_FILES)
 
-groups: $(GROUPS_PLAYBOOK_DIR) $(GROUPS_PLAYBOOK_FILES) ## Run all group playbooks.
+groups: $(ANSIBLE_GROUPS_PLAYBOOK_FILES) ## Run all group playbooks.
 
-ifeq ($(strip $(GROUPS_PLAYBOOK_FILES)),)
-$(GROUPS_PLAYBOOK_FILES): ansible-playbook ## [playbooks/groups/GROUP_NAME.yml] Run the specified group playbook.
+ifneq ($(ANSIBLE_GROUPS_PLAYBOOK_FILES),)
+$(ANSIBLE_GROUPS_PLAYBOOK_FILES): ansible-playbook ## [playbooks/groups/GROUP_NAME.yml] Run the specified group playbook.
 	$(ANSIBLE_PLAYBOOK_CMD) $@
 endif

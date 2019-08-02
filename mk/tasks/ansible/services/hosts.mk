@@ -1,10 +1,10 @@
-HOSTS_PLAYBOOK_FILES := $(shell if [ -d $(HOSTS_PLAYBOOK_DIR) ]; then find $(HOSTS_PLAYBOOK_DIR) -type f -name "*.yml"; fi)
+ANSIBLE_HOSTS_PLAYBOOK_FILES := $(strip $(shell if [ -d $(ANSIBLE_HOSTS_PLAYBOOK_DIR) ]; then find $(ANSIBLE_HOSTS_PLAYBOOK_DIR) -type f -name "*.yml"; fi))
 
-.PHONY: hosts $(HOSTS_PLAYBOOK_FILES)
+.PHONY: hosts $(ANSIBLE_HOSTS_PLAYBOOK_FILES)
 
-hosts: $(HOSTS_PLAYBOOK_DIR) $(HOSTS_PLAYBOOK_FILES) ## Run all host playbooks.
+hosts: $(ANSIBLE_HOSTS_PLAYBOOK_FILES) ## Run all host playbooks.
 
-ifeq ($(strip $(HOSTS_PLAYBOOK_FILES)),)
-$(HOSTS_PLAYBOOK_FILES): ansible-playbook ## [playbooks/hosts/HOST_NAME.yml] Run the specified host playbook.
+ifneq ($(ANSIBLE_HOSTS_PLAYBOOK_FILES),)
+$(ANSIBLE_HOSTS_PLAYBOOK_FILES): ansible-playbook ## [playbooks/hosts/HOST_NAME.yml] Run the specified host playbook.
 	$(ANSIBLE_PLAYBOOK_CMD) $@
 endif
