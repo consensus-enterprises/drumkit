@@ -7,6 +7,7 @@ ansible-galaxy_PARENT       = ansible
 
 ANSIBLE_REQUIREMENTS       ?= roles/requirements.yml
 ANSIBLE_ROLES_PATH         ?= roles
+ANSIBLE_GALAXY_CMD:=ansible-galaxy install -i -r $(ANSIBLE_REQUIREMENTS) -p $(ANSIBLE_ROLES_PATH)
 
 $(ANSIBLE_REQUIREMENTS):
 	@mkdir -p $(dir $(ANSIBLE_REQUIREMENTS))
@@ -16,12 +17,12 @@ $(ANSIBLE_ROLES_PATH):
 	@mkdir -p $(ANSIBLE_ROLES_PATH)
 
 ansible-roles: ansible-galaxy $(ANSIBLE_REQUIREMENTS) $(ANSIBLE_ROLES_PATH)
-	ansible-galaxy install -i -r $(ANSIBLE_REQUIREMENTS) -p $(ANSIBLE_ROLES_PATH)
+	$(ANSIBLE_GALAXY_CMD)
 
 ansible-roles-force: ansible-galaxy $(ANSIBLE_REQUIREMENTS) $(ANSIBLE_ROLES_PATH)
-	ansible-galaxy install -i -r $(ANSIBLE_REQUIREMENTS) -p $(ANSIBLE_ROLES_PATH) --force
+	$(ANSIBLE_GALAXY_CMD) --force
 
 ansible-roles-quiet: ansible-galaxy $(ANSIBLE_REQUIREMENTS) $(ANSIBLE_ROLES_PATH)
-	@ansible-galaxy install -i -r $(ANSIBLE_REQUIREMENTS) -p $(ANSIBLE_ROLES_PATH) > /dev/null
+	$(ANSIBLE_GALAXY_CMD) > /dev/null
 
 # vi:syntax=makefile

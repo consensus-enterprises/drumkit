@@ -5,6 +5,6 @@ GROUPS_PLAYBOOK_FILES := $(shell if [ -d $(GROUPS_PLAYBOOK_DIR) ]; then find $(G
 groups: $(GROUPS_PLAYBOOK_DIR) $(GROUPS_PLAYBOOK_FILES) ## Run all group playbooks.
 
 ifeq ($(strip $(GROUPS_PLAYBOOK_FILES)),)
-$(GROUPS_PLAYBOOK_FILES): ## [playbooks/groups/GROUP_NAME.yml] Run the specified group playbook.
+$(GROUPS_PLAYBOOK_FILES): ansible-playbook ## [playbooks/groups/GROUP_NAME.yml] Run the specified group playbook.
 	$(ANSIBLE_PLAYBOOK_CMD) $@
 endif
