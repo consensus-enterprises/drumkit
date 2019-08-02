@@ -1,10 +1,14 @@
 # Tasks for initializing ansible projects.
 ANSIBLE_PLAYBOOKS_DIR=$(PROJECT_ROOT)/playbooks
 ANSIBLE_HOSTS_PLAYBOOK_DIR=$(ANSIBLE_PLAYBOOKS_DIR)/hosts
+ANSIBLE_HOSTS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/host-playbook.yml
 ANSIBLE_GROUPS_PLAYBOOK_DIR=$(ANSIBLE_PLAYBOOKS_DIR)/groups
+ANSIBLE_GROUPS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/group-playbook.yml
 ANSIBLE_INVENTORY_DIR=$(PROJECT_ROOT)/inventory
 ANSIBLE_HOST_VARS_DIR=$(ANSIBLE_INVENTORY_DIR)/host_vars
+ANSIBLE_HOST_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/host-vars.yml
 ANSIBLE_GROUP_VARS_DIR=$(ANSIBLE_INVENTORY_DIR)/group_vars
+ANSIBLE_GROUP_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/group-vars.yml
 
 host:=example-host
 group:=example_group
@@ -20,6 +24,10 @@ ansible-add-static-inventory: $(ANSIBLE_INVENTORY_DIR)/inventory.yml
 ansible-clean-static-inventory:
 	@echo "Cleaning up Ansible static inventory file."
 	@rm -f $(ANSIBLE_INVENTORY_DIR)/inventory.yml
+
+ansible-clean-examples:
+	make -s ansible-clean-host host=example-host
+	make -s ansible-clean-group group=example_group
 
 ansible-add-host-intro:
 	@echo "Generating Ansible host config files for $(host)."
@@ -48,11 +56,11 @@ $(ANSIBLE_HOSTS_PLAYBOOK_DIR) $(ANSIBLE_GROUPS_PLAYBOOK_DIR) $(ANSIBLE_INVENTORY
 
 $(ANSIBLE_HOSTS_PLAYBOOK_DIR)/$(host).yml: $(ANSIBLE_HOSTS_PLAYBOOK_DIR)
 	@echo "Generating host playbook ($@)."
-	@jinja2 -D host=$(host) -o $@ $(FILES_DIR)/ansible/templates/host-playbook.yml
+	@jinja2 -D host=$(host) -o $@ $(ANSIBLE_HOSTS_PLAYBOOK_TEMPLATE)
 
 $(ANSIBLE_GROUPS_PLAYBOOK_DIR)/$(group).yml: $(ANSIBLE_GROUPS_PLAYBOOK_DIR)
 	@echo "Generating group playbook ($@)."
-	@jinja2 -D group=$(group) -o $@ $(FILES_DIR)/ansible/templates/group-playbook.yml
+	@jinja2 -D group=$(group) -o $@ $(ANSIBLE_GROUPS_PLAYBOOK_TEMPLATE)
 
 $(ANSIBLE_INVENTORY_DIR)/inventory.yml: $(ANSIBLE_INVENTORY_DIR)
 	@echo "Generating Ansible static inventory file ($@)."
@@ -63,11 +71,11 @@ endif
 
 $(ANSIBLE_HOST_VARS_DIR)/$(host).yml: $(ANSIBLE_HOST_VARS_DIR)
 	@echo "Generating Ansible host variables file ($@)."
-	@jinja2 -D host=$(host) -o $@ $(FILES_DIR)/ansible/templates/host-vars.yml
+	@jinja2 -D host=$(host) -o $@ $(ANSIBLE_HOST_VARS_TEMPLATE)
 
 $(ANSIBLE_GROUP_VARS_DIR)/$(group).yml: $(ANSIBLE_GROUP_VARS_DIR)
 	@echo "Initializing Ansible group variables file ($@)."
-	@jinja2 -D group=$(group) -o $@ $(FILES_DIR)/ansible/templates/group-vars.yml
+	@jinja2 -D group=$(group) -o $@ $(ANSIBLE_GROUP_VARS_TEMPLATE)
 
 README.md:
 	@cp $(FILES_DIR)/ansible/README.md $(PROJECT_ROOT)
