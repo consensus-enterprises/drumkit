@@ -33,7 +33,7 @@ clean-init-behat:
 	@rm -f behat.yml features/testing.feature
 
 behat.yml:
-	@ln -s $(MK_DIR)/behat.yml $(PROJECT_ROOT)/behat.yml
+	@cp $(FILES_DIR)/behat/behat.yml $(PROJECT_ROOT)
 
 features:
 	@mkdir -p $(PROJECT_ROOT)/features
