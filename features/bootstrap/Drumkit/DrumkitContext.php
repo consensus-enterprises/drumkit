@@ -272,8 +272,8 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iBootstrapThisAnsibleRole()
   {
     $this->iAmInATemporaryDirectory();
-    $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
     $this->iRun("cp -r " . $this->getOrigDir() ."/.mk .");
+    $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
     $this->iRun("mkdir roles && cp -r " . $this->getOrigDir() . " ./roles");
   }
 

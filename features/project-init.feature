@@ -18,30 +18,23 @@ Feature: Initialize various infrastructure projects
       Then I should get:
        """
        Initializing Drumkit OpenStack infrastructure project
+       Setting up consensus.cloud-openstack.
+       Finished Setting up consensus.cloud-openstack.
        Initialized Drumkit OpenStack infrastructure project
        """
       Then the following files should exist:
        """
-       roles/consensus.admin-users
        roles/consensus.cloud-openstack
-       playbooks/infra.yml
-       inventory/host_vars/localhost.yml
-       inventory/openstack.yml
-       inventory/openstack_inventory.py
        """
       Then I run "make"
        And I should get:
        """
-   inventory 
-      List cloud inventory.
-   facts
-      Show all available cloud resources.
-   flavors 
-      Show all available VM flavors (sizes).
-   images 
-      Show all available OS images.
-   infra
-      Ensure all cloud resources exist and are provisioned/configured.
+       flavors
+          Show all available VM flavors (sizes).
+       images
+          Show all available OS images.
+       infra
+          Ensure all cloud resources exist and are provisioned/configured.
        """
  
 #   @init @aegirvps @project
