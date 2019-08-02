@@ -27,7 +27,7 @@ clean-behat:
 	@rm -f $(BEHAT_BIN)
 
 behat: init-mk $(BEHAT_BIN)
-init-behat: behat.yml features/testing.feature behat
+init-behat: behat.yml features features/testing.feature behat
 
 clean-init-behat:
 	@rm -f behat.yml features/testing.feature
@@ -38,7 +38,7 @@ behat.yml:
 features:
 	@mkdir -p $(PROJECT_ROOT)/features
 
-features/testing.feature: features
+features/testing.feature:
 	@cp $(FILES_DIR)/behat/testing.feature $(PROJECT_ROOT)/features
 
 $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
