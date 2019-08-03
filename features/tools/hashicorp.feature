@@ -14,7 +14,6 @@ Feature: Install Hashicorp tools locally
   @slow
   Scenario: Install packer
     Given I bootstrap drumkit
-    When I run "make clean-mk"
     When I run "make packer"
     Then I should get:
       """
