@@ -22,7 +22,6 @@ Feature: Install Kubernetes tools locally
   @slow
   Scenario: Install minikube
     Given I bootstrap drumkit
-    When I run "make clean-mk"
     When I run "make minikube"
     Then I should get:
       """
@@ -39,7 +38,6 @@ Feature: Install Kubernetes tools locally
   @slow
   Scenario: Install kubectl
     Given I bootstrap drumkit
-    When I run "make clean-mk"
     When I run "make kubectl"
     Then I should get:
       """

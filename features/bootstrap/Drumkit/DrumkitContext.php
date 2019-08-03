@@ -255,6 +255,8 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->iAmInATemporaryDirectory();
     $this->iRun("cp -r " . $this->getOrigDir() ." ./.mk");
     $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
+    $this->iRun("make clean-mk");
+    $this->iRun("make init-drumkit");
   }
 
   /**

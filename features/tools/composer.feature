@@ -14,7 +14,6 @@ Feature: Install Composer locally
   @slow
   Scenario: Install Composer
     Given I bootstrap drumkit
-    And I run "make clean-mk"
     When I run "make composer"
     Then I should get:
       """
