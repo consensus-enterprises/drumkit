@@ -8,6 +8,7 @@ Feature: Install Ansible and related tools locally
     When I run "make clean-ansible"
     Then I should get:
       """
+      Removing Ansible bootstrap script.
       Removing Ansible Playbook.
       Removing Ansible Vault.
       Removing Ansible Galaxy.
@@ -22,17 +23,17 @@ Feature: Install Ansible and related tools locally
     When I run "make ansible"
     Then I should get:
       """
+      Deploying Ansible bootstrap script.
       Installing Ansible.
-        config file =
-        configured module search path = Default w/o overrides
       Installing Ansible Doc.
-      Installing Ansible Playbook.
-      Installing Ansible Vault.
       Installing Ansible Galaxy.
+      Installing Ansible Inventory.
+      Installing Ansible Playbook.
       Installing Ansible Pull.
+      Installing Ansible Vault.
       """
     When I run "make ansible"
     Then I should get:
       """
-      make: Nothing to be done for `ansible'.
+      make: Nothing to be done for 'ansible'.
       """

@@ -1,7 +1,6 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # Tasks for initializing ansible projects.
-#ANSIBLE_PLAYBOOKS_DIR=$(PROJECT_ROOT)/playbooks
 ANSIBLE_PLAYBOOKS_DIR=playbooks
 
 include $(SELF_DIR)ansible/*.mk
