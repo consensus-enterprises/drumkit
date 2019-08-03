@@ -41,7 +41,7 @@ $(BIN_DIR)/$(1): $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE)/$(1)
 	@echo Installing the $$($(1)_RELEASE) release of $$($(1)_NAME).
 	@ln -sf $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE)/$(1) $(BIN_DIR)/$(1)
 	@chmod a+x $(BIN_DIR)/$(1)
-	@. $(MK_DIR)/scripts/hacking.sh && \
+	@cd $(PROJECT_ROOT) && unset DRUMKIT && source d && \
 	$(1) version
 
 $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE)/$(1): $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE)/$(1)-$$($(1)_RELEASE).zip

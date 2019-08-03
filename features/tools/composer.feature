@@ -24,5 +24,5 @@ Feature: Install Composer locally
     When I run "make composer"
     Then I should get:
       """
-      make: Nothing to be done for `composer'.
+      make: Nothing to be done for 'composer'.
       """

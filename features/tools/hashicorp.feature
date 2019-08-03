@@ -26,5 +26,5 @@ Feature: Install Hashicorp tools locally
     When I run "make packer"
     Then I should get:
       """
-      make: Nothing to be done for `packer'.
+      make: Nothing to be done for 'packer'.
       """
