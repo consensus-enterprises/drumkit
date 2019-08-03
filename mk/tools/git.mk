@@ -56,10 +56,12 @@ $(BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest/$$($(1)_BIN_D
   ln -sf ../src/$$($(1)_PARENT)/$$($(1)_PARENT)-latest/$$($(1)_BIN_DIR)/$(1) $(1)
 	@chmod a+x $(BIN_DIR)/$(1)
 ifeq ($(1), $$($(1)_PARENT))
+ifdef ($(1)_COMMAND))
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest && \
-	$$($(1)_COMMAND) 2&>1 > /dev/null && \
-	. $(MK_DIR)/scripts/hacking.sh && \
-  $(1) --version
+  $$($(1)_COMMAND)
+endif
+	@cd $(PROJECT_ROOT) && unset DRUMKIT && source d && \
+	$(1) --version
 endif
 
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest/$$($(1)_BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest
@@ -72,12 +74,17 @@ $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest: $(SRC_DIR)/$$($(1)_PARENT)/$$
   ln -sf $$($(1)_PARENT)-$$($(1)_RELEASE) $$($(1)_PARENT)-latest
 
 $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE): $(GIT_EXECUTABLE)
-	@echo Downloading the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
+	@echo Cloning the $$($(1)_RELEASE) release of $$($(1)_NAME) via Git.
 	@git clone --quiet --depth 1 $$($(1)_DOWNLOAD_URL) $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE)
+	@echo Fetching the $$($(1)_RELEASE) release of $$($(1)_NAME).
 	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
-	git fetch --quiet --tags && \
-	git checkout --quiet $$($(1)_RELEASE) && \
-	git submodule update --quiet --init --recursive
+	git fetch origin tag $$($(1)_RELEASE) --no-tags --quiet --depth 1
+	@echo Checking out the $$($(1)_RELEASE) release of $$($(1)_NAME).
+	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
+	git checkout --quiet $$($(1)_RELEASE)
+	@echo Updating submodules for $$($(1)_NAME).
+	@cd $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-$$($(1)_RELEASE) && \
+	git submodule update --quiet --init --recursive --depth 1
 
 endif
 
@@ -90,7 +97,7 @@ $(GIT_EXECUTABLE):
 	@sudo apt-get update
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git
 
-GITS ?= ansible ansible-doc ansible-playbook ansible-vault ansible-galaxy ansible-pull
+GITS ?= ansible ansible-doc ansible-galaxy ansible-inventory ansible-playbook ansible-pull ansible-vault
 $(foreach git,$(GITS),$(eval $(call git_template,$(git))))
 
 # vi:syntax=makefile
