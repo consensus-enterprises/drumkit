@@ -69,14 +69,16 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->process->setTimeout(300);
     $this->process->run();
 
-    $this->printDebug();
+    $output = $this->getOutput();
+    $this->printDebug($output);
   }
 
-  private function printDebug() {
+  private function printDebug(string $output) {
     if (!$this->debug) return;
+    if (empty($output)) return;
     print_r("--- DEBUG START ---\n");
-    print_r($this->getOutput());
-    print_r("\n--- DEBUG END -----");
+    print_r($output);
+    print_r("\n--- DEBUG END -----\n");
   }
 
   private function succeed($command) {
@@ -173,10 +175,11 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iShouldGet(PyStringNode $expectedOutput)
   {
+    $output = $this->getOutput();
     foreach ($expectedOutput->getStrings() as $string) {
       $string = trim($string);
-      if (!empty($string) && strpos($this->getOutput(), $string) === FALSE) {
-        throw new \Exception("'$string' was not found in command output:\n------\n" . $this->getOutput() . "\n------\n");
+      if (!empty($string) && strpos($output, $string) === FALSE) {
+        throw new \Exception("'$string' was not found in command output:\n------\n" . $output . "\n------\n");
       }
     }
   }
