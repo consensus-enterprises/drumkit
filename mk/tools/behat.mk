@@ -26,7 +26,7 @@ clean-behat:
 	@rm -rf $(BEHAT_SRC)
 	@rm -f $(BEHAT_BIN)
 
-behat: init-mk $(BEHAT_BIN)
+behat: init-mk composer $(BEHAT_BIN)
 init-behat: behat.yml features features/testing.feature behat
 
 clean-init-behat:
@@ -45,7 +45,7 @@ $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
 	@mkdir -p $(BEHAT_SRC)
 	@cp $(FILES_DIR)/behat/composer.* $(BEHAT_SRC)/
 
-$(BEHAT_SRC)/composer.lock: composer $(BEHAT_SRC)/composer.json
+$(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json
 	@echo Downloading Behat.
 	@cd $(BEHAT_SRC) && \
 	$(composer) install --no-dev --prefer-dist -q
@@ -55,6 +55,5 @@ $(BEHAT_BIN): $(BEHAT_SRC)/composer.lock
 	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
 	@touch $(BEHAT_BIN)
 	@$(behat) --version
-
 
 # vi:syntax=makefile
