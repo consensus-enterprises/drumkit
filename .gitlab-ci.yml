@@ -1,15 +1,32 @@
 image: registry.gitlab.com/pages/hugo:latest
 
+stages:
+  - test
+  - publish
+
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
+fast-tests: &test-defaults
+  stage: test
+  image: php:7.2
+  before_script:
+    # Install GNU Make and Bash
+    - apk add --update make bash
+    - make behat
+  script:
+    - behat
+
+slow-tests:
+  <<: *test-defaults
+  script:
+    - behat --tags=slow
+
 pages:
-  stage: deploy
+  stage: publish
   before_script:
     # Check the current version of Hugo, so we can keep our local env in sync.
     - hugo version
-    # Install GNU Make
-    - apk add --update make bash
   script:
     # Build our site.
     - cd docs && hugo && mv public/ ..
