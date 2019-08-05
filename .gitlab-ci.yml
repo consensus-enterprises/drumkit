@@ -6,6 +6,7 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  BEHAT_OPTS: --stop-on-failure --colors
 
 fast-tests: &test-defaults
   stage: test
@@ -13,16 +14,17 @@ fast-tests: &test-defaults
   before_script:
     # Install Git and GNU Make
     - apt-get update -yqq
-    - apt-get install -yqq git make
+    - apt-get install -yqq git make python-pip
+    - pip install jinja2-cli
     - make behat
     - source d
   script:
-    - behat
+    - behat $BEHAT_OPTS
 
 slow-tests:
   <<: *test-defaults
   script:
-    - behat --tags=slow
+    - behat $BEHAT_OPTS --tags=slow 
 
 pages:
   stage: publish
