@@ -15,7 +15,7 @@ fast-tests: &test-defaults
     # Install Git and GNU Make
     - apt-get update -yqq
     - apt-get install -yqq git make python-pip unzip
-    - pip install jinja2-cli PyYAML
+    - pip install jinja2-cli PyYAML ntfy[matrix]
     - make behat
     - source d
   script:
