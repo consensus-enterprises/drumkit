@@ -11,8 +11,9 @@ fast-tests: &test-defaults
   stage: test
   image: php:7.2
   before_script:
-    # Install GNU Make and Bash
-    - apk add --update make bash
+    # Install Git and GNU Make
+    - apt-get update -yqq
+    - apt-get install -yqq git make
     - make behat
   script:
     - behat
