@@ -14,11 +14,16 @@ fast-tests: &test-defaults
   before_script:
     # Install Git and GNU Make
     - apt-get update -yqq
-    - apt-get install -yqq git make python-pip unzip
+    - apt-get install -yqq git make
+    # TODO: Figure out a way to intall these system packages as dependecies of
+    # the targets that use them.
+    - apt-get install -yqq python-pip unzip
     - pip install jinja2-cli PyYAML ntfy[matrix]
+    # TODO: Add this as a dependency of a 'run-behat-ci' or similar target
     - make behat
     - source d
   script:
+    # TODO: turn these into a 'run-behat-ci' or similar target
     - behat $BEHAT_OPTS
     - RESULT=$? make ntfy-ci
 
@@ -26,6 +31,8 @@ slow-tests:
   <<: *test-defaults
   script:
     - behat $BEHAT_OPTS --tags=slow
+    # TODO: Add the this step's title to the CI output, to differentiate it
+    # from parallel steps at the same stage.
     - RESULT=$? make ntfy-ci
 
 pages:
@@ -34,7 +41,7 @@ pages:
     # Check the current version of Hugo, so we can keep our local env in sync.
     - hugo version
   script:
-    # Build our site.
+    # Build our docs site.
     - cd docs && hugo && mv public/ ..
   artifacts:
     paths:
