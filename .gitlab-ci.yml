@@ -15,6 +15,7 @@ fast-tests: &test-defaults
     - apt-get update -yqq
     - apt-get install -yqq git make
     - make behat
+    - source d
   script:
     - behat
 
