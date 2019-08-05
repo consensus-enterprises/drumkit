@@ -20,11 +20,13 @@ fast-tests: &test-defaults
     - source d
   script:
     - behat $BEHAT_OPTS
+    - RESULT=$? make ntfy-ci
 
 slow-tests:
   <<: *test-defaults
   script:
-    - behat $BEHAT_OPTS --tags=slow 
+    - behat $BEHAT_OPTS --tags=slow
+    - RESULT=$? make ntfy-ci
 
 pages:
   stage: publish
