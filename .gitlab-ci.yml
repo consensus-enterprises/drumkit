@@ -31,8 +31,6 @@ slow-tests:
   <<: *test-defaults
   script:
     - behat $BEHAT_OPTS --tags=slow
-    # TODO: Add the this step's title to the CI output, to differentiate it
-    # from parallel steps at the same stage.
     - RESULT=$? make ntfy-ci
 
 pages:
