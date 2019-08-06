@@ -24,14 +24,12 @@ fast-tests: &test-defaults
     - source d
   script:
     # TODO: turn these into a 'run-behat-ci' or similar target
-    - behat $BEHAT_OPTS
-    - RESULT=$? make ntfy-ci
+    - behat $BEHAT_OPTS; RESULT=$? make ntfy-ci
 
 slow-tests:
   <<: *test-defaults
   script:
-    - behat $BEHAT_OPTS --tags=slow
-    - RESULT=$? make ntfy-ci
+    - behat $BEHAT_OPTS --tags=slow; - RESULT=$? make ntfy-ci
 
 pages:
   stage: publish
