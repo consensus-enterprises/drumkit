@@ -29,7 +29,7 @@ fast-tests: &test-defaults
 slow-tests:
   <<: *test-defaults
   script:
-    - behat $BEHAT_OPTS --tags=slow; - RESULT=$? make ntfy-ci
+    - behat $BEHAT_OPTS --tags=slow; RESULT=$? make ntfy-ci
 
 pages:
   stage: publish
