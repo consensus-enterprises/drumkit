@@ -3,7 +3,9 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   exit 1
 fi
 
-for file in `ls ./drumkit/bootstrap.d/*.sh`; do
-  source $file
-  if  [[ $? > 0 ]]; then return; fi
-done
+if [[ -d ./drumkit/bootstrap.d/ ]]; then
+  for file in `ls ./drumkit/bootstrap.d/*.sh`; do
+    source $file
+    if  [[ $? > 0 ]]; then return; fi
+  done
+fi
