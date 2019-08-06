@@ -13,7 +13,7 @@ if [[ ! -d .git ]]; then
   exit 1
 fi
 
-git submodule add https://gitlab.com/consensus.enterprises/drumkit .mk
+git submodule add https://gitlab.com/consensus.enterprises/drumkit.git .mk
 git submodule update --recursive --init
 echo "include .mk/GNUmakefile" >> Makefile
 
