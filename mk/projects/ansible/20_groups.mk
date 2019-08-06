@@ -1,7 +1,7 @@
 ANSIBLE_GROUPS_PLAYBOOK_DIR=$(ANSIBLE_PLAYBOOKS_DIR)/groups
-ANSIBLE_GROUPS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/group-playbook.yml
+ANSIBLE_GROUPS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/group-playbook.yml.j2
 ANSIBLE_GROUP_VARS_DIR=$(ANSIBLE_INVENTORY_DIR)/group_vars
-ANSIBLE_GROUP_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/group-vars.yml
+ANSIBLE_GROUP_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/group-vars.yml.j2
 
 group:=example_group
 

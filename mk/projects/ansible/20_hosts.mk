@@ -1,7 +1,7 @@
 ANSIBLE_HOSTS_PLAYBOOK_DIR=$(ANSIBLE_PLAYBOOKS_DIR)/hosts
-ANSIBLE_HOSTS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/host-playbook.yml
+ANSIBLE_HOSTS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/host-playbook.yml.j2
 ANSIBLE_HOST_VARS_DIR=$(ANSIBLE_INVENTORY_DIR)/host_vars
-ANSIBLE_HOST_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/host-vars.yml
+ANSIBLE_HOST_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/host-vars.yml.j2
 
 host:=example-host
 
