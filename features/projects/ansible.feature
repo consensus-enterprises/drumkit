@@ -6,7 +6,6 @@ Feature: Initialize Ansible projects.
 
   Scenario: Initialize an Ansible project.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make init-project-ansible"
      Then I should get:
       """

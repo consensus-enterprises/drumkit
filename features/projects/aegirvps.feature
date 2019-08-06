@@ -6,7 +6,6 @@ Feature: Initialize AegirVPS projects.
 
    Scenario: Initialize an AegirVPS project
      Given I bootstrap Drumkit
-       And I run "git init"
        And I run "make init-project-aegirvps"
       Then I should get:
        """

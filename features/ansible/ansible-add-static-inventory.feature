@@ -6,7 +6,6 @@ Feature: Generate Ansible static inventory
    @ansible @ansible-add-static-inventory
    Scenario: Generate Ansible static inventory with arguments
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-add-static-inventory host=myhost group=mygroup ipaddress=10.0.0.1"
       Then I should get:
       """
@@ -29,7 +28,6 @@ Feature: Generate Ansible static inventory
    @ansible @ansible-add-static-inventory
    Scenario: Generate example static Ansible inventory by default
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-add-static-inventory"
       Then I should get:
       """
@@ -53,7 +51,6 @@ Feature: Generate Ansible static inventory
    @ansible @ansible-clean-static-inventory
    Scenario: Clean up Ansible inventory.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-add-static-inventory"
       And I run "make ansible-clean-static-inventory"
       Then I should get:
@@ -68,7 +65,6 @@ Feature: Generate Ansible static inventory
    @ansible @ansible-clean-static-inventory
    Scenario: Cleaning non-existent Ansible inventory is idempotent and does not cause an error.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-clean-static-inventory"
       Then I should get:
       """

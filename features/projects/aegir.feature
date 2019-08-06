@@ -6,7 +6,6 @@ Feature: Initialize Aegir projects
 
   Scenario: Initialize an Aegir project.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make init-project-aegir"
      Then I should get:
       """

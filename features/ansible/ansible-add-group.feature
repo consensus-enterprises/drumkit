@@ -6,7 +6,6 @@ Feature: Add an Ansible group
    @ansible @ansible-add-group
    Scenario: Add an example Ansible group by default.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-add-group"
       Then the following files should exist:
       """
@@ -28,7 +27,6 @@ Feature: Add an Ansible group
    @ansible @ansible-add-group
    Scenario: Add an Ansible group that I specify.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-add-group group=mygroup"
       Then the following files should exist:
       """
@@ -50,7 +48,6 @@ Feature: Add an Ansible group
    @ansible @ansible-clean-group
    Scenario: Clean an Ansible group that I specify.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-add-group group=mygroup"
       And I run "make ansible-clean-group group=mygroup"
       Then I should get:
@@ -66,7 +63,6 @@ Feature: Add an Ansible group
    @ansible @ansible-clean-group
    Scenario: Cleaning a non-existent Ansible group is idempotent and does not cause an error.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make ansible-clean-group group=mygroup"
       Then I should get:
       """

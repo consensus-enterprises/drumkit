@@ -8,7 +8,6 @@ Feature: Initialize OpenStack cloud projects.
 
    Scenario: Initialize an OpenStack cloud project.
      Given I bootstrap Drumkit
-       And I run "git init"
       When I run "make init-project-openstack"
       Then I should get:
        """

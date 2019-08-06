@@ -6,7 +6,6 @@ Feature: Run Ansible group playbooks
    @ansible @ansible-make-group
    Scenario: Run an Ansible group playbook.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make init-project-ansible"
       And I run "make -n playbooks/groups/example_group.yml"
       Then I should not get:
@@ -22,7 +21,6 @@ Feature: Run Ansible group playbooks
    @ansible @ansible-make-groups
    Scenario: Run all Ansible group playbooks.
     Given I bootstrap Drumkit
-      And I run "git init"
       And I run "make init-project-ansible"
       And I run "make ansible-add-group group=mygroup"
       And I run "make -n groups"
