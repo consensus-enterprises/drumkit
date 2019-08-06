@@ -295,6 +295,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   {
     $contents = file_get_contents($file);
     foreach ($lines->getStrings() as $line) {
+      if (strlen($line) == 0) continue; # Skip empty lines.
       if (strpos($contents, $line) === FALSE) {
         throw new \RuntimeException("'$line' was not found in '$file'.");
       }
