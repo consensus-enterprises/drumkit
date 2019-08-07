@@ -6,7 +6,6 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  BEHAT_OPTS: --stop-on-failure --colors
 
 fast-tests: &test-defaults
   stage: test
@@ -19,17 +18,24 @@ fast-tests: &test-defaults
     # the targets that use them.
     - apt-get install -yqq python-pip unzip
     - pip install jinja2-cli PyYAML ntfy[matrix]
-    # TODO: Add this as a dependency of a 'run-behat-ci' or similar target
-    - make behat
-    - source d
   script:
-    # TODO: turn these into a 'run-behat-ci' or similar target
-    - behat $BEHAT_OPTS; RESULT=$? make ntfy-ci
+    - source d
+    - make run-behat-ci
 
 slow-tests:
   <<: *test-defaults
+  vars:
+    BEHAT_TAGS: slow
+
+# This test will fail (on purpose), in order to test that failure notifications are sent.
+noisy-tests:
+  <<: *test-defaults
   script:
-    - behat $BEHAT_OPTS --tags=slow; RESULT=$? make ntfy-ci
+    - source d
+    - BEHAT_TAGS=success make run-behat-ci
+    - BEHAT_TAGS=failure make run-behat-ci
+  when: manual
+  allow_failure: true
 
 pages:
   stage: publish
