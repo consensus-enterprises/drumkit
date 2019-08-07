@@ -25,7 +25,7 @@ fast-tests: &test-defaults
 slow-tests:
   <<: *test-defaults
   variables:
-    BEHAT_TAGS: slow
+    BEHAT_CI_TAGS: slow
 
 # This test will fail (on purpose), in order to test that failure notifications are sent.
 noisy-tests:
@@ -34,8 +34,8 @@ noisy-tests:
     NOTIFY_CI_MESSAGE: Notification test; safe to ignore failures.
   script:
     - source d
-    - BEHAT_TAGS=success make run-behat-ci
-    - BEHAT_TAGS=failure make run-behat-ci
+    - BEHAT_CI_TAGS=success make run-behat-ci
+    - BEHAT_CI_TAGS=failure make run-behat-ci
   when: manual
   allow_failure: true
 
