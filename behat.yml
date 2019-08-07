@@ -17,5 +17,5 @@ default:
       blackbox: ~
   gherkin:
     filters:
-      tags: "~@wip&&~@slow&&~@disabled"
+      tags: "~@wip&&~@slow&&~@disabled&&~@noisy"
 
