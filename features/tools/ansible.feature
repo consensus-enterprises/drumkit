@@ -9,12 +9,13 @@ Feature: Install Ansible and related tools locally
     Then I should get:
       """
       Removing Ansible bootstrap script.
-      Removing Ansible Playbook.
-      Removing Ansible Vault.
-      Removing Ansible Galaxy.
-      Removing Ansible Pull.
-      Removing Ansible Doc.
       Removing Ansible.
+      Removing Ansible Doc.
+      Removing Ansible Galaxy.
+      Removing Ansible Inventory.
+      Removing Ansible Playbook.
+      Removing Ansible Pull.
+      Removing Ansible Vault.
       """
 
   @slow
