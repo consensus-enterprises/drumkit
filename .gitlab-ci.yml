@@ -24,7 +24,7 @@ fast-tests: &test-defaults
 
 slow-tests:
   <<: *test-defaults
-  vars:
+  variables:
     BEHAT_TAGS: slow
 
 # This test will fail (on purpose), in order to test that failure notifications are sent.
