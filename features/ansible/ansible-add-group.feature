@@ -73,3 +73,5 @@ Feature: Add an Ansible group
       inventory/group_vars/mygroup.yml
       playbooks/groups/mygroup.yml
       """
+
+# TODO: test overriding the template

@@ -74,3 +74,5 @@ Feature: Generate Ansible static inventory
       """
       inventory/inventory.yml
       """
+
+# TODO: test overriding the template

@@ -73,3 +73,5 @@ Feature: Add an Ansible host
       inventory/host_vars/myhost.yml
       playbooks/hosts/myhost.yml
       """
+
+# TODO: test overriding the template
