@@ -17,7 +17,7 @@ NOTIFY_CI_PROJECT_URL  ?= $(CI_PROJECT_URL)
 RESULT            ?= 0
 NOTIFY_CI_RESULT  ?= $(RESULT)
 NOTIFY_CI_SUCCESS ?= ✅  <strong>Success</strong>
-NOTIFY_CI_FAILURE ?= ❎  <strong>Failure</strong>
+NOTIFY_CI_FAILURE ?=  ❌  <strong>Failure</strong>
 NOTIFY_CI_MESSAGE ?= running <a href='$(NOTIFY_CI_JOB_URL)'>$(NOTIFY_CI_JOB)</a> job on <em><a href='$(NOTIFY_CI_BRANCH_URL)'>$(NOTIFY_CI_BRANCH)</a></em> branch of <a href='$(NOTIFY_CI_PROJECT_URL)'>$(NOTIFY_CI_PROJECT)</a>. Pipeline <a href='$(NOTIFY_CI_PIPELINE_URL)'>\#$(NOTIFY_CI_PIPELINE)</a>.<br />Commit: <a href='$(NOTIFY_CI_COMMIT_URL)'>$(NOTIFY_CI_COMMIT)</a>: $(NOTIFY_CI_COMMIT_TITLE)
 
 include $(SELF_DIR)notify/*.mk
