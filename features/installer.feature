@@ -14,6 +14,7 @@ Feature: Install drumkit
 
   Scenario: Succeed if installer is running in the root of a git repo
     Given I am in a temporary directory
+      And I run "git init"
       And I execute "scripts/install.sh"
      Then I should not get:
        """
