@@ -35,5 +35,5 @@ Feature: Install Ansible and related tools locally
     When I run "make ansible"
     Then I should get:
       """
-      make: Nothing to be done for 'ansible'.
+      Nothing to be done for 'ansible'.
       """

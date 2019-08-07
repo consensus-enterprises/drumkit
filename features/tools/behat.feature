@@ -23,5 +23,5 @@ Feature: Install Behat locally
     When I run "make behat"
     Then I should get:
       """
-      make: Nothing to be done for 'behat'.
+      Nothing to be done for 'behat'.
       """

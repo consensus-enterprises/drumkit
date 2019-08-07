@@ -25,5 +25,5 @@ Feature: Install Drush locally
     When I run "make drush"
     Then I should get:
       """
-      make: Nothing to be done for 'drush'.
+      Nothing to be done for 'drush'.
       """

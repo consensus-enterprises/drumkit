@@ -32,7 +32,7 @@ Feature: Install Kubernetes tools locally
     When I run "make minikube"
     Then I should get:
       """
-      make: Nothing to be done for 'minikube'.
+      Nothing to be done for 'minikube'.
       """
 
   @slow
@@ -48,5 +48,5 @@ Feature: Install Kubernetes tools locally
     When I run "make kubectl"
     Then I should get:
       """
-      make: Nothing to be done for 'kubectl'.
+      Nothing to be done for 'kubectl'.
       """
