@@ -12,7 +12,6 @@ Feature: Initialize OpenStack cloud projects.
       Then I should get:
        """
        Initializing Drumkit OpenStack infrastructure project
-       Setting up consensus.cloud-openstack.
        Finished initializing Drumkit OpenStack infrastructure project
        """
        And the following files should exist:
