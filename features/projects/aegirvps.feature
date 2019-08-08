@@ -4,7 +4,6 @@ Feature: Initialize AegirVPS projects.
   As a DevOps engineer
   I need to be able to initialize AegirVPS projects
 
-   @wip
    Scenario: Initialize an AegirVPS project
      Given I bootstrap Drumkit
       When I run "make init-project-aegirvps"
@@ -12,8 +11,4 @@ Feature: Initialize AegirVPS projects.
        """
        Initializing Drumkit AegirVPS project
        Finished initializing Drumkit AegirVPS project
-       """
-       And the following files should exist:
-       """
-       roles/consensus.aegir-policy
        """
