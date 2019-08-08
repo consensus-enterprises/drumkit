@@ -4,6 +4,7 @@ Feature: Initialize AegirVPS projects.
   As a DevOps engineer
   I need to be able to initialize AegirVPS projects
 
+   @slow
    Scenario: Initialize an AegirVPS project
      Given I bootstrap Drumkit
       When I run "make init-project-aegirvps"

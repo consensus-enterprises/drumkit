@@ -4,6 +4,7 @@ Feature: Initialize Aegir projects
   As a DevOps engineer
   I need to be able to initialize Aegir projects
 
+  @slow
   Scenario: Initialize an Aegir project.
     Given I bootstrap Drumkit
      When I run "make init-project-aegir"
