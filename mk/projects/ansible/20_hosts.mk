@@ -3,7 +3,7 @@ ANSIBLE_HOSTS_PLAYBOOK_TEMPLATE=$(FILES_DIR)/ansible/templates/host-playbook.yml
 ANSIBLE_HOST_VARS_DIR=$(ANSIBLE_INVENTORY_DIR)/host_vars
 ANSIBLE_HOST_VARS_TEMPLATE=$(FILES_DIR)/ansible/templates/host-vars.yml.j2
 
-host:=example-host
+host ?= example-host
 ANSIBLE_HOST_VARS_FILENAME ?= $(host).yml
 
 .PHONY: ansible-add-host ansible-add-host-vars-file ansible-add-host-playbook ansible-clean-host
