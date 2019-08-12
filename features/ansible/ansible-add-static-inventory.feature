@@ -6,16 +6,16 @@ Feature: Generate Ansible static inventory
    @ansible @ansible-add-static-inventory
    Scenario: Generate Ansible static inventory with arguments
     Given I bootstrap Drumkit
-      And I run "make ansible-add-static-inventory host=myhost group=mygroup ipaddress=10.0.0.1"
+      And I run "make ansible-add-static-inventory host=myhost group=mygroup ipaddress=10.0.0.1 environment=staging"
       Then I should get:
       """
       Generating Ansible static inventory file
       """
       Then the following files should exist:
       """
-      inventory/inventory.yml
+      inventory/staging.yml
       """
-      And the file "inventory/inventory.yml" should contain:
+      And the file "inventory/staging.yml" should contain:
       """
       all:
         children:
@@ -32,13 +32,13 @@ Feature: Generate Ansible static inventory
       Then I should get:
       """
       Generating Ansible static inventory file
-      Next, specify an IP address for example-host in inventory/inventory.yml
+      Next, specify an IP address for example-host in inventory/default.yml
       """
       Then the following files should exist:
       """
-      inventory/inventory.yml
+      inventory/default.yml
       """
-      And the file "inventory/inventory.yml" should contain:
+      And the file "inventory/default.yml" should contain:
       """
       all:
         children:
@@ -59,7 +59,7 @@ Feature: Generate Ansible static inventory
       """
       And the following files should not exist:
       """
-      inventory/inventory.yml
+      inventory/default.yml
       """
 
    @ansible @ansible-clean-static-inventory
@@ -72,7 +72,7 @@ Feature: Generate Ansible static inventory
       """
       And the following files should not exist:
       """
-      inventory/inventory.yml
+      inventory/default.yml
       """
 
 # TODO: test overriding the template
