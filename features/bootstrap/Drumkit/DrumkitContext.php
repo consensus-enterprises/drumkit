@@ -198,6 +198,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Then I do not get:
+   */
+  public function iDoNotGet(PyStringNode $unexpectedOutput)
+  {
+    return $this->iShouldNotGet($unexpectedOutput);
+  }
+
+  /**
    * @Given I am in a temporary directory
    */
   public function iAmInATemporaryDirectory()
