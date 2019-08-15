@@ -185,6 +185,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @And I get:
+   */
+  public function iGet(PyStringNode $unexpectedOutput)
+  {
+    return $this->iShouldGet($unexpectedOutput);
+  }
+
+  /**
    * @Then I should not get:
    */
   public function iShouldNotGet(PyStringNode $unexpectedOutput)
@@ -198,7 +206,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
-   * @Then I do not get:
+   * @And I do not get:
    */
   public function iDoNotGet(PyStringNode $unexpectedOutput)
   {
@@ -235,6 +243,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Given executing :script fails
+   */
+  public function executingFails($script)
+  {
+    $this->executingShouldFail($script);
+  }
+
+  /**
    * @Then the following files should exist:
    */
   public function theFollowingFilesShouldExist(PyStringNode $files)
@@ -247,6 +263,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Given the following files exist:
+   */
+  public function theFollowingFilesExist(PyStringNode $files)
+  {
+    $this->theFollowingFilesShouldExist($files);
+  }
+
+  /**
    * @Then the following files should not exist:
    */
   public function theFollowingFilesShouldNotExist(PyStringNode $files)
@@ -256,6 +280,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
         throw new \RuntimeException("Unxpected file '$file' was found.");
       }
     }
+  }
+
+  /**
+   * @Given the following files do not exist:
+   */
+  public function theFollowingFilesDoNotExist(PyStringNode $files)
+  {
+    $this->theFollowingFilesShouldNotExist($files);
   }
 
   /**
@@ -309,4 +341,13 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
       }
     }
   }
+
+  /**
+   * @Given the file :file contains:
+   */
+  public function theFileContains($file, PyStringNode $lines)
+  {
+    $this->theFileShouldContain($file, $lines);
+  }
+
 }
