@@ -29,7 +29,7 @@ ansible-role-test: ansible-playbook
 	$(ANSIBLE_TEST_CMD)
 
 ansible-role-check: ansible-playbook
-	@echo "Run test playbook $(ANSIBLE_TEST_PLAYBOOK) with --check to predict changes without actually making any."
+	@echo "Run the test playbook $(ANSIBLE_TEST_PLAYBOOK) with --check to predict changes without actually making any."
 	$(ANSIBLE_TEST_CMD) --check
 
 ansible-playbook-syntax: ansible-playbook

@@ -28,9 +28,10 @@ clean-behat:
 
 behat: init-mk composer $(BEHAT_BIN)
 init-behat: behat.yml features features/testing.feature behat
+	@echo "Next, try running 'behat' to execute the sample tests."
 
 clean-init-behat:
-	@echo "Removing behat config file and example test."
+	@echo "Removing behat config and example test files."
 	@rm -f behat.yml features/testing.feature
 
 behat.yml:
@@ -42,7 +43,7 @@ features:
 	@mkdir -p $(PROJECT_ROOT)/features
 
 features/testing.feature:
-	@echo "Creating behat example test."
+	@echo "Creating behat example test file."
 	@cp $(FILES_DIR)/behat/testing.feature $(PROJECT_ROOT)/features
 
 $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
