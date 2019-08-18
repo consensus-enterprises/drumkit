@@ -17,7 +17,7 @@ fast-tests: &test-defaults
     # TODO: Figure out a way to intall these system packages as dependecies of
     # the targets that use them.
     - apt-get install -yqq python-pip unzip
-    - pip install jinja2-cli PyYAML ntfy[matrix]
+    - pip install jinja2-cli PyYAML ntfy[matrix] ansible
   script:
     - source d
     - make run-behat-ci
