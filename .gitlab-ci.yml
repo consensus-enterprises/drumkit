@@ -17,7 +17,7 @@ fast-tests: &test-defaults
     # TODO: Figure out a way to intall these system packages as dependecies of
     # the targets that use them.
     # TODO: Inital ansible run requires python (not python3). How to fix so we aren't installing both??
-    - apt-get install -yqq python-minimal python3-minimal python3-pip unzip
+    - apt-get install -yqq python-minimal python3-minimal python-pip python3-pip unzip
     - pip3 install jinja2-cli PyYAML ntfy[matrix] ansible
     - pip install jinja2-cli PyYAML
   script:
