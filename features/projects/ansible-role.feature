@@ -13,7 +13,7 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
-  @debug @slow
+  @debug
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
      When I run "make setup-ansible-role role=myrole"
@@ -42,9 +42,27 @@ Feature: Initialize Ansible role projects.
         roles:
           - myrole
       """
-     # Use a sub-behat to confirm the example test passes, ansible itself still works the way we expect, etc.:
-     When I run "behat features/ansible-role-example.feature"
+     When I run "make ansible-role-check"
      Then I should get:
-      """
-      Feature: Running Ansible against localhost
-      """
+     """
+     Run the test playbook
+     with --check
+     PLAY [localhost]
+     ok: [localhost]
+     """
+     When I run "make ansible-role-test"
+     Then I should get:
+     """
+     Run the test playbook
+     ok: [localhost]
+     """
+     # Test idempotence:
+     When I run "make ansible-role-test"
+     Then I should get:
+     """
+     ok: [localhost]
+     """
+     And I should not get:
+     """
+     changed: [localhost]
+     """
