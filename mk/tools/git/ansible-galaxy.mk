@@ -1,7 +1,7 @@
 ansible-galaxy_NAME         = Ansible Galaxy
 ansible-galaxy_RELEASE      = v2.8.1
 ansible-galaxy_DOWNLOAD_URL = https://github.com/ansible/ansible.git
-ansible-galaxy_DEPENDENCIES = python-paramiko python-pip python-yaml python-jinja2 python-pycurl
+ansible-galaxy_DEPENDENCIES = python3-paramiko python3-pip python3-yaml python3-jinja2 python3-pycurl
 ansible-galaxy_BIN_DIR      = bin
 ansible-galaxy_PARENT       = ansible
 

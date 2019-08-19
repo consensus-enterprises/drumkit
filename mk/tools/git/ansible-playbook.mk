@@ -1,7 +1,7 @@
 ansible-playbook_NAME         = Ansible Playbook
 ansible-playbook_RELEASE      = v2.8.1
 ansible-playbook_DOWNLOAD_URL = https://github.com/ansible/ansible.git
-ansible-playbook_DEPENDENCIES = python-paramiko python-pip python-yaml python-jinja2 python-pycurl
+ansible-playbook_DEPENDENCIES = python3-paramiko python3-pip python3-yaml python3-jinja2 python3-pycurl
 ansible-playbook_BIN_DIR      = bin
 ansible-playbook_PARENT       = ansible
 
