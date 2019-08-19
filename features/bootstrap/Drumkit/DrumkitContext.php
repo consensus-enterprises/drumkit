@@ -171,6 +171,31 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Then The :pkg deb package should be installed on :host
+   */
+  public function theDebPackageShouldBeInstalledOn($pkg, $host) {
+    $this->theDebPackageIsInstalledOn($pkg, $host);
+  }
+
+  /**
+   * @Given The :pkg deb package is not installed on :host
+   */
+  public function theDebPackageIsNotInstalledOn($pkg, $host) {
+    $this->ignoreFailures = TRUE;
+    $this->fail("ssh $host dpkg -l $pkg");
+    if (preg_match("/ii[ ]+$pkg/", $this->getOutput())) {
+      throw new \Exception("'$pkg' is unexpectedly installed, dpkg output was:\n" . $this->getOutput());
+    }
+  }
+
+  /**
+   * @Then The :pkg deb package should not be installed on :host
+   */
+  public function theDebPackageShouldNotBeInstalledOn($pkg, $host) {
+    $this->theDebPackageIsNotInstalledOn($pkg, $host);
+  }
+
+  /**
    * @Then I should get:
    */
   public function iShouldGet(PyStringNode $expectedOutput)
