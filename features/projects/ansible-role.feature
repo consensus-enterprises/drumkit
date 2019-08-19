@@ -13,7 +13,6 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
-  @debug
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
      When I run "make setup-ansible-role role=myrole"
@@ -42,6 +41,11 @@ Feature: Initialize Ansible role projects.
         roles:
           - myrole
       """
+
+  @slow
+  Scenario: Initialize and test an Ansible role project.
+    Given I bootstrap Drumkit
+     And I run "make init-project-ansible-role role=myrole"
      When I run "make ansible-role-check"
      Then I should get:
      """
