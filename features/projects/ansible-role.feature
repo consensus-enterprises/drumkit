@@ -13,6 +13,7 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
+  @wip
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
      When I run "make setup-ansible-role role=myrole"
