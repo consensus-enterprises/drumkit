@@ -19,7 +19,9 @@ fast-tests: &test-defaults
     - apt-get install -yqq python3-minimal python3-pip
     - pip3 install jinja2-cli ntfy[matrix]
     - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - make init-drumkit ansible behat
+    - make init-drumkit
+    - source d
+    - make ansible behat
   script:
     - source d
     - make run-behat-ci
