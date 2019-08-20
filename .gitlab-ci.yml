@@ -18,7 +18,7 @@ fast-tests: &test-defaults
     # the targets that use them.
     - apt-get install -yqq python3-minimal python3-pip
     - pip3 install jinja2-cli ntfy[matrix]
-    - sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
     - make ansible
     - make behat
   script:
