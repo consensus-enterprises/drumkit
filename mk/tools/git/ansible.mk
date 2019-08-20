@@ -14,7 +14,7 @@ ansible.cfg:
 
 $(ANSIBLE_BOOTSTRAP_SCRIPT):
 	@echo "Deploying Ansible bootstrap script."
-	@echo "export PYTHONPATH=.mk/.local/src/ansible/ansible-latest/lib" > $@
+	@echo "export PYTHONPATH=$(SRC_DIR)/ansible/ansible-latest/lib" > $@
 
 clean-ansible: remove-ansible-bootstrap-script
 remove-ansible-bootstrap-script:
