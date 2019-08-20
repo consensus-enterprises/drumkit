@@ -65,7 +65,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    * Run a command in a sub-process, and set its output.
    */
   private function exec($command) {
-    $this->process = new Process("{$command}");
+    $this->process = new Process("bash -c \"{$command}\"");
     $this->process->setTimeout(300);
     $this->process->run();
 
