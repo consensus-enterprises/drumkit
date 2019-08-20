@@ -1,4 +1,4 @@
-@init @ansible-role @project
+@init @ansible-role @project @wip
 Feature: Initialize Ansible role projects.
   In order to develop and test Ansible roles
   As a DevOps engineer
@@ -13,7 +13,6 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
-  @wip
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
      When I run "make setup-ansible-role role=myrole"
