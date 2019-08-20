@@ -2,7 +2,7 @@ init-project-ansible-role-intro:
 	@echo "Initializing Drumkit Ansible role '$(role)'."
 init-project-ansible-role: init-project-ansible-role-intro ansible-galaxy init-behat setup-ansible-role ## Initialize a project for developing Ansible roles.
 
-setup-ansible-role: behat.yml
+setup-ansible-role: ansible-galaxy behat.yml
 	@echo "Using ansible-galaxy to generate role files."
 	@ansible-galaxy init $(role)
 	@echo "Deploying generated role files to current directory and cleaning up."
