@@ -1,10 +1,13 @@
+@tools @ansible
 Feature: Install Ansible and related tools locally
   In order to automate infrastructure deployment 
   As a DevOps engineer
   I need to be able run Ansible
 
+  Background:
+    Given I bootstrap a clean drumkit environment
+
   Scenario: Remove Ansible
-    Given I bootstrap drumkit
     When I run "make clean-ansible"
     Then I should get:
       """
@@ -20,7 +23,6 @@ Feature: Install Ansible and related tools locally
 
   @slow
   Scenario: Download and Install Ansible
-    Given I bootstrap drumkit
     When I run "make ansible"
     Then I should get:
       """

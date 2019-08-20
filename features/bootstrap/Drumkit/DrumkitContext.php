@@ -316,6 +316,17 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Given I bootstrap a clean drumkit environment
+   */
+  public function iBootstrapACleanDrumkitEnvironment()
+  {
+    $this->iBootstrapDrumkit();
+    $this->iRun("make clean-mk");
+    $this->iRun("make clean-drumkit");
+    $this->iRun("make init-drumkit");
+  }
+
+  /**
    * @Given I bootstrap drumkit
    */
   public function iBootstrapDrumkit()
@@ -328,7 +339,6 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   public function iInitializeDrumkit()
   {
     $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
-    $this->iRun("make clean-mk");
     $this->iRun("git init");
     $this->iRun("make init-drumkit");
   }
