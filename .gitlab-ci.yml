@@ -26,7 +26,7 @@ fast-tests: &test-defaults
 slow-tests:
   <<: *test-defaults
   variables:
-    BEHAT_CI_TAGS: slow
+    BEHAT_CI_TAGS: '@slow&&~@wip'
 
 # This test will fail (on purpose), in order to test that failure notifications are sent.
 noisy-tests:
