@@ -26,8 +26,11 @@ Feature: Running Ansible against localhost
      Run the test playbook
      ok: [localhost]
      """
-     # Test idempotence:
+
+  @debug
+  Scenario: Test Ansible role target idempotence.
      When I run "make ansible-role-test"
+     And I run "make ansible-role-test"
      Then I should get:
      """
      ok: [localhost]

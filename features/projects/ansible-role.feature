@@ -35,8 +35,6 @@ Feature: Initialize Ansible role projects.
       """
       ---
       - hosts: localhost
-        become: yes
-        become_user: root
       
         roles:
           - myrole
@@ -60,13 +58,20 @@ Feature: Initialize Ansible role projects.
      Run the test playbook
      ok: [localhost]
      """
-     # Test idempotence:
-     When I run "make ansible-role-test"
+
+  # TODO: add nontrivial-test.yml
+  @wip
+  Scenario: Test Ansible role target idempotence.
+    Given I bootstrap Drumkit
+     And I run "make init-project-ansible-role role=myrole"
+     When I run "make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
      Then I should get:
      """
      ok: [localhost]
+     changed: [localhost]
      """
-     And I should not get:
+     When I run "make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
+     Then I should not get:
      """
      changed: [localhost]
      """
