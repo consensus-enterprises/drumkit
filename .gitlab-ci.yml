@@ -13,13 +13,13 @@ fast-tests: &test-defaults
   before_script:
     # Install Git and GNU Make
     - apt-get update -yqq
-    - apt-get install -yqq git make
+    - apt-get install -yqq git make unzip
     # TODO: Figure out a way to intall these system packages as dependecies of
     # the targets that use them.
-    # TODO: Inital ansible run requires python (not python3). How to fix so we aren't installing both??
-    - apt-get install -yqq python-minimal python3-minimal python-pip python3-pip unzip
-    - pip3 install jinja2-cli PyYAML ntfy[matrix] ansible
-    - pip install jinja2-cli PyYAML
+    - apt-get install -yqq python3-minimal python3-pip
+    - pip3 install jinja2-cli ntfy[matrix]
+    - make ansible
+    - make behat
   script:
     - source d
     - make run-behat-ci
