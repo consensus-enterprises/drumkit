@@ -1,4 +1,4 @@
-@tools @ansible
+@tools @ansible-suite
 Feature: Install Ansible and related tools locally
   In order to automate infrastructure deployment 
   As a DevOps engineer
@@ -22,16 +22,21 @@ Feature: Install Ansible and related tools locally
       """
 
   @slow
-  Scenario: Download and Install Ansible
-    When I run "make ansible"
+  Scenario: Download and install Ansible and related tools.
+    When I run "make ansible-suite"
     Then I should get:
       """
       Deploying Ansible bootstrap script.
-      Deploying Ansible config file.
       Installing Ansible.
+      Installing Ansible Doc.
+      Installing Ansible Galaxy.
+      Installing Ansible Inventory.
+      Installing Ansible Playbook.
+      Installing Ansible Pull.
+      Installing Ansible Vault.
       """
-    When I run "make ansible"
+    When I run "make ansible-suite"
     Then I should get:
       """
-      Nothing to be done for 'ansible'.
+      Nothing to be done for 'ansible-suite'.
       """

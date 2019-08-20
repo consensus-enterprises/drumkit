@@ -26,4 +26,4 @@ Feature: Install Ansible Galaxy locally
       """
       Nothing to be done for 'ansible-galaxy'.
       """
-    When I run "ansible-galaxy --version role"
+    When I run "unset DRUMKIT; source d ; ansible-galaxy --version role"
