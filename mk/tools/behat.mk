@@ -1,4 +1,4 @@
-behat      ?= $(BEHAT_BIN) --colors
+behat      ?= $(BEHAT_BIN) --stop-on-failure --colors
 BEHAT_BIN  ?= $(BIN_DIR)/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
 BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat

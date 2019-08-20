@@ -1,5 +1,3 @@
-behat ?= behat --stop-on-failure --colors
-
 ifdef BEHAT_CI_TAGS
   BEHAT_TAGS_REAL := --tags '$(BEHAT_CI_TAGS)'
 else
