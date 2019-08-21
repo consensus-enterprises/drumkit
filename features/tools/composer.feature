@@ -1,10 +1,13 @@
+@tools @composer
 Feature: Install Composer locally
   In order to install PHP applications
   As a developer
   I need to be able run Composer
 
+  Background:
+    Given I bootstrap a clean drumkit environment
+
   Scenario: Remove Composer
-    Given I bootstrap drumkit
     When I run "make clean-composer"
     Then I should get:
       """
@@ -13,7 +16,6 @@ Feature: Install Composer locally
 
   @slow
   Scenario: Install Composer
-    Given I bootstrap drumkit
     When I run "make composer"
     Then I should get:
       """

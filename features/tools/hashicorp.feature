@@ -1,10 +1,13 @@
+@tools @packer
 Feature: Install Hashicorp tools locally
   In order to create various machine image formats
   As a developer
   I need to be able run packer
 
+  Background:
+    Given I bootstrap a clean drumkit environment
+
   Scenario: Remove packer
-    Given I bootstrap drumkit
     When I run "make clean-packer"
     Then I should get:
       """
@@ -13,7 +16,6 @@ Feature: Install Hashicorp tools locally
 
   @slow
   Scenario: Install packer
-    Given I bootstrap drumkit
     When I run "make packer"
     Then I should get:
       """

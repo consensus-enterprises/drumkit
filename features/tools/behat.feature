@@ -1,10 +1,13 @@
+@tools @behat
 Feature: Install Behat locally
   In order to test a Drupal site
   As a developer
   I need to be able run Behat
 
+  Background:
+    Given I bootstrap a clean drumkit environment
+
   Scenario: Remove Behat
-    Given I bootstrap drumkit
     When I run "make clean-behat"
     Then I should get:
       """
@@ -13,7 +16,6 @@ Feature: Install Behat locally
 
   @slow
   Scenario: Run 'make behat'
-    Given I bootstrap drumkit
     When I run "make behat"
     Then I should get:
       """

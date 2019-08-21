@@ -13,9 +13,22 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
+  @debug @slow
+  Scenario: Set up Ansible role project dependencies.
+    Given I bootstrap Drumkit
+      And I run "make ansible-suite"
+     When I run "unset DRUMKIT && . d && which ansible-galaxy"
+     Then I should get:
+     """
+     /tmp/behat_cli
+     .mk/.local/bin/ansible-galaxy
+     """
+
+  @debug
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
-     When I run "make setup-ansible-role role=myrole"
+      And I run "make ansible-galaxy"
+     When I run "unset DRUMKIT && . d && make setup-ansible-role role=myrole"
      Then the following files should exist:
       """
       README.md
@@ -43,8 +56,9 @@ Feature: Initialize Ansible role projects.
   @slow
   Scenario: Initialize and test an Ansible role project.
     Given I bootstrap Drumkit
-     And I run "make init-project-ansible-role role=myrole"
-     When I run "make ansible-role-check"
+      And I run "make ansible-suite"
+      And I run "unset DRUMKIT && . d && make init-project-ansible-role role=myrole"
+     When I run "unset DRUMKIT && . d && make ansible-role-check"
      Then I should get:
      """
      Run the test playbook
@@ -52,7 +66,7 @@ Feature: Initialize Ansible role projects.
      PLAY [localhost]
      ok: [localhost]
      """
-     When I run "make ansible-role-test"
+     When I run "unset DRUMKIT && . d && make ansible-role-test"
      Then I should get:
      """
      Run the test playbook
@@ -63,7 +77,8 @@ Feature: Initialize Ansible role projects.
   @wip
   Scenario: Test Ansible role target idempotence.
     Given I bootstrap Drumkit
-     And I run "make init-project-ansible-role role=myrole"
+      And I run "make ansible-galaxy"
+      And I run ". d && make init-project-ansible-role role=myrole"
      When I run "make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
      Then I should get:
      """

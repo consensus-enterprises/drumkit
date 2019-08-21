@@ -1,7 +1,7 @@
 ansible_NAME         = Ansible
 ansible_RELEASE      ?= v2.8.1
 ansible_DOWNLOAD_URL = https://github.com/ansible/ansible.git
-ansible_DEPENDENCIES = python3-paramiko python3-pip python3-yaml python3-jinja2 python3-pycurl
+ansible_DEPENDENCIES = python3-minimal python3-paramiko python3-pip python3-yaml python3-jinja2 python3-pycurl
 ansible_BIN_DIR      = bin
 ansible_PARENT       = ansible
 
@@ -14,7 +14,7 @@ ansible.cfg:
 
 $(ANSIBLE_BOOTSTRAP_SCRIPT):
 	@echo "Deploying Ansible bootstrap script."
-	@echo "export PYTHONPATH=.mk/.local/src/ansible/ansible-latest/lib" > $@
+	@echo "export PYTHONPATH=$(SRC_DIR)/ansible/ansible-latest/lib" > $@
 
 clean-ansible: remove-ansible-bootstrap-script
 remove-ansible-bootstrap-script:

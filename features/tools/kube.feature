@@ -1,10 +1,13 @@
+@tools @minikube @kubectl
 Feature: Install Kubernetes tools locally
   In order to develop on a local Kubernetes instance
   As a developer
   I need to be able run minikube
 
+  Background:
+    Given I bootstrap a clean drumkit environment
+
   Scenario: Remove minikube
-    Given I bootstrap drumkit
     When I run "make clean-minikube"
     Then I should get:
       """
@@ -12,7 +15,6 @@ Feature: Install Kubernetes tools locally
       """
 
   Scenario: Remove kubectl
-    Given I bootstrap drumkit
     When I run "make clean-kubectl"
     Then I should get:
       """
@@ -21,7 +23,6 @@ Feature: Install Kubernetes tools locally
 
   @slow
   Scenario: Install minikube
-    Given I bootstrap drumkit
     When I run "make minikube"
     Then I should get:
       """
@@ -37,7 +38,6 @@ Feature: Install Kubernetes tools locally
 
   @slow
   Scenario: Install kubectl
-    Given I bootstrap drumkit
     When I run "make kubectl"
     Then I should get:
       """

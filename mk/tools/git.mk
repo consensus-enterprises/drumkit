@@ -46,8 +46,11 @@ gits: $$($(1)_COMMANDS)
 $(1): init-mk $(BIN_DIR)/$(1)
 
 ifneq ($(1), $$($(1)_PARENT))
-$$($(1)_PARENT): $(1)
+$(1): $$($(1)_PARENT)
+$$($(1)_PARENT)-suite: $(1)
 clean-$$($(1)_PARENT): clean-$(1)
+else
+$(1)-suite: $(1)
 endif
 
 $(BIN_DIR)/$(1): $(SRC_DIR)/$$($(1)_PARENT)/$$($(1)_PARENT)-latest/$$($(1)_BIN_DIR)/$(1)
