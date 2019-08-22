@@ -17,7 +17,6 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
-  @slow @debug
   Scenario: Set up Ansible role project dependencies.
      When I run "unset DRUMKIT && . d && which ansible-galaxy"
      Then I should get:
@@ -26,7 +25,6 @@ Feature: Initialize Ansible role projects.
      .mk/.local/bin/ansible-galaxy
      """
 
-  @debug
   Scenario: Set up an Ansible role project.
      When I run "unset DRUMKIT && . d && make setup-ansible-role role=myrole"
      Then the following files should exist:
@@ -53,7 +51,6 @@ Feature: Initialize Ansible role projects.
           - myrole
       """
 
-  @slow @debug
   Scenario: Initialize and test an Ansible role project.
     Given I run "unset DRUMKIT && . d && make init-project-ansible-role role=myrole"
      When I run "unset DRUMKIT && . d && make ansible-role-check"
@@ -71,7 +68,6 @@ Feature: Initialize Ansible role projects.
      ok: [localhost]
      """
 
-  @slow @debug
   Scenario: Test Ansible role target idempotence.
     Given I run "rm -rf /tmp/drumkit-ansible-role-test"
       And the following files do not exist:
