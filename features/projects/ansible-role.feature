@@ -13,7 +13,7 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
-  @debug @slow
+  @slow
   Scenario: Set up Ansible role project dependencies.
     Given I bootstrap Drumkit
       And I run "make ansible-suite"
@@ -24,7 +24,6 @@ Feature: Initialize Ansible role projects.
      .mk/.local/bin/ansible-galaxy
      """
 
-  @debug
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
       And I run "make ansible-galaxy"
@@ -73,20 +72,28 @@ Feature: Initialize Ansible role projects.
      ok: [localhost]
      """
 
-  # TODO: add nontrivial-test.yml
-  @wip
+  @slow
   Scenario: Test Ansible role target idempotence.
     Given I bootstrap Drumkit
-      And I run "make ansible-galaxy"
-      And I run ". d && make init-project-ansible-role role=myrole"
-     When I run "make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
+      And the following files do not exist:
+     """
+     /tmp/drumkit-ansible-role-test
+     """
+      And I run "unset DRUMKIT && . d && make ansible-suite"
+      And I run "unset DRUMKIT && . d && make init-project-ansible-role role=myrole"
+     When I run "unset DRUMKIT && . d && make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
      Then I should get:
      """
      ok: [localhost]
      changed: [localhost]
      """
-     When I run "make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
+     When I run "unset DRUMKIT && . d && make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
      Then I should not get:
      """
      changed: [localhost]
+     """
+     When I run "rmdir /tmp/drumkit-ansible-role-test"
+     Then the following files should not exist:
+     """
+     /tmp/drumkit-ansible-role-test
      """

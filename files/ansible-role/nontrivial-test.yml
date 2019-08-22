@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create test directory if it does not exist
+    file:
+      path: /tmp/drumkit-ansible-role-test
+      state: directory
