@@ -11,7 +11,7 @@ Feature: Install Ansible and related tools locally
     When I run "make clean-ansible"
     Then I should get:
       """
-      Removing Ansible bootstrap script.
+      Removing Ansible bootstrap scripts.
       Removing Ansible.
       Removing Ansible Doc.
       Removing Ansible Galaxy.
@@ -27,6 +27,7 @@ Feature: Install Ansible and related tools locally
     Then I should get:
       """
       Deploying Ansible bootstrap script.
+      Deploying Ansible self-bootstrap script.
       Deploying Ansible config file.
       Installing Ansible.
       """
