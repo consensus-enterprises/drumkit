@@ -96,7 +96,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->exec($command);
 
     if ($this->process->isSuccessful()) {
-      throw new \RuntimeException($this->getOutput());
+      throw new \RuntimeException("Command unexpectedly succeeded: " . $command . "\nOutput: " . $this->getOutput());
     }
   }
 
@@ -147,6 +147,30 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
       return $this->exec($command);
     } 
     $this->succeed($command);
+  }
+
+  /**
+   * @Then the command :command should succeed
+   */
+  public function theCommandShouldSucceed($command)
+  {
+    $this->iRun($command);
+  }
+
+  /**
+   * @Then the command :command should fail
+   */
+  public function theCommandShouldFail($command)
+  {
+    $this->fail($command);
+  }
+
+  /**
+   * @Given the command :command fails
+   */
+  public function theCommandFails($command)
+  {
+    $this->theCommandShouldFail($command);
   }
 
   /**
