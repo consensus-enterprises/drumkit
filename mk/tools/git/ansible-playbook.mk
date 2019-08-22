@@ -17,23 +17,4 @@ endif
 
 ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS)
 
-# Below are some helpers that are useful for ansible role testing.
-# TODO: migrate to a new ansible role project type.
-
-ANSIBLE_TEST_INVENTORY ?= tests/inventory
-ANSIBLE_TEST_PLAYBOOK ?= tests/test.yml
-ANSIBLE_TEST_CMD      ?= $(ANSIBLE_PLAYBOOK_CMD) $(ANSIBLE_TEST_PLAYBOOK) --connection=local -i $(ANSIBLE_TEST_INVENTORY)
-
-ansible-role-test: ansible-playbook
-	@echo "Run the test playbook $(ANSIBLE_TEST_PLAYBOOK)."
-	$(ANSIBLE_TEST_CMD)
-
-ansible-role-check: ansible-playbook
-	@echo "Run the test playbook $(ANSIBLE_TEST_PLAYBOOK) with --check to predict changes without actually making any."
-	$(ANSIBLE_TEST_CMD) --check
-
-ansible-playbook-syntax: ansible-playbook
-	@echo "Check the syntax of test playbook $(ANSIBLE_TEST_PLAYBOOK)."
-	$(ANSIBLE_PLAYBOOK_CMD) --syntax-check $(ANSIBLE_TEST_PLAYBOOK)
-
 # vi:syntax=makefile
