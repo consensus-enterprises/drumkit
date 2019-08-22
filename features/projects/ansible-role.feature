@@ -4,8 +4,12 @@ Feature: Initialize Ansible role projects.
   As a DevOps engineer
   I need to be able to initialize Ansible role projects
 
+  Background:
+    Given I run "make ansible-role-test-cache"
+      And I bootstrap Drumkit
+      And I run "make link-ansible-role-test-cache"
+
   Scenario: Initialize an Ansible role project.
-    Given I bootstrap Drumkit
      When I run "make -n init-project-ansible-role role=myrole"
      Then I should get:
       """
@@ -13,10 +17,8 @@ Feature: Initialize Ansible role projects.
       Finished initializing Drumkit Ansible role project
       """
 
-  @slow
+  @slow @debug
   Scenario: Set up Ansible role project dependencies.
-    Given I bootstrap Drumkit
-      And I run "make ansible-suite"
      When I run "unset DRUMKIT && . d && which ansible-galaxy"
      Then I should get:
      """
@@ -24,9 +26,8 @@ Feature: Initialize Ansible role projects.
      .mk/.local/bin/ansible-galaxy
      """
 
+  @debug
   Scenario: Set up an Ansible role project.
-    Given I bootstrap Drumkit
-      And I run "make ansible-galaxy"
      When I run "unset DRUMKIT && . d && make setup-ansible-role role=myrole"
      Then the following files should exist:
       """
@@ -52,11 +53,9 @@ Feature: Initialize Ansible role projects.
           - myrole
       """
 
-  @slow
+  @slow @debug
   Scenario: Initialize and test an Ansible role project.
-    Given I bootstrap Drumkit
-      And I run "make ansible-suite"
-      And I run "unset DRUMKIT && . d && make init-project-ansible-role role=myrole"
+    Given I run "unset DRUMKIT && . d && make init-project-ansible-role role=myrole"
      When I run "unset DRUMKIT && . d && make ansible-role-check"
      Then I should get:
      """
@@ -72,14 +71,13 @@ Feature: Initialize Ansible role projects.
      ok: [localhost]
      """
 
-  @slow
+  @slow @debug
   Scenario: Test Ansible role target idempotence.
-    Given I bootstrap Drumkit
+    Given I run "rm -rf /tmp/drumkit-ansible-role-test"
       And the following files do not exist:
      """
      /tmp/drumkit-ansible-role-test
      """
-      And I run "unset DRUMKIT && . d && make ansible-suite"
       And I run "unset DRUMKIT && . d && make init-project-ansible-role role=myrole"
      When I run "unset DRUMKIT && . d && make ansible-role-test ANSIBLE_TEST_PLAYBOOK=.mk/files/ansible-role/nontrivial-test.yml"
      Then I should get:

@@ -19,4 +19,17 @@ setup-ansible-role: ansible-galaxy behat.yml
 # TODO: Consider setting roles_path in ansible.cfg instead of the symlink trick for tests, 
 # cf. https://github.com/cjsteel/galaxy-role-skeleton/blob/master/skeleton/ansible.cfg 
 
+ANSIBLE_ROLE_TEST_CACHE_DIR=~/.drumkit/ansible-role-test-cache
 
+$(ANSIBLE_ROLE_TEST_CACHE_DIR):
+	@echo "Building Ansible test cache in $(ANSIBLE_ROLE_TEST_CACHE_DIR)."
+	@mkdir -p $(ANSIBLE_ROLE_TEST_CACHE_DIR)
+	@cp -r  $(MK_DIR) $(ANSIBLE_ROLE_TEST_CACHE_DIR)/.mk
+	@cd $(ANSIBLE_ROLE_TEST_CACHE_DIR) && echo 'include .mk/GNUmakefile' > Makefile 
+	@cd $(ANSIBLE_ROLE_TEST_CACHE_DIR) && make -s init-drumkit ansible-suite behat
+
+ansible-role-test-cache: $(ANSIBLE_ROLE_TEST_CACHE_DIR)
+
+link-ansible-role-test-cache: ansible-role-test-cache
+	@readlink .mk/.local eq $(ANSIBLE_ROLE_TEST_CACHE_DIR)/.mk/.local || (rm -rf .mk/.local && ln -s $(ANSIBLE_ROLE_TEST_CACHE_DIR)/.mk/.local .mk/.local)
+	@readlink drumkit eq $(ANSIBLE_ROLE_TEST_CACHE_DIR)/drumkit || (rm -rf drumkit && ln -s $(ANSIBLE_ROLE_TEST_CACHE_DIR)/drumkit drumkit)
