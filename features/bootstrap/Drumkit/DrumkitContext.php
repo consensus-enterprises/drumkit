@@ -364,9 +364,9 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
 
   public function iCacheDrumkitBuilds()
   {
-    $this->iRun("cd " . $this->getOrigDir() . " && make init-drumkit");
+    $this->iRun("cd " . $this->getOrigDir() . " && mkdir -p .cache");
     $this->iRun("rm -rf .mk/.local");
-    $this->iRun("cd .mk && ln -s " . $this->getOrigDir() . "/.local .");
+    $this->iRun("cd .mk && ln -s " . $this->getOrigDir() . "/.cache .local");
   }
 
   public function iInitializeDrumkit()

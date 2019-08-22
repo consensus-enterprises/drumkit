@@ -12,7 +12,8 @@ Feature: Initialize Ansible role projects.
       Initializing Drumkit Ansible role 'myrole'
       Finished initializing Drumkit Ansible role project
       """
-  @debug
+
+  @slow
   Scenario: Set up an Ansible role project.
     Given I bootstrap Drumkit
      When I run "make init-project-ansible-role role=myrole"
