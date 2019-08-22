@@ -1,15 +1,13 @@
 MK_D = drumkit/mk.d
 MK_D_EXISTS ?= $(shell if [[ -d $(MK_D) ]]; then echo 1; fi)
 MK_D_NONEMPTY ?= $(shell if [[ `ls -A $(MK_D)` ]]; then echo 1; fi)
-
 drumkit $(MK_D) $(BOOTSTRAP_D):
 	@mkdir -p $@
 
 d:
 	@ln -s .mk/d .
 
-init-drumkit: d $(BOOTSTRAP_D) $(MK_D)
-	@cd $(BOOTSTRAP_D) && ln -s ../../.mk/drumkit/bootstrap.d/* .
+init-drumkit: d $(BOOTSTRAP_D) $(MK_D) $(DRUMKIT_BOOTSTRAP_SCRIPTS)
 
 clean-all: clean-drumkit
 clean-drumkit:

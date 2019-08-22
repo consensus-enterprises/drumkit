@@ -320,20 +320,29 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iBootstrapACleanDrumkitEnvironment()
   {
-    $this->iBootstrapDrumkit();
-    $this->iRun("make clean-mk");
-    $this->iRun("make clean-drumkit");
+    $this->iBootstrapDrumkit(FALSE);
+    $this->iRun("make clean-all");
     $this->iRun("make init-drumkit");
   }
 
   /**
    * @Given I bootstrap drumkit
    */
-  public function iBootstrapDrumkit()
+  public function iBootstrapDrumkit($cache_builds = TRUE)
   {
     $this->iAmInATemporaryDirectory();
-    $this->iRun("cp -r " . $this->getOrigDir() ." ./.mk");
+    $this->iRun("cp -r " . $this->getOrigDir() . " ./.mk");
+    if ($cache_builds) {
+      $this->iCacheDrumkitBuilds();
+    }
     $this->iInitializeDrumkit();
+  }
+
+  public function iCacheDrumkitBuilds()
+  {
+    $this->iRun("cd " . $this->getOrigDir() . " && make init-drumkit");
+    $this->iRun("rm -rf .mk/.local");
+    $this->iRun("cd .mk && ln -s " . $this->getOrigDir() . "/.local .");
   }
 
   public function iInitializeDrumkit()
