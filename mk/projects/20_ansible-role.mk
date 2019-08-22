@@ -19,6 +19,13 @@ setup-ansible-role: ansible-galaxy behat.yml
 # TODO: Consider setting roles_path in ansible.cfg instead of the symlink trick for tests, 
 # cf. https://github.com/cjsteel/galaxy-role-skeleton/blob/master/skeleton/ansible.cfg 
 
+# TODO: Drop all ansible role test caching in favour of self-bootstrapping Drumkit cleanly.
+# Commits with caching stuff to be removed:
+# 34d4a7704975bbf8368ff32cf3b9c0e78b4231d8
+# 24276da1d6376134b42a27078e8796a2483c08a6
+
+# Below is a helpful fixture for testing ansible role project functionality.
+
 ANSIBLE_ROLE_TEST_CACHE_DIR=~/.drumkit/ansible-role-test-cache
 
 $(ANSIBLE_ROLE_TEST_CACHE_DIR):
@@ -33,3 +40,6 @@ ansible-role-test-cache: $(ANSIBLE_ROLE_TEST_CACHE_DIR)
 link-ansible-role-test-cache: ansible-role-test-cache
 	@readlink .mk/.local eq $(ANSIBLE_ROLE_TEST_CACHE_DIR)/.mk/.local || (rm -rf .mk/.local && ln -s $(ANSIBLE_ROLE_TEST_CACHE_DIR)/.mk/.local .mk/.local)
 	@readlink drumkit eq $(ANSIBLE_ROLE_TEST_CACHE_DIR)/drumkit || (rm -rf drumkit && ln -s $(ANSIBLE_ROLE_TEST_CACHE_DIR)/drumkit drumkit)
+
+clean-ansible-role-test-cache:
+	@rm -rf $(ANSIBLE_ROLE_TEST_CACHE_DIR)

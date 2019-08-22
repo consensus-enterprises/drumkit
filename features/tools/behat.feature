@@ -27,3 +27,19 @@ Feature: Install Behat locally
       """
       Nothing to be done for 'behat'.
       """
+
+  # TODO: fix init-behat so it's idempotent
+  @slow @wip
+  Scenario: Run 'make init-behat'
+    When I run "make init-behat"
+    Then I should get:
+      """
+      Downloading Behat.
+      Installing Behat.
+      """
+    When I run "make init-behat"
+    Then I should not get:
+      """
+      Downloading Behat.
+      Installing Behat.
+      """
