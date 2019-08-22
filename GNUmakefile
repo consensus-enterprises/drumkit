@@ -8,6 +8,7 @@ SHELL        := /bin/bash
 
 default: help
 
+include $(MK_DIR)/mk/bootstrap.mk
 include $(MK_DIR)/lib/gmsl/gmsl
 include $(MK_DIR)/mk/drumkit.mk
 include $(MK_DIR)/mk/tools.mk
