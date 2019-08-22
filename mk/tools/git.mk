@@ -28,7 +28,7 @@ ifeq ($(1), $$($(1)_PARENT))
 	@echo "  Install the $$($(1)_RELEASE) release of $$($(1)_NAME)."
 endif
 
-clean-gits: clean-$(1)
+clean-all clean-gits: clean-$(1)
 clean-$(1):
 	@echo Removing $$($(1)_NAME).
 	@rm -f $(BIN_DIR)/$(1)

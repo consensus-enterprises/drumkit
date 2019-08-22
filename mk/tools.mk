@@ -20,6 +20,7 @@ $(BIN_DIR): $(LOCAL_DIR)
 	@mkdir -p $(BIN_DIR)
 	@touch $(BIN_DIR)
 
+clean-all: clean-mk
 clean-mk:
 	@rm -rf $(BIN_DIR)
 	@rm -rf $(SRC_DIR)

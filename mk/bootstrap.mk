@@ -7,3 +7,11 @@ ifeq ($(BOOTSTRAP_D_EXISTS), 1)
     include $(BOOTSTRAP_D)/*.mk
   endif
 endif
+
+# We need to call a sub-make here, in order to re-bootstrap, since ansible
+# requires a special env var.
+test-self-bootstrap: ansible-doc
+	$(MAKE) test-self-bootstrap-real
+test-self-bootstrap-real:
+	ansible-doc --help
+

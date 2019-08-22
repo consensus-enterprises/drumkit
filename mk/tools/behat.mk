@@ -21,6 +21,7 @@ deps-behat: apt-update composer
 	@echo Installing Behat dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(BEHAT_DEPS)
 
+clean-all: clean-behat
 clean-behat:
 	@echo Removing Behat.
 	@rm -rf $(BEHAT_SRC)

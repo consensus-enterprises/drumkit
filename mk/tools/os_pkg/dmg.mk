@@ -28,6 +28,7 @@ install-release-$(1)-help:
 	@echo "make $(1) $(1)_RELEASE=$$($(1)_RELEASE)"
 	@echo "  Install the $$($(1)_RELEASE) release of $$($(1)_NAME)."
 
+clean-all: clean-$(1)
 clean-$(1):
 	@echo Removing $$($(1)_NAME).
 	echo How does one uninstall a dmg?

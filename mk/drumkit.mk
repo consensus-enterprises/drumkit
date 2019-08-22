@@ -11,6 +11,7 @@ d:
 init-drumkit: d $(BOOTSTRAP_D) $(MK_D)
 	@cd $(BOOTSTRAP_D) && ln -s ../../.mk/drumkit/bootstrap.d/* .
 
+clean-all: clean-drumkit
 clean-drumkit:
 	@rm -rf drumkit d
 
