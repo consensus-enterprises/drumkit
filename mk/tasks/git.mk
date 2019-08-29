@@ -1,4 +1,10 @@
+name   ?= "Christopher Gervais"
+email  ?= "christopher@consensus.enterprises"
 branch ?= master
+
+# Credits: http://stackoverflow.com/a/750191
+git-amend-author: ## [name,email] Rewrite history to amend author.
+	git filter-branch -f --env-filter "GIT_AUTHOR_NAME='$(name)' GIT_AUTHOR_EMAIL='$(email)' GIT_COMMITTER_NAME='$(name)' GIT_COMMITTER_EMAIL='$(email)'" HEAD
 
 git-submodule-update: ## Update all Git submodules
 	git submodule update --init --recursive
