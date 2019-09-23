@@ -9,8 +9,10 @@ drumkit $(MK_D) $(BOOTSTRAP_D):
 d:
 	@ln -s .mk/d .
 
-init-drumkit: d $(BOOTSTRAP_D) $(MK_D)
-	@cd $(BOOTSTRAP_D) && ln -s ../../.mk/drumkit/bootstrap.d/* .
+BOOTSTRAP_FILES = $(shell cd .mk/ && ls $(BOOTSTRAP_D)/*)
+$(BOOTSTRAP_FILES):
+	@ln -s ../../.mk/$@ $@
+init-drumkit: d $(MK_D) $(BOOTSTRAP_D) $(BOOTSTRAP_FILES)
 
 clean-drumkit:
 	@rm -rf drumkit d
