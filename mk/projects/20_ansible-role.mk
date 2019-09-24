@@ -1,6 +1,6 @@
 init-project-ansible-role-intro:
 	@echo "Initializing Drumkit Ansible role '$(role)'."
-init-project-ansible-role: init-project-ansible-role-intro ansible-galaxy init-behat setup-ansible-role ## Initialize a project for developing Ansible roles.
+init-project-ansible-role: init-project-ansible-role-intro ansible-galaxy init-behat setup-ansible-role setup-ansible-role-tests ## Initialize a project for developing Ansible roles.
 
 setup-ansible-role: ansible-galaxy behat.yml
 	@echo "Using ansible-galaxy to generate role files."
@@ -8,9 +8,12 @@ setup-ansible-role: ansible-galaxy behat.yml
 	@echo "Deploying generated role files to current directory and cleaning up."
 	@mv $(role)/* .
 	@rm -rf $(role)
+
+setup-ansible-role-tests:
 	@echo "Customizing tests."
+	@mkdir -p tests
 	@cd tests && ln -s .. $(role)
-	@rm tests/test.yml
+	@rm -f tests/test.yml
 	@jinja2 -D role=$(role) -o tests/test.yml $(FILES_DIR)/ansible-role/test.yml.j2
 	@mkdir -p features
 	@cp $(FILES_DIR)/ansible-role/ansible-role-example.feature features/
