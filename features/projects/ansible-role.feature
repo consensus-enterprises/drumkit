@@ -26,7 +26,7 @@ Feature: Initialize Ansible role projects.
      """
 
   Scenario: Set up an Ansible role project.
-     When I run "unset DRUMKIT && . d && make setup-ansible-role role=myrole"
+     When I run "unset DRUMKIT && . d && make setup-ansible-role setup-ansible-role-tests role=myrole"
      Then the following files should exist:
       """
       README.md
