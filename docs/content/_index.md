@@ -10,7 +10,7 @@ Drumkit is a toolkit for developing Drupal sites, modules, themes and profiles.
 Drumkit is installed on a project-by-project basis, as a git submodule. To add `drumkit` to an existing Drupal project, run the following command:
 
 ```console
-wget -O - https://gitlab.com/consensus.enterprises/drumkit/raw/master/scripts/install.sh | /bin/bash
+wget -O - https://drumk.it/installer | /bin/bash
 ```
 
 For further details on installation procedures and options, see the [Install](install) page.
