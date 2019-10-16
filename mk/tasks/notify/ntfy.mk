@@ -5,7 +5,7 @@ NTFY_URL     ?= https://matrix.org
 NTFY_ROOM    ?= INVALID
 NTFY_TOKEN   ?= INVALID
 
-ntfy = ntfy --backend $(NTFY_BACKEND) --option token $(NTFY_TOKEN) --option url $(NTFY_URL) --option roomId $(NTFY_ROOM)
+ntfy = ntfy --backend '$(NTFY_BACKEND)' --option token '$(NTFY_TOKEN)' --option url '$(NTFY_URL)' --option roomId '$(NTFY_ROOM)'
 
 ntfy-check-room:
 ifeq ($(NTFY_ROOM),INVALID)
