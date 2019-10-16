@@ -2,7 +2,7 @@ image: ubuntu:bionic
 
 stages:
   - test
-  - publish
+#  - publish
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -13,47 +13,49 @@ fast-tests: &test-defaults
   before_script:
     # Install Git and GNU Make
     - apt-get update -yqq
-    - apt-get install -yqq git make unzip
+#    - apt-get install -yqq git make unzip
     # Install Behat dependencies
-    - apt-get install -yqq curl php-cli php-mbstring php-curl
+#    - apt-get install -yqq curl php-cli php-mbstring php-curl
     # TODO: Figure out a way to intall these system packages as dependecies of
     # the targets that use them.
     - apt-get install -yqq python3-minimal python3-pip python3-yaml python3-jinja2
     - pip3 install jinja2-cli ntfy[matrix]
     - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
   script:
-    - source d
-    - make run-behat-ci
+#    - source d
+#    - make run-behat-ci
+    - make ntfy-ci-success
+    - make ntfy-ci-failure
 
-slow-tests:
-  <<: *test-defaults
-  variables:
-    BEHAT_CI_TAGS: '@slow&&~@wip'
-
-# This test will fail (on purpose), in order to test that failure notifications are sent.
-noisy-tests:
-  <<: *test-defaults
-  variables:
-    NOTIFY_CI_MESSAGE: Notification test; safe to ignore failures.
-  script:
-    - source d
-    - BEHAT_CI_TAGS=success make run-behat-ci
-    - BEHAT_CI_TAGS=failure make run-behat-ci
-  when: manual
-  allow_failure: true
-
-pages:
-  stage: publish
-  image: registry.gitlab.com/pages/hugo:latest
-  before_script:
-    # Check the current version of Hugo, so we can keep our local env in sync.
-    - hugo version
-  script:
-    # Build our docs site.
-    - cd docs && hugo && mv public/ ..
-  artifacts:
-    paths:
-      - public
-  only:
-    - master
-
+#slow-tests:
+#  <<: *test-defaults
+#  variables:
+#    BEHAT_CI_TAGS: '@slow&&~@wip'
+#
+## This test will fail (on purpose), in order to test that failure notifications are sent.
+#noisy-tests:
+#  <<: *test-defaults
+#  variables:
+#    NOTIFY_CI_MESSAGE: Notification test; safe to ignore failures.
+#  script:
+#    - source d
+#    - BEHAT_CI_TAGS=success make run-behat-ci
+#    - BEHAT_CI_TAGS=failure make run-behat-ci
+#  when: manual
+#  allow_failure: true
+#
+#pages:
+#  stage: publish
+#  image: registry.gitlab.com/pages/hugo:latest
+#  before_script:
+#    # Check the current version of Hugo, so we can keep our local env in sync.
+#    - hugo version
+#  script:
+#    # Build our docs site.
+#    - cd docs && hugo && mv public/ ..
+#  artifacts:
+#    paths:
+#      - public
+#  only:
+#    - master
+#
