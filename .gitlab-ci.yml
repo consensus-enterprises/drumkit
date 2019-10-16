@@ -15,7 +15,7 @@ fast-tests: &test-defaults
     - apt-get update -yqq
     - apt-get install -yqq git make unzip
     # Install Behat dependencies
-    - apt-get install -yqq curl php-cli
+    - apt-get install -yqq curl php-cli php-mbstring php-curl
     # TODO: Figure out a way to intall these system packages as dependecies of
     # the targets that use them.
     - apt-get install -yqq python3-minimal python3-pip python3-yaml python3-jinja2
