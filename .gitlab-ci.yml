@@ -1,4 +1,4 @@
-image: registry.gitlab.com/pages/hugo:latest
+image: ubuntu:bionic
 
 stages:
   - test
@@ -9,7 +9,6 @@ variables:
 
 fast-tests: &test-defaults
   stage: test
-  image: php:7.2
   before_script:
     # Install Git and GNU Make
     - apt-get update -yqq
@@ -42,6 +41,7 @@ noisy-tests:
 
 pages:
   stage: publish
+  image: registry.gitlab.com/pages/hugo:latest
   before_script:
     # Check the current version of Hugo, so we can keep our local env in sync.
     - hugo version
