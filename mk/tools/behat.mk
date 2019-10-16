@@ -53,7 +53,7 @@ $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
 $(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json
 	@echo Downloading Behat.
 	@cd $(BEHAT_SRC) && \
-	$(composer) install --no-dev --prefer-dist # -q
+	$(composer) install --no-dev --prefer-dist -q
 
 $(BEHAT_BIN): $(BEHAT_SRC)/composer.lock
 	@echo Installing Behat.
