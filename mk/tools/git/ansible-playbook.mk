@@ -15,7 +15,11 @@ ifdef START_AT_TASK
 ANSIBLE_START_AT_TASK := --start-at-task="$(START_AT_TASK)"
 endif
 
-ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS)
+ifdef EXTRA_VARS
+ANSIBLE_EXTRA_VARS := --extra-vars="$(EXTRA_VARS)"
+endif
+
+ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS) $(ANSIBLE_EXTRA_VARS)
 
 # Below are some helpers that are useful for ansible role testing.
 # TODO: migrate to a new ansible role project type.
