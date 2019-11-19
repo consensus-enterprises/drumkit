@@ -11,15 +11,19 @@ else
     ANSIBLE_TAGS =
 endif
 
-ifdef START_AT_TASK
-ANSIBLE_START_AT_TASK := --start-at-task="$(START_AT_TASK)"
+ifdef start_at_task
+ANSIBLE_START_AT_TASK := --start-at-task="$(start_at_task)"
 endif
 
-ifdef EXTRA_VARS
-ANSIBLE_EXTRA_VARS := --extra-vars="$(EXTRA_VARS)"
+ifdef extra_vars
+ANSIBLE_EXTRA_VARS := --extra-vars="$(extra_vars)"
 endif
 
-ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS) $(ANSIBLE_EXTRA_VARS)
+ifdef limit
+ANSIBLE_EXTRA_VARS := --limit="$(limit)"
+endif
+
+ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_LIMIT) $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS) $(ANSIBLE_EXTRA_VARS)
 
 # Below are some helpers that are useful for ansible role testing.
 # TODO: migrate to a new ansible role project type.
