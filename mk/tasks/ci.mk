@@ -7,5 +7,5 @@ endif
 run-behat-ci: behat
 	$(behat) $(BEHAT_TAGS_REAL); \
   export RESULT=$$?; \
-  make -s ntfy-ci; \
+  make -s matrix-ci; \
   exit $$RESULT 
