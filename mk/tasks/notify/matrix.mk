@@ -1,14 +1,36 @@
-MATRIX_MESSAGE    ?= "Test message from Drumkit."
-MATRIX_CI_SUCCESS ?= "✅  <strong>Success</strong>"
-MATRIX_CI_FAILURE ?= "❎  <strong>Failure</strong>"
-MATRIX_CI_MESSAGE ?= "building <em><a href='$(CI_PROJECT_URL)/tree/$(CI_COMMIT_REF_NAME)'>$(CI_COMMIT_REF_NAME)</a></em> branch of <a href='$(CI_PROJECT_URL)'>$(CI_PROJECT_NAME)</a>. See <a href='$(CI_PROJECT_URL)/pipelines/$(CI_PIPELINE_ID)'>Pipeline \#$(CI_PIPELINE_ID)</a>.<br />Commit: <a href='$(CI_PROJECT_URL)/commit/$(CI_COMMIT_SHA)'>$$(git rev-parse --short HEAD)</a>: $$(git log -1 --pretty=%B)"
+MATRIX_PLAYBOOK = $(MK_DIR)/files/ansible/matrix-playbook.yml
+MATRIX_MESSAGE ?= $(NOTIFY_MESSAGE)
+MATRIX_URL     ?= https://matrix.org
+MATRIX_ROOM    ?= INVALID
+MATRIX_TOKEN   ?= INVALID
 
-matrix-message:
-	@echo $(MATRIX_MESSAGE) | $(MK_DIR)/scripts/mcat.py --stdin
+matrix = ansible-playbook $(MATRIX_PLAYBOOK) --extra-vars 'matrix_msg="$(MATRIX_MESSAGE)" matrix_room_id="$(MATRIX_ROOM)" matrix_hs_url="$(MATRIX_URL)" matrix_auth_token="$(MATRIX_TOKEN)"'
 
-matrix-ci-success:
-	@echo $(MATRIX_CI_SUCCESS) $(MATRIX_CI_MESSAGE) | $(MK_DIR)/scripts/mcat.py --stdin
+matrix-check-room:
+ifeq ($(MATRIX_ROOM),INVALID)
+	$(ECHO) "$(RED)$(BOLD)ERROR:$(RESET) Ensure the MATRIX_ROOM environment variable is set."
+	@exit 1
+endif
 
-matrix-ci-failure:
-	@echo $(MATRIX_CI_FAILURE) $(MATRIX_CI_MESSAGE) | $(MK_DIR)/scripts/mcat.py --stdin
+matrix-check-token:
+ifeq ($(MATRIX_TOKEN),INVALID)
+	$(ECHO) "$(RED)$(BOLD)ERROR:$(RESET) Ensure the MATRIX_TOKEN environment variable is set."
+	@exit 1
+endif
+
+matrix: matrix-check-room matrix-check-token ansible-playbook
+	@$(matrix)
+
+matrix-ci:
+ifeq ($(NOTIFY_CI_RESULT),0)
+	@make -s matrix-ci-success confirmation="$(GREEN)$(BOLD)✅ SUCCESS$(RESET)"
+else
+	@make -s matrix-ci-failure confirmation="$(RED)$(BOLD)❎ FAILURE$(RESET)"
+endif
+
+matrix-ci-success: MATRIX_STATUS=$(NOTIFY_CI_SUCCESS)
+matrix-ci-failure: MATRIX_STATUS=$(NOTIFY_CI_FAILURE)
+matrix-ci-success matrix-ci-failure: MATRIX_MESSAGE=$(MATRIX_STATUS) $(NOTIFY_CI_MESSAGE)
+matrix-ci-success matrix-ci-failure: matrix
+	$(ECHO) "$(confirmation) notification sent."
 

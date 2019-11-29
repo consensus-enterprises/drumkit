@@ -24,8 +24,8 @@ fast-tests: &test-defaults
   script:
 #    - source d
 #    - make run-behat-ci
-    - make ntfy-ci-success
-    - make ntfy-ci-failure
+    - make matrix-ci-success
+    - make matrix-ci-failure
 
 #slow-tests:
 #  <<: *test-defaults
