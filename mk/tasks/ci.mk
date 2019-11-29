@@ -7,6 +7,6 @@ endif
 run-behat-ci: behat
 	$(behat) $(BEHAT_TAGS_REAL); \
   export RESULT=$$?; \
-  make -s ansible-playbook; \
-  make -s matrix-ci; \
+  make -s ansible-playbook 2>&1 >/dev/null; \
+  source d; make -s matrix-ci; \
   exit $$RESULT
