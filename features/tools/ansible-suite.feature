@@ -1,6 +1,6 @@
 @tools @ansible-suite
 Feature: Install Ansible and related tools locally
-  In order to automate infrastructure deployment 
+  In order to automate infrastructure deployment
   As a DevOps engineer
   I need to be able run Ansible
 
@@ -26,7 +26,6 @@ Feature: Install Ansible and related tools locally
     When I run "make ansible-suite"
     Then I should get:
       """
-      Deploying Ansible bootstrap script.
       Deploying Ansible config file.
       Installing Ansible.
       Installing Ansible Doc.
