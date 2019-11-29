@@ -23,6 +23,10 @@ ifdef limit
 ANSIBLE_LIMIT := --limit="$(limit)"
 endif
 
+ifdef inventory
+ANSIBLE_INVENTORY := --inventory="$(inventory)"
+endif
+
 ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_LIMIT) $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS) $(ANSIBLE_EXTRA_VARS)
 
 # Below are some helpers that are useful for ansible role testing.
