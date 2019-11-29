@@ -1,6 +1,6 @@
 @tools @ansible
 Feature: Install Ansible and related tools locally
-  In order to automate infrastructure deployment 
+  In order to automate infrastructure deployment
   As a DevOps engineer
   I need to be able run Ansible
 

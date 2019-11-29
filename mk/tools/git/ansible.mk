@@ -7,7 +7,7 @@ ansible_PARENT       = ansible
 
 ANSIBLE_BOOTSTRAP_SCRIPT = $(BOOTSTRAP_D)/40_ansible.sh
 
-ansible ansible-suite: ansible.cfg $(BOOTSTRAP_D) $(ANSIBLE_BOOTSTRAP_SCRIPT)
+ansible: ansible.cfg $(BOOTSTRAP_D) $(ANSIBLE_BOOTSTRAP_SCRIPT)
 ansible.cfg:
 	@echo "Deploying Ansible config file."
 	@cp $(FILES_DIR)/ansible/ansible.cfg $(PROJECT_ROOT)

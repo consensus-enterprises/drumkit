@@ -26,6 +26,7 @@ Feature: Install Ansible and related tools locally
     When I run "make ansible-suite"
     Then I should get:
       """
+      Deploying Ansible bootstrap script.
       Deploying Ansible config file.
       Installing Ansible.
       Installing Ansible Doc.
