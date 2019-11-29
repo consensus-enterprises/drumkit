@@ -1,10 +1,9 @@
-MATRIX_PLAYBOOK = $(MK_DIR)/files/ansible/matrix-playbook.yml
 MATRIX_MESSAGE ?= $(NOTIFY_MESSAGE)
 MATRIX_URL     ?= https://matrix.org
 MATRIX_ROOM    ?= INVALID
 MATRIX_TOKEN   ?= INVALID
 
-matrix = ansible-playbook $(MATRIX_PLAYBOOK) --extra-vars 'matrix_msg="$(MATRIX_MESSAGE)" matrix_room_id="$(MATRIX_ROOM)" matrix_hs_url="$(MATRIX_URL)" matrix_auth_token="$(MATRIX_TOKEN)"'
+matrix = ansible localhost -m matrix -a 'msg_plain="" msg_html="$(MATRIX_MESSAGE)" room_id="$(MATRIX_ROOM)" hs_url="$(MATRIX_URL)" token="$(MATRIX_TOKEN)"'
 
 matrix-check-room:
 ifeq ($(MATRIX_ROOM),INVALID)
@@ -18,7 +17,7 @@ ifeq ($(MATRIX_TOKEN),INVALID)
 	@exit 1
 endif
 
-matrix: matrix-check-room matrix-check-token ansible-playbook
+matrix: matrix-check-room matrix-check-token ansible
 	@$(matrix)
 
 matrix-ci:
