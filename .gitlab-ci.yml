@@ -22,7 +22,7 @@ fast-tests: &test-defaults
     - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
     - pip3 install jinja2-cli matrix-client
   script:
-#    - source d
+    - source d
 #    - make run-behat-ci
     - make matrix-ci-success
     - make matrix-ci-failure
