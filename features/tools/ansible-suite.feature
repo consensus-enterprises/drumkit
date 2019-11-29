@@ -27,6 +27,7 @@ Feature: Install Ansible and related tools locally
     Then I should get:
       """
       Deploying Ansible bootstrap script.
+      Deploying Ansible config file.
       Installing Ansible.
       Installing Ansible Doc.
       Installing Ansible Galaxy.
