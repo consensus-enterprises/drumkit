@@ -20,7 +20,7 @@ ANSIBLE_EXTRA_VARS := --extra-vars="$(extra_vars)"
 endif
 
 ifdef limit
-ANSIBLE_EXTRA_VARS := --limit="$(limit)"
+ANSIBLE_LIMIT := --limit="$(limit)"
 endif
 
 ANSIBLE_PLAYBOOK_CMD := ansible-playbook $(ANSIBLE_LIMIT) $(ANSIBLE_START_AT_TASK) $(ANSIBLE_INVENTORY) $(ANSIBLE_TAGS) $(ANSIBLE_EXTRA_VARS)
