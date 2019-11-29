@@ -23,6 +23,7 @@ fast-tests: &test-defaults
     - pip3 install jinja2-cli matrix-client
   script:
     - source d
+    - make clean-ansible  # Clean up Ansible config from Drumkit itself.
     - make run-behat-ci
 
 slow-tests:
