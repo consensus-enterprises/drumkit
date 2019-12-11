@@ -17,6 +17,11 @@ clean-project-drupal8:
 	@rm drumkit-drupal8.conf
 
 init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit
+  @echo "Finished initializing Drupal 8 drumkit."
+  @echo "You can now spin up your project using the following commands:"
+  @echo "  make start"
+  @echo "  make build"
+  @echo "  make install"
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
@@ -30,14 +35,17 @@ init-drupal8-drumkit: $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
 
 .lando.yml:
+	@echo "Initializing .lando.yml"
 	@echo jinja2 `perl -n < drumkit-drupal8.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/lando.yml.j2  > .drumkit-drupal8-init-lando.cmd
 	@ . .drumkit-drupal8-init-lando.cmd
 	@ rm .drumkit-drupal8-init-lando.cmd
 
 $(MK_D)/10_variables.mk: $(MK_D)
+	@echo "Initializing $@"
 	@echo jinja2 `perl -n < drumkit-drupal8.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/10_variables.mk.j2  > .drumkit-drupal8-init-variables.cmd
 	@ . .drumkit-drupal8-init-variables.cmd
 	@ rm .drumkit-drupal8-init-variables.cmd
 
 $(MK_FILES):
+	@echo "Initializing $@"
 	@cp $(FILES_DIR)/drupal8/$@ $(MK_D)/
