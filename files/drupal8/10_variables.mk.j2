@@ -1,0 +1,56 @@
+# Set some variables for use across commands.
+SITE_URL  = {{ PROJECT_NAME }}.lndo.site
+SITE_NAME = "{{ SITE_NAME }}"
+
+ADMIN_USER = {{ ADMIN_USER }}
+ADMIN_PASS = {{ ADMIN_PASS }}
+INSTALL_PROFILE = standard
+
+DB_NAME = {{ DB_NAME }}
+DB_USER = {{ DB_USER }}
+DB_PASS = {{ DB_PASS }}
+
+TIMESTAMP = $(shell date +%s)
+TMP_DIR   = tmp 
+
+# Suppress Make-specific output, but allow for greater verbosity.
+VERBOSE := 1
+QUIET   :=  
+ifeq ($(VERBOSE), 0)
+    MAKE-QUIET = $(MAKE) -s
+    QUIET      = > /dev/null
+    DRUSH_VERBOSE =
+else
+    MAKE-QUIET = $(MAKE)
+    DRUSH_VERBOSE = --verbose
+endif
+
+# Allow debug output
+DEBUG := 0
+ifeq ($(DEBUG), 0)
+    DRUSH_DEBUG =
+else
+    DRUSH_DEBUG = --debug
+endif
+
+# Normalize local development and CI commands.
+LANDO = $(shell which lando)
+ifeq ($(LANDO),)
+    DRUSH_CMD = ./bin/drush
+    APP_PATH  =
+else
+    DRUSH_CMD = $(LANDO) drush
+    APP_PATH  = /app/
+endif
+DRUSH = $(DRUSH_CMD) --uri=$(SITE_URL) $(DRUSH_VERBOSE) $(DRUSH_DEBUG)
+
+# Colour output. See 'help' for example usage.
+ECHO       = @echo -e
+BOLD       = \033[1m
+RESET      = \033[0m
+make_color = \033[38;5;$1m  # defined for 1 through 255 
+GREEN      = $(strip $(call make_color,22))
+GREY       = $(strip $(call make_color,241))
+RED        = $(strip $(call make_color,124))
+WHITE      = $(strip $(call make_color,255))
+YELLOW     = $(strip $(call make_color,94))

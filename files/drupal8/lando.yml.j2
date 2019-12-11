@@ -1,0 +1,10 @@
+name: {{ PROJECT_NAME }}   
+recipe: drupal8
+config:
+  webroot: web
+services:
+  database:
+    creds:
+      user: {{ DB_USER }}
+      password: {{ DB_PASS }}
+      database: {{ DB_NAME }}

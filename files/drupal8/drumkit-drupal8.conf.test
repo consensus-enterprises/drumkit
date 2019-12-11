@@ -1,0 +1,7 @@
+PROJECT_NAME=mydrupalsite
+SITE_NAME=My Drupal Site
+DB_USER=drupal8
+DB_NAME=drupal8
+DB_PASS=drupal8
+ADMIN_USER=dev
+ADMIN_PASS=pwd
