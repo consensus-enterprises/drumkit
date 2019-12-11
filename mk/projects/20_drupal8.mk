@@ -17,11 +17,11 @@ clean-project-drupal8:
 	@rm drumkit-drupal8.conf
 
 init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit
-  @echo "Finished initializing Drupal 8 drumkit."
-  @echo "You can now spin up your project using the following commands:"
-  @echo "  make start"
-  @echo "  make build"
-  @echo "  make install"
+	@echo "Finished initializing Drupal 8 drumkit."
+	@echo "You can now spin up your project using the following commands:"
+	@echo "  make start"
+	@echo "  make build"
+	@echo "  make install"
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
