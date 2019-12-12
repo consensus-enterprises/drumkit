@@ -8,7 +8,6 @@ Feature: Initialize Drupal 8 projects with Lando.
     Given I bootstrap Drumkit
       And I run "cp .mk/files/drupal8/drumkit-drupal8.conf.test drumkit-drupal8.conf"
 
-  @debug
   Scenario: Initialize a Drupal 8 project.
      When I run "make -n init-project-drupal8"
      Then I should get:
@@ -44,7 +43,7 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
 
   Scenario: Test Drumkit setup of .env and drumkit/ directory contents
-     When I run "make init-drupal8-drumkit"
+     When I run "make init-drupal8-drumkit-dir"
      Then I should get:
      """
 	   Setting up drumkit directory.
