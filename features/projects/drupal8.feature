@@ -8,18 +8,20 @@ Feature: Initialize Drupal 8 projects with Lando.
     Given I bootstrap Drumkit
       And I run "cp .mk/files/drupal8/drumkit-drupal8.conf.test drumkit-drupal8.conf"
 
+  @debug
   Scenario: Initialize a Drupal 8 project.
      When I run "make -n init-project-drupal8"
      Then I should get:
      """
      Initializing Drumkit Drupal 8 project
-     Installing python dependencies so that Drumkit can use ansible and jinja2.
-     Installing PHP dependencies.
+     Ensuring python dependencies are installed.
+     Ensuring PHP dependencies are installed.
      Installing Behat.
-     Installing Docker.
-     to docker group.
-     Installing Lando.
+     Ensuring Docker is installed.
+     in docker group.
+     Ensuring Lando is installed.
      Creating Composer project from drupal-project template.
+     You can now spin up your project using the following commands
      """
 
   @slow
