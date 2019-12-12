@@ -27,7 +27,7 @@ init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-py
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
-	@which composer > /dev/null || . d  && composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction # we have to bootstrap drumkit if it hasn't been done yet, to get composer in our path
+	@composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
