@@ -31,7 +31,7 @@ init-composer-drupal8-project:
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
-init-drupal8-drumkit-dir: $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
+init-drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
 	@echo "Setting up drumkit directory."
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" >> .env
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
@@ -42,7 +42,7 @@ init-drupal8-drumkit-dir: $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
 	@ . .drumkit-drupal8-init-lando.cmd
 	@rm .drumkit-drupal8-init-lando.cmd
 
-$(MK_D)/10_variables.mk: $(MK_D)
+$(MK_D)/10_variables.mk:
 	@echo "Initializing $@"
 	@echo jinja2 `perl -n < drumkit-drupal8.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/10_variables.mk.j2  > .drumkit-drupal8-init-variables.cmd
 	@ . .drumkit-drupal8-init-variables.cmd
