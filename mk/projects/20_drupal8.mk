@@ -2,6 +2,7 @@ MK_FILES = 20_lando.mk 30_build.mk 40_install.mk
 
 init-project-drupal8-intro:
 	@echo "Initializing Drumkit Drupal 8 project."
+	@[ -d web ] && read -p "It looks like you already have a Drupal project here. If you continue, some or all of it may be overwritten, and/or some of the following commands may only partially work, leaving your project in an inconsistent state. Press 'Enter' to continue anyway or Ctrl-C to abort:" dummy_variable || true
 
 drumkit-drupal8.conf:
 	@echo "Please provide the following information so we can create your project:"
@@ -13,7 +14,7 @@ drumkit-drupal8.conf:
 	@read -p "Admin username (press enter for 'dev'): " admin_user && echo "ADMIN_USER=$${admin_user:-dev}" >> drumkit-drupal8.conf
 	@read -p "Admin password (press enter for 'pwd'): " admin_pass && echo "ADMIN_PASS=$${admin_pass:-pwd}" >> drumkit-drupal8.conf
 
-clean-project-drupal8:
+clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
 
 init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit
@@ -38,13 +39,13 @@ init-drupal8-drumkit: $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
 	@echo "Initializing .lando.yml"
 	@echo jinja2 `perl -n < drumkit-drupal8.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/lando.yml.j2  > .drumkit-drupal8-init-lando.cmd
 	@ . .drumkit-drupal8-init-lando.cmd
-	@ rm .drumkit-drupal8-init-lando.cmd
+	@rm .drumkit-drupal8-init-lando.cmd
 
 $(MK_D)/10_variables.mk: $(MK_D)
 	@echo "Initializing $@"
 	@echo jinja2 `perl -n < drumkit-drupal8.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/10_variables.mk.j2  > .drumkit-drupal8-init-variables.cmd
 	@ . .drumkit-drupal8-init-variables.cmd
-	@ rm .drumkit-drupal8-init-variables.cmd
+	@rm .drumkit-drupal8-init-variables.cmd
 
 $(MK_FILES):
 	@echo "Initializing $@"

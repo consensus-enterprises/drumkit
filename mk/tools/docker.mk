@@ -1,7 +1,11 @@
-docker:
-	@echo "Installing Docker."
+docker: /usr/bin/docker docker-group
+
+/usr/bin/docker:
+	@echo "Ensuring Docker is installed."
 	@curl -fsSL https://get.docker.com -o get-docker.sh
 	@sudo sh get-docker.sh
-	@echo "Adding $USER to docker group."
-	@sudo usermod -aG docker $USER
-	@newgrp docker
+	@rm get-docker.sh
+
+docker-group:
+	@echo "Ensuring $(USER) is in docker group."
+	@id|grep docker || sudo usermod -aG docker $(USER)
