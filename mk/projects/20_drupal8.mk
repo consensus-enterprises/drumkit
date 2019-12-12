@@ -2,7 +2,7 @@ MK_FILES = 20_lando.mk 30_build.mk 40_install.mk
 
 init-project-drupal8-intro:
 	@echo "Initializing Drumkit Drupal 8 project."
-	@[ -d web ] && read -p "It looks like you already have a Drupal project here. If you continue, some or all of it may be overwritten, and/or some of the following commands may only partially work, leaving your project in an inconsistent state. Press 'Enter' to continue anyway or Ctrl-C to abort:" dummy_variable || true
+	@[ -d web ] && read -p "It looks like you already have a Drupal project here. If you continue, some or all of it may be overwritten, and/or the project initialization process may only partially work, leaving your project in an inconsistent state. Press 'Enter' to continue anyway or Ctrl-C to abort:" dummy_variable || true
 
 drumkit-drupal8.conf:
 	@echo "Please provide the following information so we can create your project:"
@@ -17,7 +17,7 @@ drumkit-drupal8.conf:
 clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
 
-init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit
+init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit-dir
 	@echo "Finished initializing Drupal 8 drumkit."
 	@echo "You can now spin up your project using the following commands:"
 	@echo "  make start"
@@ -27,11 +27,11 @@ init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-py
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
-	@composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction
+	@which composer > /dev/null || . d  && composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction # we have to bootstrap drumkit if it hasn't been done yet, to get composer in our path
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
-init-drupal8-drumkit: $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
+init-drupal8-drumkit-dir: $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
 	@echo "Setting up drumkit directory."
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" >> .env
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
