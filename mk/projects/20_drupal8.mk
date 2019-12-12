@@ -17,12 +17,13 @@ drumkit-drupal8.conf:
 clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
 
-init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit
+init-project-drupal8: # drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit
 	@echo "Finished initializing Drupal 8 drumkit."
 	@echo "You can now spin up your project using the following commands:"
 	@echo "  make start"
 	@echo "  make build"
 	@echo "  make install"
+	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."

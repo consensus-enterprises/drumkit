@@ -8,4 +8,4 @@ docker: /usr/bin/docker docker-group
 
 docker-group:
 	@echo "Ensuring $(USER) is in docker group."
-	@id|grep docker || sudo usermod -aG docker $(USER)
+	@groups|grep docker || sudo usermod -aG docker $(USER)
