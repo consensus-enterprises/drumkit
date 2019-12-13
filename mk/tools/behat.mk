@@ -17,7 +17,7 @@ $(BDE_DIR): $(DRUSH_DIR)
 	@$(drush) @none cc drush
 
 deps: deps-behat
-deps-behat: apt-update composer
+deps-behat: apt-update deps-php composer
 	@echo Installing Behat dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(BEHAT_DEPS)
 
