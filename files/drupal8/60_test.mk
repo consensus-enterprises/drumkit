@@ -3,7 +3,7 @@
 .PHONY: tests tests-ci tests-wip tests-js vnc test-steps tests-upstream
 
 tests-complete: tests tests-upstream
-tests:
+tests: ## Run Behat test suite
 	lando behat
 
 tests-upstream:

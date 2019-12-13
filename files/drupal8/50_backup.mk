@@ -8,7 +8,7 @@ LATEST_FILE := $(SITE_URL)-database-latest.sql
 SNAPSHOT_FILE = $(SITE_URL)-database-snapshot.sql
 RESTORE_FILE := $(BACKUP_DIR)/$(LATEST_FILE)
 
-backup:
+backup: ## Back up site database.
 	@$(MAKE-QUIET) backup-real
 	@$(ECHO) "$(YELLOW)Generated backup for $(GREY)$(SITE_URL)$(YELLOW) at $(GREY)$(BACKUP_DIR)/$(BACKUP_FILE)$(YELLOW).$(RESET)"
 backup-real:
@@ -17,7 +17,7 @@ backup-real:
 	$(DRUSH_CMD) --uri=$(SITE_URL) sql:dump > $(BACKUP_DIR)/$(BACKUP_FILE)
 	rm -f $(BACKUP_DIR)/$(LATEST_FILE)
 	cd $(BACKUP_DIR); ln -s $(BACKUP_FILE) $(LATEST_FILE)
-clean-backups:
+clean-backups: ## Remove all backups.
 	rm -f $(TMP_DIR)/backups/*
 	@$(ECHO) "$(YELLOW)Deleted all backups.$(RESET)"
 
@@ -32,13 +32,13 @@ restore-real:
 	$(DRUSH) sql:query --file $(APP_PATH)$(RESTORE_FILE) $(QUIET)
 	@$(ECHO) "$(YELLOW)Restored $(GREY)$(SITE_URL)$(YELLOW) from backup at $(GREY)$(RESTORE_FILE)$(YELLOW).$(RESET)"
 
-snapshot:
+snapshot: ## Take a snapshot database dump.
 	@$(MAKE-QUIET) snapshot-real LATEST_FILE=$(SNAPSHOT_FILE)
 snapshot-real:
 	@$(MAKE-QUIET) backup-real LATEST_FILE=$(SNAPSHOT_FILE) $(QUIET)
 	@$(ECHO) "$(YELLOW)Generated snapshot for $(GREY)$(SITE_URL)$(YELLOW) at $(GREY)$(BACKUP_DIR)/$(SNAPSHOT_FILE)$(YELLOW).$(RESET)"
 
-restore-snapshot:
+restore-snapshot: ## Restore most recent database snapshot.
 	@$(MAKE-QUIET) restore-snapshot-real LATEST_FILE=$(SNAPSHOT_FILE)
 restore-snapshot-real:
 	@$(MAKE-QUIET) restore-real LATEST_FILE=$(SNAPSHOT_FILE) $(QUIET)
