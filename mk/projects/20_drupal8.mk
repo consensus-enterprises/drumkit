@@ -17,7 +17,7 @@ drumkit-drupal8.conf:
 clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
 
-init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro install-python-deps install-php-deps behat docker lando init-composer-drupal8-project init-drupal8-drumkit-dir
+init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro deps-python deps-php jinja2 behat docker lando init-composer-drupal8-project init-drupal8-drumkit-dir
 	@echo "Finished initializing Drupal 8 drumkit."
 	@echo "You can now spin up your project using the following commands:"
 	@echo "  make start"
