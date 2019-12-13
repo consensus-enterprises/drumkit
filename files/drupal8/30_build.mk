@@ -5,7 +5,7 @@
 check-composer-cache:
 				@if [ -z ${COMPOSER_CACHE_DIR} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)COMPOSER_CACHE_DIR$(YELLOW).$(RESET)"; echo -e "$(BOLD)$(WHITE)Remember to bootstrap Drumkit ($(GREEN). d$(WHITE))$(RESET)"; exit 1; fi
 
-build: check-composer-cache web/index.php
+build: check-composer-cache web/index.php ## Build Composer codebase.
 web/index.php: composer
 				@$(MAKE-QUIET) build-real
 build-real:
@@ -15,13 +15,13 @@ build-real:
 				$(LANDO) composer --ansi create-project --no-progress $(QUIET)
 				@$(ECHO) "$(YELLOW)Completed build of codebase.$(RESET)"
 
-clean-composer-cache:
+clean-composer-cache: ## Clean Composer cache.
 ifneq ("$(wildcard $(COMPOSER_CACHE_DIR))","")
 				rm -rf $(COMPOSER_CACHE_DIR)/*
 				$(ECHO) "$(YELLOW)Deleted Composer cache contents.$(RESET)"
 endif
 
-clean-build:
+clean-build: ## Clean Composer built code.
 ifneq ("$(wildcard web)","")
 				chmod -R 700 web
 				rm -rf web
@@ -32,7 +32,7 @@ ifneq ("$(wildcard vendor)","")
 				@$(ECHO) "$(YELLOW)Deleted vendor directory.$(RESET)"
 endif
 
-update:
+update: ## Run composer update
 				@$(MAKE-QUIET) update-real
 update-real:
 				@$(ECHO) "$(YELLOW)Beginning update of codebase. (Be patient. This may take a while.)$(RESET)"
