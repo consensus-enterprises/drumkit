@@ -15,8 +15,8 @@ drumkit-drupal8.conf:
 clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
 
-init-project-drupal8: drumkit-drupal8.conf deps-python deps-php jinja2 behat docker lando drupal8-composer-codebase init-drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
-	@echo "all: start build install" >> Makefile
+init-project-drupal8: drumkit-drupal8.conf deps-python deps-php jinja2 behat docker lando drupal8-composer-codebase drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
+	@grep "all:" Makefile || echo "all: start build install" >> Makefile
 	@echo "Finished initializing Drupal 8 drumkit."
 	@echo "You can now spin up your project using the following commands:"
 	@echo "  make start"
@@ -34,9 +34,11 @@ composer.json:
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
-init-drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
+drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml $(BOOTSTRAP_D)/40_lando.sh
+.env:
+	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" > .env
+$(BOOTSTRAP_D)/40_lando.sh: .env
 	@echo "Setting up drumkit directory."
-	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" >> .env
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
 
 .lando.yml:

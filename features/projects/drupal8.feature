@@ -42,7 +42,7 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
 
   Scenario: Test Drumkit setup of .env and drumkit/ directory contents
-     When I run "make init-drupal8-drumkit-dir"
+     When I run "make drupal8-drumkit-dir"
      Then I should get:
      """
 	   Setting up drumkit directory.
