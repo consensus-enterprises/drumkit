@@ -1,8 +1,6 @@
 MK_FILES = 20_lando.mk 30_build.mk 40_install.mk
 
-init-project-drupal8-intro:
-	@echo "Initializing Drumkit Drupal 8 project."
-	@[ -d web ] && read -p "It looks like you already have a Drupal project here. If you continue, some or all of it may be overwritten, and/or the project initialization process may only partially work, leaving your project in an inconsistent state. Press 'Enter' to continue anyway or Ctrl-C to abort:" dummy_variable || true
+COMPOSER_BASE_PROJECT=drupal/recommended-project
 
 drumkit-drupal8.conf:
 	@echo "Please provide the following information so we can create your project:"
@@ -17,7 +15,7 @@ drumkit-drupal8.conf:
 clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
 
-init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro deps-python deps-php jinja2 behat docker lando init-composer-drupal8-project init-drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
+init-project-drupal8: drumkit-drupal8.conf deps-python deps-php jinja2 behat docker lando drupal8-composer-codebase init-drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
 	@echo "all: start build install" >> Makefile
 	@echo "Finished initializing Drupal 8 drumkit."
 	@echo "You can now spin up your project using the following commands:"
@@ -26,9 +24,13 @@ init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro deps-pytho
 	@echo "  make install"
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
-init-composer-drupal8-project:
-	@echo "Creating Composer project from drupal-project template."
-	@composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction
+drupal8-composer-codebase: composer.json
+# N.B. Using `composer.json` as a target here may not work in the long run,
+# since there are lots of project types that might want to initialize a
+# Composer file. But we'll use it here for expediency.
+composer.json: composer
+	@echo "Initializing Drupal 8 Composer project."
+	@composer create-project $(COMPOSER_BASE_PROJECT) tmpdir --stability dev --no-interaction
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
