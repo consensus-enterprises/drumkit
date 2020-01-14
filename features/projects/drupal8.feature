@@ -24,10 +24,10 @@ Feature: Initialize Drupal 8 projects with Lando.
 
   @slow
   Scenario: Sanity check the Composer Drupal 8 project template.
-     When I run "make init-composer-drupal8-project"
+     When I run "make drupal8-composer-codebase"
      Then I should get:
      """
-     Creating Composer project from drupal-project template
+     Initializing Drupal 8 Composer project.
      """
       And the following files should exist:
      """
