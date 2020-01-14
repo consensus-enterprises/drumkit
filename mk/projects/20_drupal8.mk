@@ -24,11 +24,11 @@ init-project-drupal8: drumkit-drupal8.conf deps-python deps-php jinja2 behat doc
 	@echo "  make install"
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
-drupal8-composer-codebase: composer.json
+drupal8-composer-codebase: composer composer.json
 # N.B. Using `composer.json` as a target here may not work in the long run,
 # since there are lots of project types that might want to initialize a
 # Composer file. But we'll use it here for expediency.
-composer.json: composer
+composer.json:
 	@echo "Initializing Drupal 8 Composer project."
 	@composer create-project $(COMPOSER_BASE_PROJECT) tmpdir --stability dev --no-interaction
 	@shopt -s dotglob && mv tmpdir/* .
