@@ -12,14 +12,13 @@ Feature: Initialize Drupal 8 projects with Lando.
      When I run "make -n init-project-drupal8"
      Then I should get:
      """
-     Initializing Drumkit Drupal 8 project
      Ensuring python dependencies are installed.
      Ensuring PHP dependencies are installed.
      Installing Behat.
      Ensuring Docker is installed.
      in docker group.
      Ensuring Lando is installed.
-     Creating Composer project from drupal-project template.
+     Initializing Drupal 8 Composer project.
      You can now spin up your project using the following commands
      """
 
