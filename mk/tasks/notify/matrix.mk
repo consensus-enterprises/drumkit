@@ -17,7 +17,7 @@ ifeq ($(MATRIX_TOKEN),INVALID)
 	@exit 1
 endif
 
-matrix: matrix-check-room matrix-check-token ansible
+matrix: matrix-check-room matrix-check-token
 	@$(matrix)
 
 matrix-ci:

@@ -1,0 +1,38 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "registry.gitlab.com/consensus.enterprises/clients/hc/controlled-vocabulary/bionic:latest",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/packer/scripts/utils.sh",
+        "scripts/packer/scripts/cleanup.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "registry.gitlab.com/consensus.enterprises/clients/hc/controlled-vocabulary/{{user `image_name`}}",
+        "tag": "0.0.x"
+      },
+      {
+        "type": "docker-tag",
+        "repository": "registry.gitlab.com/consensus.enterprises/clients/hc/controlled-vocabulary/{{user `image_name`}}",
+        "tag": "latest"
+      },
+      {
+        "type": "docker-push"
+      }
+    ]
+  ],
+  "variables": {
+    "image_name": "base"
+  }
+}
