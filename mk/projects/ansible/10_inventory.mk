@@ -5,7 +5,7 @@ ANSIBLE_INVENTORY_FILENAME             ?= $(environment).yml
 ANSIBLE_INVENTORY_DIR                  := $(PROJECT_ROOT)/inventory
 ANSIBLE_STATIC_INVENTORY_FILE_TEMPLATE := $(FILES_DIR)/ansible/templates/inventory.yml.j2
 
-ansible-add-static-inventory: $(ANSIBLE_INVENTORY_DIR) $(ANSIBLE_INVENTORY_DIR)/$(ANSIBLE_INVENTORY_FILENAME) ## [host,group,ipaddress,environment] Generate Ansible static inventory file with the given host, group and IP address for the given environment.
+ansible-add-static-inventory: $(ANSIBLE_INVENTORY_DIR) $(ANSIBLE_INVENTORY_DIR)/$(ANSIBLE_INVENTORY_FILENAME) ##@ansible [host,group,ipaddress,environment] Generate Ansible static inventory file with the given host, group and IP address for the given environment.
 
 ansible-clean-static-inventory:
 	@echo "Cleaning up Ansible static inventory file."

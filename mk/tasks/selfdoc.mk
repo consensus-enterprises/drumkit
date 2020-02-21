@@ -13,7 +13,7 @@ help-selfdoc-short: ## Aggregate and print all short self-documentation messages
 	@grep -h -E '^[a-zA-Z_-]+:.*?##@?[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##@?[^ ]* "}; \
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}' | sort -u
 
-help-category: ##@foo [category] Aggregate and print all short self-documentation messages from this category from all included makefiles.
+help-category: ##@help [category] Aggregate and print all short self-documentation messages from this category from all included makefiles.
 ifeq ($(category),)
 	@make -s help-categories
 else ifeq ($(shell echo $(HELP_CATEGORIES)|grep $(category)),)
@@ -25,7 +25,7 @@ else
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}'
 endif
 
-help-categories: ##@bar-baaz List all available help categories.
+help-categories: ##@help List all available help categories.
 	@$(ECHO) ""
 	@$(ECHO) "$(BOLD)Available help categories:$(RESET)"
 	@$(ECHO) ""
