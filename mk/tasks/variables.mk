@@ -28,8 +28,10 @@ BOLD       = \033[1m
 RESET      = \033[0m
 make_color = \033[38;5;$1m  # defined for 1 through 255
 GREEN      = $(strip $(call make_color,22))
+BLUE       = $(strip $(call make_color,33))
 GREY       = $(strip $(call make_color,241))
 RED        = $(strip $(call make_color,124))
 WHITE      = $(strip $(call make_color,255))
 YELLOW     = $(strip $(call make_color,94))
+CYAN       = $(strip $(call make_color,6))
 
