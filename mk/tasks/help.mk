@@ -7,7 +7,7 @@ help-help:
 	@echo "make tools-help"
 	@echo "  Print install help for all tools."
 
-help: $(HELP_HOOKS)
+#help: $(HELP_HOOKS)
 tools-help: $(HELP_HOOKS_TOOLS)
 
 list-help:
