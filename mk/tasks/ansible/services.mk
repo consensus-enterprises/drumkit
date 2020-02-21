@@ -3,4 +3,4 @@ include $(SELF_DIR)services/*.mk
 
 .PHONY: services
 
-services: groups hosts ## Ensure all services and applications are installed and configured on all groups and hosts.
+services: groups hosts ##@ansible Ensure all services and applications are installed and configured on all groups and hosts.
