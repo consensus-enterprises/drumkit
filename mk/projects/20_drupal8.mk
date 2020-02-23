@@ -28,7 +28,7 @@ init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro deps-pytho
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
-	@composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction
+	@composer create-project drupal/recommended-project tmpdir --stability dev --no-interaction
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
