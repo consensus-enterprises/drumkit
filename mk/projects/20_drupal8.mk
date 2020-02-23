@@ -26,20 +26,17 @@ init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro deps-pytho
 	@echo "  make install"
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
-init-composer-drupal8-project: .gitignore
+init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
 	@composer create-project drupal/recommended-project tmpdir --stability dev --no-interaction
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
+	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
 
 init-drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
 	@echo "Setting up drumkit directory."
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" >> .env
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
-
-.gitignore:
-	@echo "Creating .gitignore"
-	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
 
 .lando.yml:
 	@echo "Initializing .lando.yml"
