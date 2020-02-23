@@ -28,14 +28,19 @@ init-project-drupal8: drumkit-drupal8.conf init-project-drupal8-intro deps-pytho
 
 init-composer-drupal8-project:
 	@echo "Creating Composer project from drupal-project template."
-	@composer create-project drupal-composer/drupal-project:8.x-dev tmpdir --stability dev --no-interaction
+	@composer create-project "drupal/recommended-project:~8.8.0" tmpdir --no-interaction
+	@rm -rf tmpdir/tmp
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
-init-drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml
+init-drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES)  .gitignore .lando.yml
 	@echo "Setting up drumkit directory."
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" >> .env
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
+
+.gitignore:
+	@echo "Creating .gitignore"
+	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
 
 .lando.yml:
 	@echo "Initializing .lando.yml"
