@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 CWD=`pwd`
 if [[ -d .mk/ ]]; then
   BIN_PATH="$CWD/.mk/.local/bin"
