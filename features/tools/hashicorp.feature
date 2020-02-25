@@ -30,3 +30,36 @@ Feature: Install Hashicorp tools locally
       """
       Nothing to be done for 'packer'.
       """
+
+@tools @terraform
+Feature: Install Hashicorp terraform locally
+  In order to create various infrastructure components in the cloud
+  As a developer
+  I need to be able run terraform
+
+  Background:
+    Given I bootstrap a clean drumkit environment
+
+  Scenario: Remove terraform
+    When I run "make clean-terraform"
+    Then I should get:
+      """
+      Removing terraform.
+      """
+
+  @slow
+  Scenario: Install terraform
+    When I run "make packer"
+    Then I should get:
+      """
+      Downloading the
+      Unzipping terraform.
+      Installing the
+      release of terraform.
+      Terraform v
+      """
+    When I run "make terraform"
+    Then I should get:
+      """
+      Nothing to be done for 'terraform'.
+      """
