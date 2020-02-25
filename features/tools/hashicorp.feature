@@ -41,7 +41,7 @@ Feature: Install Hashicorp tools locally
 
   @slow
   Scenario: Install terraform
-    When I run "make packer"
+    When I run "make terraform"
     Then I should get:
       """
       Downloading the
