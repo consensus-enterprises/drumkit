@@ -14,7 +14,7 @@ help-selfdoc-short: ## Aggregate and print all short self-documentation messages
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}' | sort -u
 
 help-category: ##@help [category] Aggregate and print all short self-documentation messages from this category from all included makefiles.
-ifeq ($(category),)
+ifeq ($(category),) # No category supplied: display the help categories doc
 	@make -s help-categories
 else ifeq ($(shell echo $(HELP_CATEGORIES)|grep $(category)),)
 	@$(ECHO) ""
