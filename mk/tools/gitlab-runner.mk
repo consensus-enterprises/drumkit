@@ -1,7 +1,7 @@
 GITLAB_RUNNER_URL=https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
 GITLAB_RUNNER=$(BIN_DIR)/gitlab-runner
 
-gitlab-runner:
+gitlab-runner: ## Install and configure local gitlab-runner.
 	@which gitlab-runner || make -s gitlab-runner-real gitlab-runner-config
 
 gitlab-runner-real: docker
