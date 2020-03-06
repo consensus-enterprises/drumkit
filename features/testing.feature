@@ -10,7 +10,7 @@ Feature: Testing tools
      When I run "which behat"
      Then I should get:
        """
-       .mk/.local/bin/behat
+       behat
        """
 
   # NOTE: the @debug tag will show the entire output from tests as they run
