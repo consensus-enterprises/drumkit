@@ -21,11 +21,17 @@ pieces are:
 
 ### GitLab Image Registry
 
-* **TBD**: your project needs some basic config to enable (and authenticate) the docker image registry.
+Your GitLab project should have a Docker image registry enabled by default,
+assuming your instance has the feature enabled.
 
-* **TBD**: need to setup environment variables, or some other auth mechanism (ie.
-  `docker login`) to push images.
+While it is possible to automate authenticating to your image registry, the
+simplest solution is to do a `docker login` before building the images below,
+using your regular gitlab credentials. This just authenticates that you have
+access to the project and permission to push container images:
 
+```
+docker login registry.gitlab.com
+```
 
 ### Layered packer build scripts
 
@@ -111,7 +117,7 @@ Example:
 # Steps for setting up CV inside a CI docker image at packer time.
 
 # Run a composer install to pre-populate its cache, which should speed up the process in CI.
-cd /var/www/project-codebase
+cd /var/www/[PROJECT]
 . d
 make build VERBOSE=1
 ```
@@ -140,6 +146,17 @@ bionic-image: clone
         @packer build scripts/packer/docker/10-bionic.json
 
 ```
+
+So we'd run:
+
+```bash
+docker login registry.gitlab.com
+make ci-image
+```
+
+This will run through building each image layer in turn, and finally push one
+specific to your project, that your `.gitlab-ci.yml` will reference as the
+environment to run your build/test/notify stages.
 
 #### .clone target (**TBD** Dan)
 
