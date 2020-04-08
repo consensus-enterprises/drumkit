@@ -9,33 +9,34 @@ Feature: Initialize Drupal 8 projects with Lando.
       And I run "cp .mk/files/drupal8/drumkit-drupal8.conf.test drumkit-drupal8.conf"
 
   Scenario: Initialize a Drupal 8 project.
-     When I run "make -n init-project-drupal8"
+     When I run "make -n init-project-drupal8-deps"
      Then I should get:
      """
-     Initializing Drumkit Drupal 8 project
      Ensuring python dependencies are installed.
      Ensuring PHP dependencies are installed.
      Installing Behat.
      Ensuring Docker is installed.
      in docker group.
      Ensuring Lando is installed.
-     Creating Composer project from drupal-project template.
-     You can now spin up your project using the following commands
+     """
+     When I run "make -n init-project-drupal8"
+     Then I should get:
+     """
+     Initializing Drupal 8 Composer project.
+     You can spin up your project using the following commands
      """
 
   @slow
   Scenario: Sanity check the Composer Drupal 8 project template.
-     When I run "make init-composer-drupal8-project"
+     When I run "make drupal8-composer-codebase"
      Then I should get:
      """
-     Creating Composer project from drupal-project template
+     Initializing Drupal 8 Composer project.
      """
       And the following files should exist:
      """
-     vendor
-     web
-     web/core
-     web/index.php
+     composer.json
+     composer.lock
      """
       And the following files should not exist:
      """
@@ -43,7 +44,7 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
 
   Scenario: Test Drumkit setup of .env and drumkit/ directory contents
-     When I run "make init-drupal8-drumkit-dir"
+     When I run "make drupal8-drumkit-dir"
      Then I should get:
      """
 	   Setting up drumkit directory.
