@@ -1,4 +1,4 @@
-MK_FILES = 20_lando.mk 30_build.mk 40_install.mk
+MK_FILES = $(MK_D)/20_lando.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk
 
 COMPOSER_BASE_PROJECT=drupal/recommended-project
 
@@ -14,17 +14,17 @@ drumkit-drupal8.conf:
 
 clean-drumkit-drupal8.conf:
 	@rm drumkit-drupal8.conf
-
-init-project-drupal8: drumkit-drupal8.conf deps-python deps-php jinja2 behat docker lando drupal8-composer-codebase drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
-	@grep "all:" Makefile || echo "all: start build install" >> Makefile
+init-project-drupal8-deps: deps-python deps-php jinja2 behat docker lando
+init-project-drupal8: drumkit-drupal8.conf drupal8-composer-codebase drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
+	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@echo "Finished initializing Drupal 8 drumkit."
-	@echo "You can now spin up your project using the following commands:"
+	@echo "You can spin up your project using the following commands:"
 	@echo "  make start"
 	@echo "  make build"
 	@echo "  make install"
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
-drupal8-composer-codebase: composer composer.json
+drupal8-composer-codebase: composer composer.json .gitignore .env
 # N.B. Using `composer.json` as a target here may not work in the long run,
 # since there are lots of project types that might want to initialize a
 # Composer file. But we'll use it here for expediency.
@@ -59,4 +59,4 @@ $(MK_D)/10_variables.mk:
 
 $(MK_FILES):
 	@echo "Initializing $@"
-	@cp $(FILES_DIR)/drupal8/$@ $(MK_D)/
+	@cp $(FILES_DIR)/drupal8/$(notdir $@) $@
