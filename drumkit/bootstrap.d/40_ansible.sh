@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 CWD=`pwd`
 if [[ -d .mk/ ]]; then
   PYTHONPATH="$CWD/.mk/.local/src/ansible/ansible-latest/lib"
