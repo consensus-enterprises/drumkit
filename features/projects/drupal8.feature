@@ -37,7 +37,6 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
      composer.json
      composer.lock
-     tmp/composer-cache
      """
       And the following files should not exist:
      """
