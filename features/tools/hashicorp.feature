@@ -30,3 +30,28 @@ Feature: Install Hashicorp tools locally
       """
       Nothing to be done for 'packer'.
       """
+
+  @tools @terraform
+  Scenario: Remove terraform
+    When I run "make clean-terraform"
+    Then I should get:
+      """
+      Removing terraform.
+      """
+
+  @slow
+  Scenario: Install terraform
+    When I run "make terraform"
+    Then I should get:
+      """
+      Downloading the
+      Unzipping terraform.
+      Installing the
+      release of terraform.
+      Terraform v
+      """
+    When I run "make terraform"
+    Then I should get:
+      """
+      Nothing to be done for 'terraform'.
+      """

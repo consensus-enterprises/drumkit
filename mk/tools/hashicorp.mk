@@ -56,7 +56,7 @@ $(SRC_DIR)/$(1)/$(1)-$$($(1)_RELEASE)/$(1)-$$($(1)_RELEASE).zip:
 
 endef
 
-hashicorp-apps ?= packer
+hashicorp-apps ?= packer terraform
 
 $(foreach hashicorp-app,$(hashicorp-apps),$(eval $(call HASHICORP_template,$(hashicorp-app))))
 
