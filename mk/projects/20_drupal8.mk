@@ -41,6 +41,10 @@ $(BOOTSTRAP_D)/40_lando.sh: .env
 	@echo "Setting up drumkit directory."
 	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/40_lando.sh
 
+.gitignore:
+	@echo "Creating .gitignore"
+	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
+
 .lando.yml:
 	@echo "Initializing .lando.yml"
 	@echo jinja2 `perl -n < drumkit-drupal8.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/lando.yml.j2  > .drumkit-drupal8-init-lando.cmd

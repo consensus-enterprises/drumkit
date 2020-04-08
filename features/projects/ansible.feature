@@ -31,10 +31,6 @@ Feature: Initialize Ansible projects.
            Ensure all services and applications are installed and configured on all groups and hosts.
         groups 
            Run all group playbooks.
-        [playbooks/groups/GROUP_NAME.yml]
-           Run the specified group playbook.
         hosts 
            Run all host playbooks.
-        [playbooks/hosts/HOST_NAME.yml]
-           Run the specified host playbook.
       """

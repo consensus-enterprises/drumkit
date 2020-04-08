@@ -17,7 +17,7 @@ ifeq ($(MATRIX_TOKEN),INVALID)
 	@exit 1
 endif
 
-matrix: matrix-check-room matrix-check-token ansible
+matrix: matrix-check-room matrix-check-token
 	@$(matrix)
 
 matrix-ci:
@@ -26,6 +26,7 @@ ifeq ($(NOTIFY_CI_RESULT),0)
 else
 	@make -s matrix-ci-failure confirmation="$(RED)$(BOLD)❎ FAILURE$(RESET)"
 endif
+	exit $(NOTIFY_CI_RESULT)
 
 matrix-ci-success: MATRIX_STATUS=$(NOTIFY_CI_SUCCESS)
 matrix-ci-failure: MATRIX_STATUS=$(NOTIFY_CI_FAILURE)
