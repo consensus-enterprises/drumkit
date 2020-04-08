@@ -1,6 +1,7 @@
 MK_FILES = $(MK_D)/20_lando.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk
 
-COMPOSER_BASE_PROJECT=drupal/recommended-project
+COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
+COMPOSER_BASE_PROJECT_VERSION ?= "^8.8"
 
 drumkit-drupal8.conf:
 	@echo "Please provide the following information so we can create your project:"
@@ -30,7 +31,7 @@ drupal8-composer-codebase: composer composer.json .gitignore .env
 # Composer file. But we'll use it here for expediency.
 composer.json:
 	@echo "Initializing Drupal 8 Composer project."
-	@composer create-project $(COMPOSER_BASE_PROJECT) tmpdir --stability dev --no-interaction
+	@composer create-project $(COMPOSER_BASE_PROJECT):$(COMPOSER_BASE_PROJECT_VERSION) tmpdir --no-interaction
 	@shopt -s dotglob && mv tmpdir/* .
 	@rmdir tmpdir
 
