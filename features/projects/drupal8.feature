@@ -35,10 +35,9 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
       And the following files should exist:
      """
-     vendor
-     web
-     web/core
-     web/index.php
+     composer.json
+     composer.lock
+     tmp/composer-cache
      """
       And the following files should not exist:
      """
