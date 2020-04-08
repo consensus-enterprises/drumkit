@@ -32,8 +32,8 @@ drupal8-composer-codebase: composer composer.json .gitignore .env
 composer.json:
 	@echo "Initializing Drupal 8 Composer project."
 	@composer create-project $(COMPOSER_BASE_PROJECT):$(COMPOSER_BASE_PROJECT_VERSION) tmpdir --no-interaction
-	@shopt -s dotglob && mv tmpdir/* .
-	@rmdir tmpdir
+	@mv tmpdir/composer.* .
+	@rm -rf tmpdir
 
 drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml $(BOOTSTRAP_D)/40_lando.sh
 .env:
