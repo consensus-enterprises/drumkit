@@ -11,4 +11,5 @@ apt-get install -yqq \
   patch \
   sudo \
   unzip \
+  vim-tiny \
 > /dev/null
