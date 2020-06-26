@@ -33,7 +33,7 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
       scripts/packer/json/30-php.json
       scripts/packer/json/40-myproj.json
       """
-      And the file "drumkit/mk.d/20-ci.mk" should contain:
+      And the file "drumkit/mk.d/20_ci.mk" should contain:
       """
       CONTAINER_REGISTRY_URL ?= sample.gitlab.repo/uri
       CONTAINER_PROJECT_NAME = myproj

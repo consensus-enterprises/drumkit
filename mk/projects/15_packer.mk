@@ -13,7 +13,7 @@ init-project-packer-intro:
 clean-drumkit-packer.conf:
 	@rm .drumkit-packer.conf
 
-init-project-packer: init-project-packer-intro .drumkit-packer.conf $(MK_D)/20-ci.mk
+init-project-packer: init-project-packer-intro .drumkit-packer.conf $(MK_D)/20_ci.mk
 	@mkdir -p $(PACKER_JSON_DIR) $(PACKER_SH_DIR)
 	@echo "Initializing Packer JSON files and scripts."
 	@cp $(FILES_DIR)/packer/json/*.json $(PACKER_JSON_DIR)
@@ -24,9 +24,9 @@ init-project-packer: init-project-packer-intro .drumkit-packer.conf $(MK_D)/20-c
 	@make -s clean-drumkit-packer.conf
 	@echo "Finished initializing Drumkit Packer project."
 
-$(MK_D)/20-ci.mk:
+$(MK_D)/20_ci.mk:
 	@echo "Initializing CI makefile."
-	@echo jinja2 `perl -n < .drumkit-packer.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/packer/20-ci.mk.j2 > .drumkit-packer-init-$(notdir $@)-script.cmd
+	@echo jinja2 `perl -n < .drumkit-packer.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/packer/20_ci.mk.j2 > .drumkit-packer-init-$(notdir $@)-script.cmd
 	@ . .drumkit-packer-init-$(notdir $@)-script.cmd
 	@rm .drumkit-packer-init-$(notdir $@)-script.cmd
 
