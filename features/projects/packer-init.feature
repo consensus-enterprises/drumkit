@@ -42,4 +42,20 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
       """
       .drumkit-packer.conf
       """ 
-
+      Then I run "make clone"
+      And I should get:
+      """
+      Cloning a fresh copy of our code
+      """
+      Then I run "make clone"
+      And I should get:
+      """
+      up to date, skipping reclone.
+      """
+      Then I run "make -n ci-images"
+      And I should get:
+      """
+      Building packer images for CI.
+      Using project name: myproj
+      Using container registry: sample.gitlab.repo/uri
+      """
