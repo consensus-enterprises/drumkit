@@ -4,7 +4,7 @@ CONTAINER_PROJECT_NAME = {{ CONTAINER_PROJECT_NAME }}
 local_ref = $(shell git rev-parse HEAD)
 clone_ref = $(shell [ -d .clone ] && (cd .clone && git rev-parse HEAD))
 
-clone: ## Create a local clone of our repo that will be placed at /var/www/sm inside the CI packer image.
+clone: ## Create a local clone of our repo that will be used inside the CI packer image.
 ifneq ($(local_ref),$(clone_ref))
 	@echo "Cloning a fresh copy of our code in to .clone directory."
 	@rm -rf .clone
