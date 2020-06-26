@@ -1,0 +1,2 @@
+CONTAINER_REGISTRY_URL=sample.gitlab.repo/uri
+CONTAINER_PROJECT_NAME=myproj

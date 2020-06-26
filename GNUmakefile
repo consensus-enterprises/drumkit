@@ -4,6 +4,7 @@ orig-mk       = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 MK_DIR       := $(shell dirname $(call orig-mk))
 PROJECT_ROOT ?= $(CURDIR)
 FILES_DIR    ?= $(MK_DIR)/files
+SCRIPTS_DIR    ?= $(MK_DIR)/scripts
 SHELL        := /bin/bash
 
 default: help
