@@ -24,7 +24,7 @@ init-project-packer: init-project-packer-intro .drumkit-packer.conf $(MK_D)/20-c
 	@make -s clean-drumkit-packer.conf
 	@echo "Finished initializing Drumkit Packer project."
 
-$(MK_D)/20-ci.mk: .drumkit-packer.conf
+$(MK_D)/20-ci.mk:
 	@echo "Initializing CI makefile."
 	@echo jinja2 `perl -n < .drumkit-packer.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/packer/20-ci.mk.j2 > .drumkit-packer-init-$(notdir $@)-script.cmd
 	@ . .drumkit-packer-init-$(notdir $@)-script.cmd
