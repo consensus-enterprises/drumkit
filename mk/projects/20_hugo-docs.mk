@@ -9,7 +9,7 @@ hugo-docs.conf:
 clean-hugo-docs.conf:
 	@rm hugo-docs.conf
 
-init-project-hugo-docs: init-project-hugo-docs-intro hugo hugo-docs.conf init-project-hugo-docs-dir docs/config.yaml hugo-docs-search-index
+init-project-hugo-docs: init-project-hugo-docs-intro hugo hugo-docs.conf init-project-hugo-docs-dir docs/config.yaml hugo-docs-search-index ##@projects Initialize a hugo site
 	@git add docs
 	@git commit -m "Initialize docs site."
 	@cd docs && hugo new _index.md
