@@ -12,8 +12,10 @@ apt-update:
 
 deps-python: apt-update
 	@echo Ensuring python dependencies are installed.
-	@sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3-minimal python3-pip python3-yaml
+	@sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3-minimal python3-pip python3-yaml python3-venv
 	@sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+	@python -m venv `pwd`/.mk/.local
+	@source `pwd`/.mk/.local/bin/activate
 
 deps-php: apt-update
 	@echo Ensuring PHP dependencies are installed.
