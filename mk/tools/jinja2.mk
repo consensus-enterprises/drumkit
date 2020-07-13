@@ -2,13 +2,15 @@ jinja2_installed = $(shell test -f "$(BIN_DIR)/jinja2")
 
 jinja2-real: deps-python
 	@echo "Installing jinja2."
-	@if test -f "$(BIN_DIR)/jinja2"; then (echo "Jinja2 already installed on your system."); else (sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3-jinja2) && (echo "Installed jinja2 on your system."); fi
-	@if test -f "$(BIN_DIR)/jinja2"; then (echo "Found jinja2-cli already in your kit."); else (pip3 install jinja2-cli --install-option="--install-scripts=$(BIN_DIR)") && (echo "Installed jinja2-cli in your kit."); fi
+	@pip3 install jinja2-cli --install-option="--install-scripts=$(BIN_DIR)"
+	@echo "Installed jinja2-cli in your kit."
 	@which jinja2
 
 jinja2:
-ifndef jinja2_installed
-	make -s jinja2-real
+ifeq (jinja2_installed,)
+	@make -s jinja2-real
+else
+	@echo "Found jinja2-cli already in your kit."
 endif
 
 clean-jinja2:
