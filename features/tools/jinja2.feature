@@ -6,7 +6,6 @@ Feature: Install jinja2 locally
 
   Background:
     Given I bootstrap a clean drumkit environment
-    And I run "deactivate"
 
   Scenario: Remove jinja2 
     When I run "make clean-jinja2"

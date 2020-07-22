@@ -38,11 +38,15 @@ endif
 
 .mk/.local/bin/activate: deps-python
 	@python3 -m venv `pwd`/.mk/.local
+	@mkdir -p drumkit/bootstrap.d
+	@cp $(FILES_DIR)/python/*.sh drumkit/bootstrap.d
 
 venv: 
 ifndef VIRTUAL_ENV
 	@make -s .mk/.local/bin/activate 
 	@source `pwd`/.mk/.local/bin/activate
+else
+	@echo "Python virtual environment already is already bootstrapped."
 endif
 
 deps-php: apt-update
