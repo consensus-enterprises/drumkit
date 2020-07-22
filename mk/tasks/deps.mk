@@ -1,5 +1,5 @@
 python3_installed = $(shell which python3)
-OS_X_MESSAGE = On OS X, manage package dependencies e.g. python/python3 via Homebrew, outside of Drumkit.
+OS_X_MESSAGE = On OS X, manage package dependencies via Homebrew, outside of Drumkit.
 
 deps: apt-update mysql-server
 
@@ -37,17 +37,13 @@ ifndef python3_installed
 endif
 
 .mk/.local/bin/activate: deps-python
-	@python3 -m venv `pwd`/.mk/.local
+	@python3 -m venv .mk/.local
 	@mkdir -p drumkit/bootstrap.d
 	@cp $(FILES_DIR)/python/*.sh drumkit/bootstrap.d
 
 venv: 
-ifndef VIRTUAL_ENV
-	@make -s .mk/.local/bin/activate 
-	@source `pwd`/.mk/.local/bin/activate
-else
-	@echo "Python virtual environment already is already bootstrapped."
-endif
+	@make .mk/.local/bin/activate 
+	# source $(BIN_DIR)/activate
 
 deps-php: apt-update
 ifneq ($(MK_OS),darwin)

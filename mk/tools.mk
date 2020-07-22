@@ -1,6 +1,7 @@
 LOCAL_DIR = $(MK_DIR)/.local
 BIN_DIR   = $(LOCAL_DIR)/bin
 SRC_DIR   = $(LOCAL_DIR)/src
+LIB_DIR   = $(LOCAL_DIR)/lib
 MK_OS     = $(shell echo `uname -s` | tr A-Z a-z)
 MK_ARCH   = $(shell echo `uname -p` | tr A-Z a-z)
 
@@ -23,6 +24,7 @@ $(BIN_DIR): $(LOCAL_DIR)
 clean-mk:
 	@rm -rf $(BIN_DIR)
 	@rm -rf $(SRC_DIR)
+	@rm -rf $(LIB_DIR)
 
 include $(MK_DIR)/mk/tools/*.mk
 

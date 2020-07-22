@@ -13,14 +13,26 @@ Feature: Install jinja2 locally
       """
       Cleaning jinja2.
       """
+    And executing "ls .mk/.local/bin/jinja2" should fail
 
   Scenario: Install jinja2, but not if it's already installed.
-    When I run "make jinja2"
+    When I run "make clean-jinja2 && make venv && source .mk/.local/bin/activate && make jinja2"
     Then I should get:
       """
+      Cleaning jinja2.
       Installing jinja2
       Collecting jinja2-cli
       Successfully installed
+      """
+    When I run "which jinja2"
+    Then I should get:
+      """
+      .mk/.local/bin/jinja2
+      """
+    When I run "jinja2 --help"
+    Then I should get:
+      """
+      Usage: jinja2
       """
     When I run "make jinja2"
     Then I should get:
