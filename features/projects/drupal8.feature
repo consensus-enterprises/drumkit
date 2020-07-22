@@ -12,7 +12,6 @@ Feature: Initialize Drupal 8 projects with Lando.
      When I run "make -n init-project-drupal8-deps"
      Then I should get:
      """
-     Ensuring python dependencies are installed.
      Ensuring PHP dependencies are installed.
      Installing Behat.
      Ensuring Docker is installed.
