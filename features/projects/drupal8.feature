@@ -6,13 +6,12 @@ Feature: Initialize Drupal 8 projects with Lando.
 
   Background:
     Given I bootstrap Drumkit
-      And I run "cp .mk/files/drupal8/drumkit-drupal8.conf.test drumkit-drupal8.conf"
+      And I run "cp .mk/files/drupal8/drumkit-drupal8.conf.test.yml drumkit-drupal8.conf.yml"
 
   Scenario: Initialize a Drupal 8 project.
      When I run "make -n init-project-drupal8-deps"
      Then I should get:
      """
-     Ensuring python dependencies are installed.
      Ensuring PHP dependencies are installed.
      Installing Behat.
      Ensuring Docker is installed.
