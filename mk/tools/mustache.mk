@@ -2,6 +2,7 @@ mustache_NAME         ?= mustache
 mustache_RELEASE      ?= v1.0.0
 mustache_OS           ?= $(shell echo "$(OS)" | tr '[:upper:]' '[:lower:]')
 mustache_DOWNLOAD_URL ?= https://github.com/quantumew/mustache-cli/releases/download/$(mustache_RELEASE)/mustache-cli-$(mustache_OS)-amd64.zip
+mustache_ZIP          ?= $(mustache_NAME)-$(mustache_RELEASE)-$(mustache_OS).zip
 
 mustache: $(BIN_DIR)/mustache
 
@@ -12,7 +13,7 @@ $(BIN_DIR)/mustache: $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_
 $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME):
 	@echo "Downloading mustache."
 	@mkdir -p $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)
-	@cd $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE) && curl -O -sSL $(mustache_DOWNLOAD_URL) && unzip mustache-cli-linux-amd64.zip > /dev/null
+	@cd $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE) && curl -o $(mustache_ZIP) -sSL $(mustache_DOWNLOAD_URL) && unzip $(mustache_ZIP) > /dev/null
 
 clean-mustache:
 	@echo "Cleaning mustache."
