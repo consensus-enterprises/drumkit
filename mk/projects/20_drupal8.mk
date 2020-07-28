@@ -3,21 +3,24 @@ MK_FILES = $(MK_D)/20_lando.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
 COMPOSER_BASE_PROJECT_VERSION ?= "^8.8"
 
-drumkit-drupal8.conf.yml:
-	@echo "Please provide the following information so we can create your project:"
-	@echo "---" >> drumkit-drupal8.conf.yml
-	@read -p "Project name (NO SPACES, press enter for 'mydrupalsite'): " project_name && echo "PROJECT_NAME=$${project_name:-mydrupalsite}" >> drumkit-drupal8.conf.yml
-	@read -p "Site name (drupal name, press enter for 'My Drupal Site'): " site_name && echo "SITE_NAME=$${site_name:-My Drupal Site}" >> drumkit-drupal8.conf.yml
-	@read -p "Database user (press enter for 'drupal8'): " db_user && echo "DB_USER=$${db_user:-drupal8}" >> drumkit-drupal8.conf.yml
-	@read -p "Database name (press enter for 'drupal8'): " db_name && echo "DB_NAME=$${db_name:-drupal8}" >> drumkit-drupal8.conf.yml
-	@read -p "Database pass (press enter for 'drupal8'): " db_pass && echo "DB_PASS=$${db_pass:-drupal8}" >> drumkit-drupal8.conf.yml
-	@read -p "Admin username (press enter for 'dev'): " admin_user && echo "ADMIN_USER=$${admin_user:-dev}" >> drumkit-drupal8.conf.yml
-	@read -p "Admin password (press enter for 'pwd'): " admin_pass && echo "ADMIN_PASS=$${admin_pass:-pwd}" >> drumkit-drupal8.conf.yml
+# Explicitly export these vars to sub-makes; we use this for values
+# initialized by user interaction, below:
+export PROJECT_NAME SITE_NAME DB_USER DB_NAME DB_PASS ADMIN_USER ADMIN_PASS
 
-clean-drumkit-drupal8.conf.yml:
-	@rm drumkit-drupal8.conf.yml
-init-project-drupal8-deps: deps-php mustache behat docker lando
-init-project-drupal8: drumkit-drupal8.conf.yml drupal8-composer-codebase drupal8-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
+init-project-drupal8-user-vars: $(MK_D) 
+	@echo "Please provide the following information so we can create your project:"
+	@read -p "Project name (NO SPACES, press enter for 'mydrupalsite'): " project_name && PROJECT_NAME=$${project_name:-mydrupalsite} && \
+	read -p "Site name (drupal name, press enter for 'My Drupal Site'): " site_name && SITE_NAME=$${site_name:-My Drupal Site} && \
+	read -p "Database user (press enter for 'drupal8'): " db_user && DB_USER=$${db_user:-drupal8} && \
+	read -p "Database name (press enter for 'drupal8'): " db_name && DB_NAME=$${db_name:-drupal8} && \
+	read -p "Database pass (press enter for 'drupal8'): " db_pass && DB_PASS=$${db_pass:-drupal8} && \
+	read -p "Admin username (press enter for 'dev'): " admin_user && ADMIN_USER=$${admin_user:-dev} && \
+	read -p "Admin password (press enter for 'pwd'): " admin_pass && ADMIN_PASS=$${admin_pass:-pwd} && \
+	make -s .lando.yml && \
+	make -s $(MK_D)/10_variables.mk
+
+init-project-drupal8-deps: deps-php behat docker lando
+init-project-drupal8: init-project-drupal8-user-vars init-project-drupal8-deps drupal8-drumkit-dir drupal8-composer-codebase ## Initialize a project for developing Drupal 8 with Lando.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@echo "Finished initializing Drupal 8 drumkit."
 	@echo "You can spin up your project using the following commands:"
@@ -36,7 +39,8 @@ composer.json:
 	@mv tmpdir/composer.* .
 	@rm -rf tmpdir
 
-drupal8-drumkit-dir: $(MK_D) $(MK_D)/10_variables.mk $(MK_FILES) .lando.yml $(BOOTSTRAP_D)/40_lando.sh
+drupal8-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/40_lando.sh
+
 .env:
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" > .env
 $(BOOTSTRAP_D)/40_lando.sh: .env
@@ -47,13 +51,13 @@ $(BOOTSTRAP_D)/40_lando.sh: .env
 	@echo "Creating .gitignore"
 	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
 
-.lando.yml:
-	@echo "Initializing .lando.yml"
-	@mustache drumkit-drupal8.conf.yml $(FILES_DIR)/drupal8/lando.yml.mustache  > $@
-
-$(MK_D)/10_variables.mk:
+.lando.yml: mustache
 	@echo "Initializing $@"
-	@mustache drumkit-drupal8.conf.yml $(FILES_DIR)/drupal8/10_variables.mk.mustache  > $@
+	@mustache ENV $(FILES_DIR)/drupal8/lando.yml.tmpl > $@
+
+$(MK_D)/10_variables.mk: mustache
+	@echo "Initializing $@"
+	@mustache ENV $(FILES_DIR)/drupal8/10_variables.mk.tmpl > $@
 
 $(MK_FILES):
 	@echo "Initializing $@"
