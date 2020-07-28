@@ -1,15 +1,15 @@
 @init @drupal8 @project
-Feature: Initialize Drupal 8 projects with Lando.
-  In order to start a new Drupal 8 project in a Lando environment
+Feature: Initialize Drupal projects with Lando.
+  In order to start a new Drupal project in a Lando environment
   As a Drupal Developer
-  I need to be able to initialize Drupal 8 projects
+  I need to be able to initialize Drupal projects
 
   Background:
     Given I bootstrap Drumkit
-      And I run "cp .mk/files/drupal8/drumkit-drupal8.conf.test.yml drumkit-drupal8.conf.yml"
+      And I run "cp .mk/files/drupal-project/drumkit-drupal.conf.test drumkit-drupal.conf"
 
-  Scenario: Initialize a Drupal 8 project.
-     When I run "make -n init-project-drupal8-deps"
+  Scenario: Initialize a Drupal project.
+     When I run "make -n init-project-drupal-deps"
      Then I should get:
      """
      Ensuring PHP dependencies are installed.
@@ -18,19 +18,19 @@ Feature: Initialize Drupal 8 projects with Lando.
      in docker group.
      Ensuring Lando is installed.
      """
-     When I run "make -n init-project-drupal8"
+     When I run "make -n init-project-drupal"
      Then I should get:
      """
-     Initializing Drupal 8 Composer project.
+     Initializing Drupal Composer project.
      You can spin up your project using the following commands
      """
 
   @slow
-  Scenario: Sanity check the Composer Drupal 8 project template.
-     When I run "make drupal8-composer-codebase"
+  Scenario: Sanity check the Composer Drupal project template.
+     When I run "make drupal-composer-codebase"
      Then I should get:
      """
-     Initializing Drupal 8 Composer project.
+     Initializing Drupal Composer project.
      """
       And the following files should exist:
      """
@@ -43,7 +43,7 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
 
   Scenario: Test Drumkit setup of .env and drumkit/ directory contents
-     When I run "make drupal8-drumkit-dir"
+     When I run "make drupal-drumkit-dir"
      Then I should get:
      """
 	   Setting up drumkit directory.
@@ -71,8 +71,8 @@ Feature: Initialize Drupal 8 projects with Lando.
      """
      And the following files should not exist:
      """
-     .drumkit-drupal8-init-variables.cmd
-     .drumkit-drupal8-init-lando.cmd
+     .drumkit-drupal-init-variables.cmd
+     .drumkit-drupal-init-lando.cmd
      """
      And the file "drumkit/mk.d/10_variables.mk" should contain:
      """

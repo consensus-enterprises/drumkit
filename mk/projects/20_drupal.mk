@@ -6,7 +6,7 @@ COMPOSER_BASE_PROJECT_VERSION ?= "^8.8"
 # We export vars into the environment as we collect them from the user so that
 # a) we can take advantage of bash's default value syntax, and
 # b) we can use them when we do template interpolation at the end:
-init-project-drupal8-user-vars: $(MK_D) mustache
+init-project-drupal-user-vars: $(MK_D) mustache
 	@echo "Please provide the following information so we can create your project:"
 	@read -p "Project name (NO SPACES, press enter for 'mydrupalsite'): " project_name && export PROJECT_NAME=$${project_name:-mydrupalsite} && \
 	read -p "Site name (drupal name, press enter for 'My Drupal Site'): " site_name && export SITE_NAME=$${site_name:-My Drupal Site} && \
@@ -16,32 +16,31 @@ init-project-drupal8-user-vars: $(MK_D) mustache
 	read -p "Admin username (press enter for 'dev'): " admin_user && export ADMIN_USER=$${admin_user:-dev} && \
 	read -p "Admin password (press enter for 'pwd'): " admin_pass && export ADMIN_PASS=$${admin_pass:-pwd} && \
 	echo "Initializing Lando config file." && \
-	mustache ENV $(FILES_DIR)/drupal8/lando.yml.tmpl > .lando.yml && \
+	mustache ENV $(FILES_DIR)/drupal-project/lando.yml.tmpl > .lando.yml && \
 	echo "Initializing drumkit variables file." && \
-	mustache ENV $(FILES_DIR)/drupal8/10_variables.mk.tmpl > $(MK_D)/10_variables.mk
+	mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $(MK_D)/10_variables.mk
 
-init-project-drupal8-deps: deps-php behat docker lando
-init-project-drupal8: init-project-drupal8-user-vars init-project-drupal8-deps drupal8-drumkit-dir drupal8-composer-codebase ## Initialize a project for developing Drupal 8 with Lando.
+init-project-drupal-deps: deps-php behat docker lando
+init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase ## Initialize a project for developing Drupal 8 with Lando.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
-	@echo "Finished initializing Drupal 8 drumkit."
+	@echo "Finished initializing Drupal drumkit."
 	@echo "You can spin up your project using the following commands:"
 	@echo "  make start"
 	@echo "  make build"
 	@echo "  make install"
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
-drupal8-composer-codebase: composer composer.json .gitignore .env
+drupal-composer-codebase: composer composer.json .gitignore .env
 # N.B. Using `composer.json` as a target here may not work in the long run,
 # since there are lots of project types that might want to initialize a
 # Composer file. But we'll use it here for expediency.
 composer.json:
-	@echo "Initializing Drupal 8 Composer project."
+	@echo "Initializing Drupal Composer project."
 	@composer create-project $(COMPOSER_BASE_PROJECT):$(COMPOSER_BASE_PROJECT_VERSION) tmpdir --no-interaction
 	@mv tmpdir/composer.* .
 	@rm -rf tmpdir
 
-drupal8-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/40_lando.sh
-
+drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/40_lando.sh
 .env:
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" > .env
 $(BOOTSTRAP_D)/40_lando.sh: .env
@@ -50,8 +49,8 @@ $(BOOTSTRAP_D)/40_lando.sh: .env
 
 .gitignore:
 	@echo "Creating .gitignore"
-	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
+	@cp $(FILES_DIR)/drupal-project/dotgitignore .gitignore
 
 $(MK_FILES):
 	@echo "Initializing $@"
-	@cp $(FILES_DIR)/drupal8/$(notdir $@) $@
+	@cp $(FILES_DIR)/drupal-project/$(notdir $@) $@
