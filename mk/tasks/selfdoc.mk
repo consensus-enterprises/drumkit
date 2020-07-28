@@ -2,7 +2,7 @@
 
 .PHONY: help help-selfdoc help-selfdoc-short help-message-header selfdoc-howto help-categories help-category
 
-HELP_CATEGORIES ?= $(shell grep -h -E '^[a-zA-Z_-]+:.*?\#\#@[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'match($$0,/@[^ ]+/){ print substr($$0, RSTART+1,RLENGTH-1)}' | sort -u)
+HELP_CATEGORIES ?= $(shell grep -h -E '^[a-zA-Z0-9_-]+:.*?\#\#@[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'match($$0,/@[^ ]+/){ print substr($$0, RSTART+1,RLENGTH-1)}' | sort -u)
 
 help-message-header:
 	@$(ECHO) "$(BOLD)$(GREY)Available 'make' commands:$(RESET)"
@@ -10,7 +10,7 @@ help-message-header:
 help: help-selfdoc-short
 help-selfdoc-short: help-message-header 
 help-selfdoc-short: ## Aggregate and print all short self-documentation messages from all included makefiles.
-	@grep -h -E '^[a-zA-Z_-]+:.*?##@?[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##@?[^ ]* "}; \
+	@grep -h -E '^[a-zA-Z0-9_-]+:.*?##@?[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##@?[^ ]* "}; \
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}' | sort -u
 
 help-category: ##@help [category] Aggregate and print all short self-documentation messages from this category from all included makefiles.
@@ -21,7 +21,7 @@ else ifeq ($(shell echo $(HELP_CATEGORIES)|grep $(category)),)
 	@$(ECHO) "$(BOLD)$(GREY)Unrecognized help category: $(category)$(RESET)"
 	@make -s help-categories
 else
-	@grep -h -E '^[a-zA-Z_-]+:.*?##@$(category) .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?##@$(category)"}; \
+	@grep -h -E '^[a-zA-Z0-9_-]+:.*?##@$(category) .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?##@$(category)"}; \
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}'
 endif
 

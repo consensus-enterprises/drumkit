@@ -16,7 +16,7 @@ drumkit-drupal.conf:
 clean-drumkit-drupal.conf:
 	@rm drumkit-drupal.conf
 init-project-drupal-deps: deps-python deps-php jinja2 behat docker lando
-init-project-drupal: drumkit-drupal.conf drupal-composer-codebase drupal-drumkit-dir ## Initialize a project for developing Drupal 8 with Lando.
+init-project-drupal: drumkit-drupal.conf drupal-composer-codebase drupal-drumkit-dir ##@projects Initialize a project for developing Drupal 8 with Lando.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@echo "Finished initializing Drupal drumkit."
 	@echo "You can spin up your project using the following commands:"
