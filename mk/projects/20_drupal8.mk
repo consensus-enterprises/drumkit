@@ -3,21 +3,22 @@ MK_FILES = $(MK_D)/20_lando.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
 COMPOSER_BASE_PROJECT_VERSION ?= "^8.8"
 
-# Explicitly export these vars to sub-makes; we use this for values
-# initialized by user interaction, below:
-export PROJECT_NAME SITE_NAME DB_USER DB_NAME DB_PASS ADMIN_USER ADMIN_PASS
-
-init-project-drupal8-user-vars: $(MK_D) 
+# We export vars into the environment as we collect them from the user so that
+# a) we can take advantage of bash's default value syntax, and
+# b) we can use them when we do template interpolation at the end:
+init-project-drupal8-user-vars: $(MK_D) mustache
 	@echo "Please provide the following information so we can create your project:"
-	@read -p "Project name (NO SPACES, press enter for 'mydrupalsite'): " project_name && PROJECT_NAME=$${project_name:-mydrupalsite} && \
-	read -p "Site name (drupal name, press enter for 'My Drupal Site'): " site_name && SITE_NAME=$${site_name:-My Drupal Site} && \
-	read -p "Database user (press enter for 'drupal8'): " db_user && DB_USER=$${db_user:-drupal8} && \
-	read -p "Database name (press enter for 'drupal8'): " db_name && DB_NAME=$${db_name:-drupal8} && \
-	read -p "Database pass (press enter for 'drupal8'): " db_pass && DB_PASS=$${db_pass:-drupal8} && \
-	read -p "Admin username (press enter for 'dev'): " admin_user && ADMIN_USER=$${admin_user:-dev} && \
-	read -p "Admin password (press enter for 'pwd'): " admin_pass && ADMIN_PASS=$${admin_pass:-pwd} && \
-	make -s .lando.yml && \
-	make -s $(MK_D)/10_variables.mk
+	@read -p "Project name (NO SPACES, press enter for 'mydrupalsite'): " project_name && export PROJECT_NAME=$${project_name:-mydrupalsite} && \
+	read -p "Site name (drupal name, press enter for 'My Drupal Site'): " site_name && export SITE_NAME=$${site_name:-My Drupal Site} && \
+	read -p "Database user (press enter for 'drupal8'): " db_user && export DB_USER=$${db_user:-drupal8} && \
+	read -p "Database name (press enter for 'drupal8'): " db_name && export DB_NAME=$${db_name:-drupal8} && \
+	read -p "Database pass (press enter for 'drupal8'): " db_pass && export DB_PASS=$${db_pass:-drupal8} && \
+	read -p "Admin username (press enter for 'dev'): " admin_user && export ADMIN_USER=$${admin_user:-dev} && \
+	read -p "Admin password (press enter for 'pwd'): " admin_pass && export ADMIN_PASS=$${admin_pass:-pwd} && \
+	echo "Initializing Lando config file." && \
+	mustache ENV $(FILES_DIR)/drupal8/lando.yml.tmpl > .lando.yml && \
+	echo "Initializing drumkit variables file." && \
+	mustache ENV $(FILES_DIR)/drupal8/10_variables.mk.tmpl > $(MK_D)/10_variables.mk
 
 init-project-drupal8-deps: deps-php behat docker lando
 init-project-drupal8: init-project-drupal8-user-vars init-project-drupal8-deps drupal8-drumkit-dir drupal8-composer-codebase ## Initialize a project for developing Drupal 8 with Lando.
@@ -50,14 +51,6 @@ $(BOOTSTRAP_D)/40_lando.sh: .env
 .gitignore:
 	@echo "Creating .gitignore"
 	@cp $(FILES_DIR)/drupal8/dotgitignore .gitignore
-
-.lando.yml: mustache
-	@echo "Initializing $@"
-	@mustache ENV $(FILES_DIR)/drupal8/lando.yml.tmpl > $@
-
-$(MK_D)/10_variables.mk: mustache
-	@echo "Initializing $@"
-	@mustache ENV $(FILES_DIR)/drupal8/10_variables.mk.tmpl > $@
 
 $(MK_FILES):
 	@echo "Initializing $@"
