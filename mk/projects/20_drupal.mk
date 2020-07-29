@@ -15,9 +15,15 @@ init-project-drupal-user-vars: $(MK_D) mustache
 	read -p "Database pass (press enter for 'drupal8'): " db_pass && export DB_PASS=$${db_pass:-drupal8} && \
 	read -p "Admin username (press enter for 'dev'): " admin_user && export ADMIN_USER=$${admin_user:-dev} && \
 	read -p "Admin password (press enter for 'pwd'): " admin_pass && export ADMIN_PASS=$${admin_pass:-pwd} && \
-	echo "Initializing Lando config file." && \
-	mustache ENV $(FILES_DIR)/drupal-project/lando.yml.tmpl > .lando.yml && \
-	echo "Initializing drumkit variables file." && \
+	make -s .lando.yml && \
+	make -s $(MK_D)/10_variables.mk
+
+.lando.yml:
+	echo "Initializing Lando config file." 
+	mustache ENV $(FILES_DIR)/drupal-project/lando.yml.tmpl > .lando.yml
+
+$(MK_D)/10_variables.mk:
+	echo "Initializing drumkit variables file."
 	mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $(MK_D)/10_variables.mk
 
 init-project-drupal-deps: deps-php behat docker lando
