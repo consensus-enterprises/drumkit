@@ -5,7 +5,7 @@ Feature: Initialize Drupal projects with Lando.
   I need to be able to initialize Drupal projects
 
   Background:
-    Given I bootstrap Drumkit
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Initialize a Drupal project.
      When I run "make -n init-project-drupal-deps"
@@ -72,10 +72,14 @@ Feature: Initialize Drupal projects with Lando.
      """
   
   @unit
-  Scenario: Initialize lando.yml 
-     # In real life this is called by interactive target init-project-drupal-user-vars
-     When I run "make .lando.yml PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
-     Then the following files should exist:
+  Scenario: Initialize lando config file
+     # In real life this target is called by init-project-drupal-user-vars after user interaction
+     When I run "unset DRUMKIT && source d && make .lando.yml PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
+     Then I should get:
+     """
+     Initializing lando config file
+     """
+     And the following files should exist:
      """
      .lando.yml
      """
@@ -88,11 +92,12 @@ Feature: Initialize Drupal projects with Lando.
      """
   
   @unit
-  Scenario: Initialize drumkit variables   
-     Given I run "make drupal-drumkit-dir"     
-     # In real life this is called by interactive target init-project-drupal-user-vars
-     # In testing, we call `make drupal-drumkit-dir`  to ensure that drumkit/mk.d exists  
-     And I run "make drumkit/mk.d/10_variables.mk PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
+  Scenario: Initialize drumkit variables file   
+     When I run "unset DRUMKIT && source d && make drumkit/mk.d/10_variables.mk PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
+     Then I should get:
+     """
+     Initializing drumkit variables file.
+     """
      Then the following files should exist:
      """
      drumkit/mk.d/10_variables.mk

@@ -19,12 +19,12 @@ init-project-drupal-user-vars:
 	make -s $(MK_D)/10_variables.mk
 
 .lando.yml: mustache
-	echo "Initializing Lando config file." 
-	mustache ENV $(FILES_DIR)/drupal-project/lando.yml.tmpl > .lando.yml
+	@echo "Initializing lando config file." 
+	@mustache ENV $(FILES_DIR)/drupal-project/lando.yml.tmpl > $@
 
 $(MK_D)/10_variables.mk: $(MK_D) mustache
-	echo "Initializing drumkit variables file."
-	mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $(MK_D)/10_variables.mk
+	@echo "Initializing drumkit variables file."
+	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
 
 init-project-drupal-deps: deps-php behat docker lando
 init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase ## Initialize a project for developing Drupal 8 with Lando.

@@ -6,15 +6,16 @@ mustache_ZIP          ?= $(mustache_NAME)-$(mustache_RELEASE)-$(mustache_OS).zip
 
 mustache: $(BIN_DIR)/mustache
 
-$(BIN_DIR)/mustache: $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
+$(BIN_DIR)/mustache: $(BIN_DIR) $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
 	@ln -s $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME) $@
 	@mustache --version
+	@touch $@
 
 $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME):
-	@echo "Downloading mustache."
+	@echo "Downloading Mustache."
 	@mkdir -p $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)
 	@cd $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE) && curl -o $(mustache_ZIP) -sSL $(mustache_DOWNLOAD_URL) && unzip $(mustache_ZIP) > /dev/null
 
 clean-mustache:
-	@echo "Cleaning mustache."
+	@echo "Cleaning Mustache."
 	@rm -rf $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE) $(BIN_DIR)/mustache
