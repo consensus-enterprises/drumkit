@@ -1,4 +1,4 @@
-MK_FILES = $(MK_D)/20_lando.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk
+MK_FILES = $(MK_D)/20_lando.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk $(MK_D)/50_backup.mk $(MK_D)/60_test.mk
 
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
 COMPOSER_BASE_PROJECT_VERSION ?= "^8.8"
