@@ -8,14 +8,15 @@ hugo-docs.conf:
 
 docs/config.yaml: mustache
 	@echo "Initializing config.yaml."
-	@mustache ENV $(FILES_DIR)/hugo-docs/config.yml.tmpl > $@
-	@rm docs/config.toml
+	@mkdir -p docs
+	@mustache ENV $(FILES_DIR)/hugo-docs/config.yaml.tmpl > $@
+	@rm -f docs/config.toml
 
 
 clean-hugo-docs.conf:
 	@rm hugo-docs.conf
 
-init-project-hugo-docs: init-project-hugo-docs-intro hugo hugo-docs.conf init-project-hugo-docs-dir docs/config.yaml hugo-docs-search-index
+init-project-hugo-docs: init-project-hugo-docs-intro hugo-docs.conf init-project-hugo-docs-dir docs/config.yaml hugo-docs-search-index
 	@git add docs
 	@git commit -m "Initialize docs site."
 	@cd docs && hugo new _index.md
@@ -25,7 +26,7 @@ init-project-hugo-docs: init-project-hugo-docs-intro hugo hugo-docs.conf init-pr
 	@echo "  hugo new <path/to/file.md> --> create new pages."
 	@echo "  hugo serve --> serve files locally at http://localhost:1313/PROJECT"
 
-init-project-hugo-docs-dir:
+init-project-hugo-docs-dir: hugo
 	@hugo new site docs
 	@git submodule add https://github.com/matcornic/hugo-theme-learn.git docs/themes/learn
 

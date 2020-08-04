@@ -20,7 +20,7 @@ Feature: Initialize Hugo Docs Projects
 
   @unit
   Scenario: Initialize config.yaml file
-    When I run "make docs/config.yaml GITLAB_GROUP=mygroup GITLAB_PROJECT_NAME=myproject"
+    When I run "unset DRUMKIT && source d && make docs/config.yaml GITLAB_GROUP=mygroup GITLAB_PROJECT_NAME=myproject"
     Then I should get:
     """
     Initializing config.yaml
@@ -36,7 +36,23 @@ Feature: Initialize Hugo Docs Projects
     """ 
 
   @unit
-  Scenario: Initialize Hugo Docs Search Index
+  Scenario: Initialize Hugo Docs Directory & Search Index
+    Given I run "unset DRUMKIT && source d && make init-project-hugo-docs-dir"
+    Then I should get:
+    """
+    Hugo Static Site Generator
+    Congratulations! Your new Hugo site
+    """
+    And the following files should exist:
+    """
+    docs/themes/learn
+    docs/archetypes
+    docs/config.toml
+    docs/content
+    docs/data
+    docs/layouts
+    docs/static
+    """
     When I run "make hugo-docs-search-index"
     Then I should get:
     """
