@@ -1,0 +1,12 @@
+name: mydrupalsite   
+recipe: drupal8
+config:
+  webroot: web
+  php: '7.3'
+services:
+  database:
+    creds:
+      user: drupal8
+      password: drupal8
+      database: drupal8
+

@@ -2,9 +2,15 @@ init-project-hugo-docs-intro:
 	@echo "Initializing Hugo Docs project."
 
 hugo-docs.conf:
-	@echo "Please provide the following information to initialize your Hugo docs site:"
-	@read -p "GitLab group name: " group && echo "GROUP=$${group}" >> hugo-docs.conf
-	@read -p "GitLab project name: " project && echo "PROJECT=$${project}" >> hugo-docs.conf
+	@echo "Please provide the following information to initialize your Hugo Gitlab Pages site:"
+	@read -p "GitLab group name: " group && export GITLAB_GROUP=$${group} && \
+	@read -p "GitLab project name: " project && export GITLAB_PROJECT_NAME=$${project}
+
+docs/config.yaml: mustache
+	@echo "Initializing config.yaml."
+	@mustache ENV $(FILES_DIR)/hugo-docs/config.yml.tmpl > $@
+	@rm docs/config.toml
+
 
 clean-hugo-docs.conf:
 	@rm hugo-docs.conf
@@ -22,14 +28,6 @@ init-project-hugo-docs: init-project-hugo-docs-intro hugo hugo-docs.conf init-pr
 init-project-hugo-docs-dir:
 	@hugo new site docs
 	@git submodule add https://github.com/matcornic/hugo-theme-learn.git docs/themes/learn
-
-docs/config.yaml: jinja2
-	@echo "Initializing config.yaml."
-	@echo jinja2 `perl -n < hugo-docs.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/hugo-docs/config.yaml.j2 > .drumkit-hugo-docs-init-config.cmd
-	@echo jinja2 `perl -n < hugo-docs.conf -e 'chomp and print " -D " and print "\"$$_\""'` -o $@ $(FILES_DIR)/drupal8/lando.yml.j2  > .drumkit-drupal8-init-lando.cmd
-	@ . .drumkit-hugo-docs-init-config.cmd
-	@rm .drumkit-hugo-docs-init-config.cmd
-	@rm docs/config.toml
 
 hugo-docs-search-index:
 	@echo "Initializing search index.json."

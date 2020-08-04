@@ -1,14 +1,14 @@
-baseUrl: "http://{{ GROUP }}.gitlab.io/{{ PROJECT }}/"
+baseUrl: "http://{{ GITLAB_GROUP }}.gitlab.io/{{ GITLAB_PROJECT_NAME }}/"
 languageCode: "en-US"
 defaultContentLanguage: "en"
 
-title: "My Project Docs Site"
+title: "{{ GITLAB_PROJECT_NAME }} Docs Site"
 theme: "learn"
 metaDataFormat: "yaml"
 defaultContentLanguageInSubdir: true
 
 params:
-  editURL: "https://gitlab.com/{{ GROUP }}/{{ PROJECT }}/tree/master/docs/content/"
+  editURL: "https://gitlab.com/{{ GITLAB_GROUP }}/{{ GITLAB_PROJECT_NAME }}/tree/master/docs/content/"
   description: "Description of project docs site"
   author: "Consensus Enterprises"
   showVisitedLinks: true
@@ -24,10 +24,10 @@ params:
 menu:
   shortcuts:
     - name: "<i class='fa fa-gitlab'></i> Gitlab repo"
-      url: "https://gitlab.com/{{ GROUP }}/{{ PROJECT }}"
+      url: "https://gitlab.com/{{ GITLAB_GROUP }}/{{ GITLAB_PROJECT_NAME }}"
       weight: 10
     - name: "<i class='fa fa-bullhorn'></i> Contributors"
-      url: "https://gitlab.com/{{ GROUP }}/{{ PROJECT }}/graphs/master"
+      url: "https://gitlab.com/{{ GITLAB_GROUP }}/{{ GITLAB_PROJECT_NAME }}/graphs/master"
       weight: 30
 
 # For search functionality
