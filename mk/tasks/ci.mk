@@ -4,9 +4,14 @@ else
   BEHAT_TAGS_REAL =
 endif
 
+ifdef MATRIX_ROOM
+  matrix_sub_make = make -s matrix-ci
+else
+  matrix_sub_make = echo "Skiping matrix client: no MATRIX_ROOM defined."
+endif
+
 run-behat-ci: behat
 	$(behat) $(BEHAT_TAGS_REAL); \
-  export RESULT=$$?; \
-  make -s ansible 2>&1 >/dev/null; \
-  make -s matrix-ci; \
-  exit $$RESULT
+	export RESULT=$$?; \
+	$(matrix_sub_make); \
+	exit $$RESULT
