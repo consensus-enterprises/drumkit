@@ -29,5 +29,5 @@ Feature: Install Mustache locally
      And I run "make mustache"
     Then I should get:
       """
-      Nothing to be done for 'mustache'.
+      Nothing to be done for `mustache'.
       """
