@@ -1,4 +1,4 @@
-@init @ansible-role @project
+@init @ansible-role @project @slow
 Feature: Initialize Ansible role projects.
   In order to develop and test Ansible roles
   As a DevOps engineer
