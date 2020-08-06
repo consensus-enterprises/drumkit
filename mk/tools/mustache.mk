@@ -4,22 +4,21 @@ mustache_OS           ?= $(shell echo "$(OS)" | tr '[:upper:]' '[:lower:]')
 mustache_DOWNLOAD_URL ?= https://github.com/quantumew/mustache-cli/releases/download/$(mustache_RELEASE)/mustache-cli-$(mustache_OS)-amd64.zip
 mustache_ZIP          ?= $(mustache_NAME)-$(mustache_RELEASE)-$(mustache_OS).zip
 
-mustache: $(BIN_DIR)/mustache
+install-mustache: init-mk $(BIN_DIR)/mustache
+mustache: install-mustache
+	@: # silence "Nothing to be done for mustache" message
 
-$(BIN_DIR)/mustache: $(BIN_DIR) $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
-	@if [ -f $(BIN_DIR)/mustache ]; \
-  then \
-      echo "$@ exists; do 'make clean-mustache mustache' to delete it and force re-download."; \
-  else  \
-      ln -s $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME) $@ ; \
-  fi
-	mustache --version
+$(BIN_DIR)/mustache: $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
+	@echo "Installing mustache $(mustache_RELEASE)."
+	@ln -sf $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME) $@
+	@cd $(PROJECT_ROOT) && unset DRUMKIT && source d && \
+	  mustache --version
 
 $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME):
-	@echo "Downloading Mustache."
+	@echo "Downloading mustache release $(mustache_RELEASE)."
 	@mkdir -p $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)
 	@cd $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE) && curl -o $(mustache_ZIP) -sSL $(mustache_DOWNLOAD_URL) && unzip $(mustache_ZIP) > /dev/null
 
 clean-mustache:
-	@echo "Cleaning Mustache."
+	@echo "Cleaning mustache."
 	@rm -rf $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE) $(BIN_DIR)/mustache
