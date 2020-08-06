@@ -7,8 +7,8 @@ init-project-packer-intro:
 
 .drumkit-packer.conf:
 	@echo "Please provide the following information to initialize your Packer scripts:"
-	@read -p "Docker container project name: " project && echo "CONTAINER_PROJECT_NAME=$${project}" >> drumkit-packer.conf
-	@read -p "Docker container registry URL: " registry_url && echo "CONTAINER_REGISTRY_URL=$${registry_url}" >> drumkit-packer.conf
+	@read -p "Docker container project name: " project && echo "CONTAINER_PROJECT_NAME=$${project}" >> .drumkit-packer.conf
+	@read -p "Docker container registry URL: " registry_url && echo "CONTAINER_REGISTRY_URL=$${registry_url}" >> .drumkit-packer.conf
 
 clean-drumkit-packer.conf:
 	@rm .drumkit-packer.conf

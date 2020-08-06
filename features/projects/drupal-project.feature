@@ -25,6 +25,10 @@ Feature: Initialize Drupal projects with Lando.
      Initializing Drupal Composer project.
      You can spin up your project using the following commands
      """
+     And the following files should exist:
+     """
+     drumkit-drupal.conf
+     """
 
   @slow
   Scenario: Sanity check the Composer Drupal project template.
@@ -69,6 +73,8 @@ Feature: Initialize Drupal projects with Lando.
      drumkit/mk.d/20_lando.mk
      drumkit/mk.d/30_build.mk
      drumkit/mk.d/40_install.mk
+     drumkit/mk.d/50_backup.mk
+     drumkit/mk.d/60_test.mk
      """
      And the following files should not exist:
      """
