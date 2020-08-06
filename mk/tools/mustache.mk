@@ -7,9 +7,13 @@ mustache_ZIP          ?= $(mustache_NAME)-$(mustache_RELEASE)-$(mustache_OS).zip
 mustache: $(BIN_DIR)/mustache
 
 $(BIN_DIR)/mustache: $(BIN_DIR) $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
-	@ln -s $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME) $@
-	@mustache --version
-	@touch $@
+	@if [ -f $(BIN_DIR)/mustache ]; \
+  then \
+      echo "$@ exists; do 'make clean-mustache mustache' to delete it and force re-download."; \
+  else  \
+      ln -s $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME) $@ ; \
+  fi
+	mustache --version
 
 $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME):
 	@echo "Downloading Mustache."

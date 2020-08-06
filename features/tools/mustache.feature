@@ -15,7 +15,7 @@ Feature: Install Mustache locally
       """
     And executing "which mustache" should fail
 
-  Scenario: Install Mustache
+  Scenario: Install Mustache, but only if it isn't already installed.
     When I run "unset DRUMKIT && source d && make clean-mustache mustache"
     Then I should get:
       """
@@ -29,5 +29,15 @@ Feature: Install Mustache locally
      And I run "make mustache"
     Then I should get:
       """
-      Nothing to be done for
+      exists; do 'make clean-mustache mustache' to delete it and force re-download
+      """
+     And I run "make clean-mustache mustache"
+    Then I should not get:
+      """
+      exists; do 'make clean-mustache mustache' to delete it and force re-download
+      """
+     And I should get:
+      """
+      Cleaning Mustache
+      Downloading Mustache
       """
