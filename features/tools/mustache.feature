@@ -15,7 +15,6 @@ Feature: Install mustache locally
       """
     And executing "which mustache" should fail
 
-  @debug
   Scenario: Install mustache, but only if it isn't already installed.
     When I run "unset DRUMKIT && source d && make clean-mustache mustache"
     Then I should get:
