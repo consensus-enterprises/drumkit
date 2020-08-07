@@ -1,8 +1,14 @@
 ---
-title: Documentation
+title: Documentation Contributions
 weight: 100
+draft: true
 
 ---
+
+The documentation site you are currently looking at is generated using a Hugo site embedded in the drumkit project in the `docs` folder.
+
+
+
 
 We maintain the Drumkit documentation site using
 [Hugo](http://www.gohugo.org/). To get started contributing to this project,
