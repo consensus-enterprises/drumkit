@@ -11,6 +11,7 @@ debug-$(1):
 	@echo NAME: $$($(1)_NAME)
 	@echo RELEASE: $$($(1)_RELEASE)
 	@echo DOWNLOAD_URL: $$($(1)_DOWNLOAD_URL)
+	@echo OS: $$($(1)_OS)
 	@echo EXECUTABLE: $(BIN_DIR)/$(1)
 	@echo SOURCE: $(SRC_DIR)/$(1)
 	@echo GOAPP: $(SRC_DIR)/$(1)/$(1)
