@@ -1,5 +1,6 @@
 ---
 title: Structure of the Drumkit Project
+draft: true
 
 ---
 
