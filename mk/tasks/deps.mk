@@ -1,7 +1,7 @@
 ifeq ($(user),'root')
   SUDO=
 else
-  SUDO='$(SUDO)'
+  SUDO='sudo'
 endif
 
 deps: apt-update mysql-server
