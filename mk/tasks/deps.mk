@@ -18,7 +18,7 @@ apt-update:
 
 deps-python: apt-update
 	@echo Ensuring python dependencies are installed.
-	@$(SUDO) DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3-minimal python3-pip python3-yaml
+	@$(SUDO) DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3-minimal python3-pip python3-yaml python3-jinja2
 	@$(SUDO) update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
 deps-php: apt-update
