@@ -1,4 +1,4 @@
-ifeq ($(shell whoami),'root')
+ifeq ($(shell whoami),root)
   SUDO=
 else
   SUDO=sudo
