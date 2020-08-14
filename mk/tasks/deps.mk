@@ -1,7 +1,7 @@
-ifeq ($(user),'root')
+ifeq ($(shell whoami),'root')
   SUDO=
 else
-  SUDO='sudo'
+  SUDO=sudo
 endif
 
 deps: apt-update mysql-server
