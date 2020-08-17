@@ -10,7 +10,12 @@ else
   matrix_sub_make = echo "Skipping matrix client: no MATRIX_ROOM defined."
 endif
 
-run-behat-ci: behat
+BEHAT_INSTALLED=$(shell test -f $(BEHAT_BIN); echo $$?)
+
+run-behat-ci:
+ifneq ($(BEHAT_INSTALLED),0)
+	make -s behat
+endif
 	$(behat) $(BEHAT_TAGS_REAL); \
 	export RESULT=$$?; \
 	$(matrix_sub_make); \
