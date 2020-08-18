@@ -9,13 +9,15 @@ Feature: Download and Install Hugo
 
   @unit
   Scenario: Hugo Dowloads right tarball for the current OS (Linux and MacOS)
-    Given I run "unset DRUMKIT && source d && make debug-hugo OS=Linux"
+    Given I run "unset DRUMKIT && source d && make -n init-project-hugo-docs-dir OS=Linux"
     Then I should get:
     """
-    OS: Linux 
+    Download URL is 
+    Linux-64bit.tar.gz
     """
-    Given I run "unset DRUMKIT && source d && make debug-hugo OS=Darwin"
+    Given I run "unset DRUMKIT && source d && make -n init-project-hugo-docs-dir OS=Darwin"
     Then I should get:
     """
-    OS: macOS 
+    Download URL is 
+    macOS-64bit.tar.gz
     """
