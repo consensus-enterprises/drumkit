@@ -6,7 +6,7 @@ COMPOSER_BASE_PROJECT_VERSION ?= "^8.8"
 # We export vars into the environment as we collect them from the user so that
 # a) we can take advantage of bash's default value syntax, and
 # b) we can use them when we do template interpolation at the end:
-init-project-drupal-user-vars:
+init-project-drupal-user-vars: mustache
 	@echo "Please provide the following information so we can create your project:"
 	@read -p "Project name (NO SPACES, press enter for 'mydrupalsite'): " project_name && export PROJECT_NAME=$${project_name:-mydrupalsite} && \
 	read -p "Site name (drupal name, press enter for 'My Drupal Site'): " site_name && export SITE_NAME=$${site_name:-My Drupal Site} && \
@@ -18,12 +18,13 @@ init-project-drupal-user-vars:
 	make -s .lando.yml && \
 	make -s $(MK_D)/10_variables.mk
 
-.lando.yml: mustache
+.lando.yml:
 	@echo "Initializing lando config file." 
 	@mustache ENV $(FILES_DIR)/drupal-project/lando.yml.tmpl > $@
 
-$(MK_D)/10_variables.mk: $(MK_D) mustache
+$(MK_D)/10_variables.mk:
 	@echo "Initializing drumkit variables file."
+	@mkdir -p $(MK_D)
 	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
 
 init-project-drupal-deps: deps-php behat docker lando

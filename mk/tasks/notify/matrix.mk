@@ -3,6 +3,9 @@ MATRIX_URL     ?= https://matrix.org
 MATRIX_ROOM    ?= INVALID
 MATRIX_TOKEN   ?= INVALID
 
+PYTHON_IS_INSTALLED     = $(shell which python)
+ANSIBLE_IS_INSTALLED    = $(shell which ansible)
+
 matrix = ansible localhost -m matrix -a 'msg_plain="" msg_html="$(MATRIX_MESSAGE)" room_id="$(MATRIX_ROOM)" hs_url="$(MATRIX_URL)" token="$(MATRIX_TOKEN)"'
 
 matrix-check-room:
@@ -17,7 +20,13 @@ ifeq ($(MATRIX_TOKEN),INVALID)
 	@exit 1
 endif
 
-matrix: ansible matrix-check-room matrix-check-token
+matrix: matrix-check-room matrix-check-token
+ifeq ($(PYTHON_IS_INSTALLED),)
+	@make -s deps-python
+endif
+ifeq ($(ANSIBLE_IS_INSTALLED),)
+	@make -s ansible
+endif
 	@$(matrix)
 
 matrix-ci:

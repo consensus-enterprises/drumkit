@@ -13,7 +13,7 @@ init-project-packer-intro:
 clean-drumkit-packer.conf:
 	@rm .drumkit-packer.conf
 
-init-project-packer: init-project-packer-intro .drumkit-packer.conf $(MK_D)/20_ci.mk
+init-project-packer: init-project-packer-intro .drumkit-packer.conf $(MK_D)/20_ci.mk ##@projects Initialize a packer project.
 	@mkdir -p $(PACKER_JSON_DIR) $(PACKER_SH_DIR)
 	@echo "Initializing Packer JSON files and scripts."
 	@cp $(FILES_DIR)/packer/json/*.json $(PACKER_JSON_DIR)

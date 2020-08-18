@@ -4,19 +4,22 @@ weight: 10
 
 ---
 
+## Spin up a New Drupal8 Project
+
 `make init-project-drupal8`
----------------------------
 
 This will initialize a [Lando](https://lando.dev)-based Drupal 8 project, using
 the standard [Composer](https://getcomposer.org) `composer create-project`
 workflow to initialize a Drupal codebase from the standard
 [`drupal-composer/drupal-project`](https://github.com/drupal-composer/drupal-project)
 
+Lando is a development wrapper around docker, designed to allow you to rapidly spin up local development environments. To use drumkit this way, you need to already have lando and docker installed. (See the [Lando website](https://lando.dev) for instructions.)
+
 **NB** As of Drupal 8.8.0, this [composer template is
 deprecated](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies) in favour of
 [`drupal/recommended-project`](https://github.com/drupal/recommended-project).
 Drumkit will shortly update this and/or make the composer template configurable
-with sane default.
+with sane defaults.
 
 To bootstrap a Drupal 8 project with Drumkit:
 
@@ -40,10 +43,16 @@ This will prompt you for some information to populate your project:
 Each of these has a default value, and once you've entered all of them, Drumkit
 will proceed with ensuring you have the relevant dependencies to initialize the
 project- primarily this is Python3 (for Jinja2 templating), plus Behat, Docker,
-and Lando.
+and Lando. [Wait... if you don't have lando and docker, what happens?]
 
+#### On Linux
 If any packages are missing you may be prompted by `sudo` for your
-user password so `apt` can install them. Then it will call the `composer
+user password so `apt` can install them. 
+
+#### On a Mac
+You may need to manually install dependencies using `brew install {package}`.
+
+Then it will call the `composer
 create-project` command to initialize the codebase. Finally it will create a
 handful of default make targets, in the following files, and initialize your
 `.lando.yml`:

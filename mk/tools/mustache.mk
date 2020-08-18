@@ -4,9 +4,10 @@ mustache_OS           ?= $(shell echo "$(OS)" | tr '[:upper:]' '[:lower:]')
 mustache_DOWNLOAD_URL ?= https://github.com/quantumew/mustache-cli/releases/download/$(mustache_RELEASE)/mustache-cli-$(mustache_OS)-amd64.zip
 mustache_ZIP          ?= $(mustache_NAME)-$(mustache_RELEASE)-$(mustache_OS).zip
 
+.PHONY: mustache install-mustache clean-mustache
+
 install-mustache: init-mk $(BIN_DIR)/mustache
 mustache: install-mustache
-	@: # silence "Nothing to be done for mustache" message
 
 $(BIN_DIR)/mustache: $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
 	@echo "Installing mustache $(mustache_RELEASE)."

@@ -5,7 +5,7 @@ init-project-aegir-intro:
 init-project-aegir-dependencies: roles/consensus.aegir-policy $(MK_D)/20_project_aegir.mk
 init-project-aegir: host=aegir0
 init-project-aegir: group=aegir
-init-project-aegir: init-project-aegir-intro init-project-aegir-dependencies ## Initialize a project for deploying Aegir with Ansible (application only, no infrastructure management).
+init-project-aegir: init-project-aegir-intro init-project-aegir-dependencies ##@projects Initialize a project for deploying Aegir with Ansible (application only, no infrastructure management).
 	@make -s init-role-aegir host=$(host) group=$(group)
 	@echo "Finished initializing Drumkit Aegir project."
 

@@ -1,5 +1,6 @@
 behat      ?= $(BEHAT_BIN) --stop-on-failure --colors
 BEHAT_BIN  ?= $(BIN_DIR)/behat
+BEHAT_RELATIVE_EXEC ?= ../src/behat/bin/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
 BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat
 BEHAT_DEPS ?= php5-curl php-mbstring php-dom
@@ -57,7 +58,7 @@ $(BEHAT_SRC)/composer.lock: $(BEHAT_SRC)/composer.json
 
 $(BEHAT_BIN): $(BEHAT_SRC)/composer.lock
 	@echo Installing Behat.
-	@ln -sf $(BEHAT_EXEC) $(BEHAT_BIN)
+	@cd $(BIN_DIR) && ln -sf $(BEHAT_RELATIVE_EXEC) behat
 	@touch $(BEHAT_BIN)
 	@$(behat) --version
 

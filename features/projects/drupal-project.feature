@@ -74,7 +74,7 @@ Feature: Initialize Drupal projects with Lando.
   @unit
   Scenario: Initialize lando config file
      # In real life this target is called by init-project-drupal-user-vars after user interaction
-     When I run "unset DRUMKIT && source d && make .lando.yml PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
+     When I run "unset DRUMKIT && source d && make mustache .lando.yml PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
      Then I should get:
      """
      Initializing lando config file
@@ -93,7 +93,7 @@ Feature: Initialize Drupal projects with Lando.
   
   @unit
   Scenario: Initialize drumkit variables file   
-     When I run "unset DRUMKIT && source d && make drumkit/mk.d/10_variables.mk PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
+     When I run "unset DRUMKIT && source d && make mustache drumkit/mk.d/10_variables.mk PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
      Then I should get:
      """
      Initializing drumkit variables file.
