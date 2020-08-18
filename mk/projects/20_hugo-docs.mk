@@ -1,10 +1,11 @@
 init-project-hugo-docs-intro:
 	@echo "Initializing Hugo Docs project."
+	@echo "OS is $(OS)"
 
 hugo-docs.conf:
 	@echo "Please provide the following information to initialize your Hugo Gitlab Pages site:"
 	@read -p "GitLab group name: " group && export GITLAB_GROUP=$${group} && \
-	@read -p "GitLab project name: " project && export GITLAB_PROJECT_NAME=$${project}
+	read -p "GitLab project name: " project && export GITLAB_PROJECT_NAME=$${project}
 
 docs/config.yaml: mustache
 	@echo "Initializing config.yaml."
@@ -28,6 +29,7 @@ init-project-hugo-docs: init-project-hugo-docs-intro hugo-docs.conf init-project
 	@echo "  hugo serve --> serve files locally at http://localhost:1313/PROJECT"
 
 init-project-hugo-docs-dir: hugo
+	@echo "Download URL is $(hugo_DOWNLOAD_URL)"
 	@hugo new site docs
 	@git submodule add https://github.com/matcornic/hugo-theme-learn.git docs/themes/learn
 

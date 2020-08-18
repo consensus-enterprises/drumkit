@@ -1,4 +1,4 @@
-OS = $(shell uname)
+OS ?= $(shell uname)
 ifeq ($(OS), Darwin)
   include $(MK_DIR)/mk/tools/os_pkg/dmg.mk
 else ifeq ($(OS), Linux)

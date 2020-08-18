@@ -1,5 +1,5 @@
 user   = $(shell whoami)
-utils  = screen htop strace tree
+utils  = screen htop strace tree unzip
 bashrc = export PATH="$(BIN_DIR):$$PATH"
 
 bashrc:
