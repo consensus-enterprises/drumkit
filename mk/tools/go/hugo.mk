@@ -1,7 +1,7 @@
 hugo_NAME         ?= Hugo
 hugo_RELEASE      ?= 0.73.0
 
-ifeq ($(OS),Darwin)
+ifeq ($(OS),"Darwin")
         hugo_OS   ?= macOS
 else
         hugo_OS   ?= $(OS)
