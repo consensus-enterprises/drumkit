@@ -6,8 +6,11 @@ gitlab-runner: ## Install and configure local gitlab-runner.
 
 gitlab-runner-real: docker
 	@echo "Downloading gitlab-runner."
+	@mkdir -p $(BIN_DIR)
 	@curl -L --output $(GITLAB_RUNNER) $(GITLAB_RUNNER_URL) 
 	@chmod 755 $(GITLAB_RUNNER)
+	@which gitlab-runner
+	@$(GITLAB_RUNNER) --version
 
 gitlab-runner-config:
 	@echo "Configuring gitlab-runner."
