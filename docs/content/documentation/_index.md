@@ -1,7 +1,7 @@
 ---
 title: Documentation Contributions
 weight: 100
-draft: true
+draft: false
 
 ---
 
@@ -11,7 +11,7 @@ The documentation site you are currently looking at is generated using a Hugo si
 
 
 We maintain the Drumkit documentation site using
-[Hugo](http://www.gohugo.org/). To get started contributing to this project,
+[Hugo](http://www.gohugo.org/). To get started contributing to this set of documentation,
 fork it on Gitlab. Then install Hugo and clone this repo:
 
 ```console
