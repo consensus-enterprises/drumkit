@@ -10,6 +10,7 @@ Drumkit includes all the necessary components to embed a Hugo documentation site
 
 ### Initialization
 At the root of the project, you can install a complete hugo site using `make init-project-hugo-docs`.
+If you want to use a specific version of hugo, you can speficy it using the variable `hugo_RELEASE`
 
 This will:
 - Download a local copy of hugo (inside the `.mk/.local/bin` folder)
