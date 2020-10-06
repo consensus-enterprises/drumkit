@@ -8,9 +8,9 @@ init-project-packer-intro:
 init-project-packer-vars:
 	@echo "Please provide the following information to initialize your Packer scripts:"
 	@read -p "Docker container project name: " project && export CONTAINER_PROJECT_NAME=$${project:-project} && \
-	read -p "Docker container registry URL: " registry_url && export CONTAINER_REGISTRY_URL=$${registry_url:-registry.gitlab.com} && \
-	make -s $(MK_D)/20_ci.mk && \
-	make -s $(PACKER_SH_DIR)/$(CONTAINER_PROJECT_NAME).sh
+	@read -p "Docker container registry URL: " registry_url && export CONTAINER_REGISTRY_URL=$${registry_url:-registry.gitlab.com} && \
+	@make -s $(MK_D)/20_ci.mk && \
+	@make -s $(PACKER_SH_DIR)/$(CONTAINER_PROJECT_NAME).sh
 
 init-project-packer-static: mustache
 	@mkdir -p $(PACKER_JSON_DIR) $(PACKER_SH_DIR)
@@ -28,7 +28,7 @@ $(MK_D)/20_ci.mk:
 	@mustache ENV $(FILES_DIR)/packer/20_ci.mk.tmpl > $@
 
 $(PACKER_JSON_DIR)/40-$(CONTAINER_PROJECT_NAME).json:
-	@echo Initializing project-specific Packer JSON file $@
+	@echo "Initializing project-specific Packer JSON file $@"
 	@cp $(FILES_DIR)/packer/40-project.json $@
 
 $(PACKER_SH_SCRIPTS):
