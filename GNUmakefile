@@ -21,3 +21,6 @@ ifeq ($(MK_D_EXISTS), 1)
   endif
 endif
 
+# Include the self-documentation makefile after MK_D gets included
+# (above), so that files from MK_D get scanned for inline help messages:
+include $(MK_DIR)/mk/selfdoc.mk

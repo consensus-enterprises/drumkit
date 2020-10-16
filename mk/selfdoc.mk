@@ -1,19 +1,29 @@
 # Inspired by https://www.client9.com/self-documenting-makefiles/
 
-.PHONY: help help-selfdoc help-selfdoc-short help-message-header selfdoc-howto help-categories help-category
+.PHONY: help help-selfdoc help-selfdoc help-message-header selfdoc-howto help-categories help-category
 
-HELP_CATEGORIES ?= $(shell grep -h -E '^[a-zA-Z0-9_-]+:.*?\#\#@[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'match($$0,/@[^ ]+/){ print substr($$0, RSTART+1,RLENGTH-1)}' | sort -u)
-
+############################################################################
+# What this next bit of grep/perl does:
+# * grep for all lines containing self-doc messages
+# * collect all categories from those lines
+# * output the categories in a sorted list, which 
+# * can then be captured in the HELP_CATEGORIES make variable.
+#
+# If you want to test this shell invocation on the command line, note the make-specific
+# escaping of # chars and doubled $ chars, both of which you'll need to undo.
+#
+HELP_CATEGORIES ?= $(shell grep -h -E '^[a-zA-Z0-9_-]+:.*?\#\#@[^ ]* .*$$' $(MAKEFILE_LIST) | perl -nle'/\#\#@([^ ]+?) /; @a = split /[@ ]/, $$1; print join "\n", @a' | sort -u)
+  
 help-message-header:
 	@$(ECHO) "$(BOLD)$(GREY)Available 'make' commands:$(RESET)"
 
-help: help-selfdoc-short
-help-selfdoc-short: help-message-header 
-help-selfdoc-short: ## Aggregate and print all short self-documentation messages from all included makefiles.
+help: help-selfdoc
+help-selfdoc: help-message-header
+help-selfdoc: ## Aggregate and print all short self-documentation messages from all included makefiles.
 	@grep -h -E '^[a-zA-Z0-9_-]+:.*?##@?[^ ]* .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?##@?[^ ]* "}; \
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}' | sort -u
 
-help-category: ##@help [category] Aggregate and print all short self-documentation messages from this category from all included makefiles.
+help-category: ##@help [category] Aggregate and print all short self-documentation messages tagged with this category in all included makefiles.
 ifeq ($(category),) # No category supplied: display the help categories doc
 	@make -s help-categories
 else ifeq ($(shell echo $(HELP_CATEGORIES)|grep $(category)),)
@@ -21,7 +31,7 @@ else ifeq ($(shell echo $(HELP_CATEGORIES)|grep $(category)),)
 	@$(ECHO) "$(BOLD)$(GREY)Unrecognized help category: $(category)$(RESET)"
 	@make -s help-categories
 else
-	@grep -h -E '^[a-zA-Z0-9_-]+:.*?##@$(category) .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?##@$(category)"}; \
+	@grep -h -E '^[a-zA-Z0-9_-]+:.*?##@?.*?@$(category)' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?##@[^ ]*? "}; \
     {printf "$(BOLD)$(CYAN)%-30s $(RESET)%s\n", $$1, $$2}'
 endif
 
