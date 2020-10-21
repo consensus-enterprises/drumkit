@@ -5,7 +5,7 @@ PLATFORM_ROOT   ?= $(DRUPAL_DIR)/drupal-$(SITE)
 .PHONY: drupal-rebuild drupal-rebuild-help clean-drupal-platform drupal-build-platform
 
 drupal-rebuild-help:
-	@echo "make drupal-rebuild"
+	@$(ECHO) "$(BOLD)make drupal-rebuild$(RESET)"
 	@echo "  Destroy the current Drupal site and rebuild it from scratch."
 drupal-rebuild: clean-drupal drupal
 

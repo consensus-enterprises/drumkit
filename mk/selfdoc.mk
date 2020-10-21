@@ -51,7 +51,7 @@ help-categories: ##@help List all available help categories.
 help-%:
 	@make -s help-category category=$*
 
-selfdoc-howto: ## Print a brief message explaining how to write self-documenting makefiles
+selfdoc-howto: ##@help Print a brief message explaining how to write self-documenting makefiles
 	@$(ECHO)
 	@$(ECHO) "\t$(BOLD)$(GREY)WRITING SELF-DOCUMENTING MAKEFILES$(RESET)"
 	@$(ECHO)	

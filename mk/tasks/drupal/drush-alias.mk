@@ -5,8 +5,8 @@ DRUSHRC_DRUMKIT  ?= $(DRUSH_DIR)/.drumkit.drushrc.php
 
 .PHONY: drush-alias-help debug-drush-alias drush-alias
 
-drush-alias-help:
-	@echo "make drush-alias"
+drush-alias-help: ##@help [TODO: Explain how this works.]
+	@$(ECHO) "$(BOLD)make drush-alias$(RESET)"
 	@echo "  Generate a Drush alias for the dev site."
 
 debug-drush-alias:
