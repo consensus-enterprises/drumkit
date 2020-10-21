@@ -1,6 +1,6 @@
 # Inspired by https://www.client9.com/self-documenting-makefiles/
 
-.PHONY: help help-selfdoc help-selfdoc help-message-header selfdoc-howto help-categories help-category
+.PHONY: help help-selfdoc help-message-header selfdoc-howto help-categories help-category
 
 ############################################################################
 # What this next bit of grep/perl does:
@@ -53,19 +53,42 @@ help-%:
 
 selfdoc-howto: ## Print a brief message explaining how to write self-documenting makefiles
 	@$(ECHO)
-	@$(ECHO) "$(BOLD)$(GREY)WRITING SELF-DOCUMENTING MAKEFILES$(RESET)"
+	@$(ECHO) "\t$(BOLD)$(GREY)WRITING SELF-DOCUMENTING MAKEFILES$(RESET)"
+	@$(ECHO)	
+	@$(ECHO) "\t$(BOLD)To add a one-line description of a target that will display in $(YELLOW)make help-selfdoc$(RESET):"
+	@$(ECHO) "\tAt the end of the list of dependencies for the target, add a pair of octothorpes (##) followed by"
+	@$(ECHO) "\tthe text you want to have printed."
 	@$(ECHO)
-	@$(ECHO) "\t$(GREY)When adding make targets to your Drumkit makefiles, target names (ending with a colon),"
-	@$(ECHO) "\talong with comments that start with '##', will be scraped and aggregated in the output of"
-	@$(ECHO) "\t$(YELLOW)make help-selfdoc$(GREY). Use $(YELLOW)[]$(GREY) to indicate arguments to the make target.$(RESET)"
+	@$(ECHO) "\t$(BOLD)BASIC SYNTAX:$(RESET)"
+	@$(ECHO) "\ttarget-name: ## Description of the current target."
 	@$(ECHO)
-	@$(ECHO) "\t$(GREY)Virtual make targets will be documented with no target name.$(RESET)" 
+	@$(ECHO) "\t$(BOLD)NOTE:$(RESET)"
+	@$(ECHO) "\t* The list of dependencies may be empty."
+	@$(ECHO) "\t* Use $(YELLOW)[]$(RESET) to indicate arguments to the make target."
 	@$(ECHO)
-	@$(ECHO) "$(BOLD)$(GREY)EXAMPLE$(RESET)"
+	@$(ECHO) "\t* You can assign the target to one or more help categories by adding any number of '@foo' '@bar' tags between"
+	@$(ECHO) "\tthe '##'' indicators and the text. The message will then appear when the user runs 'make help-foo' "
 	@$(ECHO)
-	@$(ECHO) "\t$(GREY)In a makefile:$(RESET)"
+	@$(ECHO) "\tYou can also introduce new categories this way. If it is the first use of a paricular category, it will be"
+	@$(ECHO) "\tautomatically added to the list produced by 'make help-categories'. "
 	@$(ECHO)
-	@$(ECHO) "\t\ttarget: ## [arguments to the target] A one-line description of target."
+	@$(ECHO) "\t$(BOLD)COMPLETE SYNTAX:$(RESET)"
+	@$(ECHO) "\ttarget-name: list dependencies ##@foo @bar [argument1 argument2] Description of the current target."
+	@$(ECHO)
+	@$(ECHO) "\t'[argument1 argument2] Description of the current target.' will appear in the " 
+	@$(ECHO) "\tlists of targets when you run $(YELLOW)make help-selfdoc$(RESET), $(YELLOW)make help-foo$(RESET), and $(YELLOW)make help-bar$(RESET)"
+	@$(ECHO)	
+	@$(ECHO) "\t$(YELLOW)foo$(RESET) and $(YELLOW)bar$(RESET) will appear in the list when you run $(YELLOW)make help-categories$(RESET)"
 	@$(ECHO)
 	@$(ECHO) "\t$(GREY)Run $(YELLOW)make help-selfdoc$(GREY) to see more examples.$(RESET)"
+	@$(ECHO)
+
+	@$(ECHO) "\t$(BOLD)To Add Multi-line help (like this one)... $(RESET)"
+
+	@$(ECHO) "\tWe use the .PHONY feature of makefiles to generate arbitrary targets which use ECHO"
+	@$(ECHO) "\tto make multi-line output. To ensure that they are listed as possible help targets:"
+	@$(ECHO) "\t* Start their target name with 'help-' and"
+	@$(ECHO) "\t* Include a useful one-line description as above."
+	@$(ECHO)
+	@$(ECHO) "\tThis message came from mk/selfdoc.mk if you want to look at an example."
 	@$(ECHO)
