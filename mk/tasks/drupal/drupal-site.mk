@@ -7,8 +7,11 @@ SITE_URI        ?= http://localhost:$(PHP_SERVER_PORT)
 .PHONY: drupal-reinstall-help drupal-reinstall clean-drupal-site drupal-install drupal-create-sqlite-db 
 
 drupal-reinstall-help:
-	@echo "make drupal-reinstall"
+	@$(ECHO) "$(BOLD)make drupal-reinstall$(RESET)"
 	@echo "  Re-install the current Drupal site."
+	@echo "  - Kills server, deletes database and settings.php"
+	@echo "  - Complete reinstall including a new database"
+
 drupal-reinstall: clean-drupal-site drupal-install drupal-start-server drupal-user-login
 
 clean-drupal-site: drupal-kill-server

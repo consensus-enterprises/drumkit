@@ -3,16 +3,16 @@ PHP_SERVER_PORT ?= 8888
 .PHONY: drupal-start-server-help drupal-start-server drupal-kill-server-help drupal-kill-server
 
 drupal-start-server-help:
-	@echo "make drupal-start-server"
+	@$(ECHO) "$(BOLD)make drupal-start-server$(RESET)"
 	@echo "  Start an embedded PHP server."
-drupal-start-server:
+drupal-start-server: ## Start an embedded PHP server
 	@echo "Starting PHP server."
 	@cd $(PLATFORM_ROOT) && php -S 0.0.0.0:$(PHP_SERVER_PORT) &> runserver.log &
 	@echo "Giving PHP server a chance to start."
 	@sleep 3
 
 drupal-kill-server-help:
-	@echo "make drupal-kill-server"
+	@$(ECHO) "$(BOLD)make drupal-kill-server$(RESET)"
 	@echo "  Stop the PHP server."
 drupal-kill-server:
 	@echo "Stopping any running PHP servers."

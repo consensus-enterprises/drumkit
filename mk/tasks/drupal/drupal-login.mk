@@ -1,7 +1,7 @@
 .PHONY: drupal-user-login-help drupal-user-login
 
 drupal-user-login-help:
-	@echo "make drupal-user-login"
+	@$(ECHO) "$(BOLD)make drupal-user-login$(RESET)"
 	@echo "  Open a browser and login to the dev site."
 drupal-user-login: drupal-install drupal-start-server
 	@echo "A browser window should open on your new site. If not, use the following URL:"

@@ -9,4 +9,4 @@ docs: ## Run Hugo server locally in the background (http://localhost:1313).
 
 #TODO add support to kill local server on a mac
 docs-kill: ## Shut down the Hugo server.
-	pkill -xfe "$(HUGO_SERVE_CMD)"
+	pkill -xf "$(HUGO_SERVE_CMD)"
