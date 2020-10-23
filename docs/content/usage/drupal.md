@@ -6,7 +6,7 @@ weight: 10
 
 ## Spin up a New Drupal8 Project
 
-`make init-project-drupal8`
+`make init-project-drupal`
 
 This will initialize a [Lando](https://lando.dev)-based Drupal 8 project, using
 the standard [Composer](https://getcomposer.org) `composer create-project`

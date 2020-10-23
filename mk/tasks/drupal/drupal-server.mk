@@ -5,7 +5,7 @@ PHP_SERVER_PORT ?= 8888
 drupal-start-server-help:
 	@$(ECHO) "$(BOLD)make drupal-start-server$(RESET)"
 	@echo "  Start an embedded PHP server."
-drupal-start-server: ##@drupal Start an embedded PHP server
+drupal-start-server: ## Start an embedded PHP server
 	@echo "Starting PHP server."
 	@cd $(PLATFORM_ROOT) && php -S 0.0.0.0:$(PHP_SERVER_PORT) &> runserver.log &
 	@echo "Giving PHP server a chance to start."
