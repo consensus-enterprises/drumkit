@@ -6,42 +6,36 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
 
   Background:
     Given I bootstrap Drumkit
-      And I run "cp .mk/files/packer/drumkit-packer.conf.test .drumkit-packer.conf"
 
   Scenario: Initialize a Packer CI project.
-      When I run "make init-project-packer"
+      When I run "make -n init-project-packer"
       Then I should get:
       """
       Initializing Drumkit Packer project.
-      Initializing CI makefile.
       Initializing Packer JSON files and scripts.
-      Initializing project specific Packer script scripts/packer/scripts/myproj.sh
-      Initializing project-specific Packer JSON file scripts/packer/json/40-myproj.json
       Finished initializing Drumkit Packer project.
+      """
+
+  Scenario: Initialize a Packer CI project.
+      When I run "unset DRUMKIT && source d && make mustache && make CONTAINER_REGISTRY_URL=sample.gitlab.repo/uri CONTAINER_PROJECT_NAME=myproj init-project-packer-static drumkit/mk.d/20_ci.mk scripts/packer/scripts/myproj.sh"
+      Then I should get:
+      """
+      Initializing Packer JSON files and scripts.
+      Initializing project-specific Packer JSON file scripts/packer/json/40-myproj.json
+      Initializing CI makefile.
+      Initializing project specific Packer script scripts/packer/scripts/myproj.sh
       """
       And the following files should exist:
       """
-      scripts/packer/scripts/apt.sh
-      scripts/packer/scripts/cleanup.sh
-      scripts/packer/scripts/php.sh
-      scripts/packer/scripts/purge-extra-packages.sh
-      scripts/packer/scripts/python.sh
-      scripts/packer/scripts/utils.sh
-      scripts/packer/scripts/myproj.sh
-      scripts/packer/json/10-bionic.json
-      scripts/packer/json/20-base.json
-      scripts/packer/json/30-php.json
       scripts/packer/json/40-myproj.json
+      scripts/packer/scripts/myproj.sh
+      drumkit/mk.d/20_ci.mk
       """
       And the file "drumkit/mk.d/20_ci.mk" should contain:
       """
       CONTAINER_REGISTRY_URL ?= sample.gitlab.repo/uri
       CONTAINER_PROJECT_NAME = myproj
       """
-      And the following files should not exist:
-      """
-      .drumkit-packer.conf
-      """ 
       Then I run "make clone"
       And I should get:
       """
@@ -58,4 +52,4 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
       Building packer images for CI.
       Using project name: myproj
       Using container registry: sample.gitlab.repo/uri
-      """
+     """
