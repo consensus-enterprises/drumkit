@@ -35,9 +35,30 @@ Feature: Selfdoc for Drumkit development
 
   Scenario: I can see documentation that only exists in the local drumkit mk.d files
   Given I bootstrap Drumkit
-  When I run "make init-project-drupal"
+  When I run "make drupal-drumkit-dir"
   And I run "make help"
   Then I should get:
   """
   Start Lando containers.
+  """
+  And I run "cp .mk/files/test-fixtures/mock.mk drumkit/mk.d/"
+  Then the following files should exist:
+  """
+  drumkit/mk.d/mock.mk
+  """
+  And I run "make help"
+  Then I should get:
+  """
+  Some helpful text about a mock target
+  """
+  And I run "make help-categories"
+  Then I should get:
+  """
+  foo
+  """
+  And I run "make help-foo"
+  Then I should get:
+  """
+  make_mock_target
+  Some helpful text about a mock target
   """
