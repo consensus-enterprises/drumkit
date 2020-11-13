@@ -22,15 +22,23 @@ ifneq ("$(wildcard $(COMPOSER_CACHE_DIR))","")
 endif
 
 clean-build: ## Clean Composer built code.
-ifneq ("$(wildcard web)","")
-	chmod -R 700 web
-	rm -rf web
-	@$(ECHO) "$(YELLOW)Deleted platform directory.$(RESET)"
-endif
-ifneq ("$(wildcard vendor)","")
-	rm -rf vendor
-	@$(ECHO) "$(YELLOW)Deleted vendor directory.$(RESET)"
-endif
+	@$(ECHO) "$(YELLOW)Beginning clean of composer-built code.$(RESET)"
+	@chmod -R +w web
+	@# We want to keep the .env, .lando.local.yml, and settings.local.php because
+	@# they contain machine-specific config. Also, tmp/backups has database
+	@# backups and .idea contains IDE configuration.
+	@git clean -dfx -e '/.env' -e '/.lando.local.yml' -e '/web/sites/default/settings.local.php' -e '/.idea' -e '/tmp/backups/'
+	@# Git clean won't delete repos that composer cloned; so delete these. See
+	@# composer.json -> extra.installer-paths for the list of places these repos
+	@# could end up.
+	@if [ -d web/core/ ] ; then rm -r web/core/ ; fi
+	@if [ -d web/libraries/ ] ; then rm -r web/libraries/ ; fi
+	@if [ -d web/modules/contrib/ ] ; then rm -r web/modules/contrib/ ; fi
+	@if [ -d web/profiles/contrib/ ] ; then rm -r web/profiles/contrib/ ; fi
+	@if [ -d web/themes/contrib/ ] ; then rm -r web/themes/contrib/ ; fi
+	@if [ -d drush/Commands/contrib/ ] ; then rm -r drush/Commands/contrib/ ; fi
+	@if [ -d web/private/scripts/quicksilver/ ] ; then rm -r web/private/scripts/quicksilver/ ; fi
+	@$(ECHO) "$(YELLOW)Completed clean of composer-built code.$(RESET)"
 
 update: ## Run composer update
 	@$(MAKE-QUIET) update-real
