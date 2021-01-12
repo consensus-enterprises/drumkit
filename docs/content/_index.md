@@ -15,7 +15,7 @@ wget -O - https://drumk.it/installer | /bin/bash
 
 For further details on installation procedures and options, see the [Install](install) page.
 
-## Common Commands
+## Common Commands [None of these currently work]
 
 Drumkit is built atop [GNU Make](https://www.gnu.org/software/make/), a ubiquitous build tool present on all Unixes. As such, all Drumkit commands must be run from the root of your project, and are prefaced by `make`.
 
