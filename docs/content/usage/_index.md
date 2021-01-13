@@ -14,48 +14,17 @@ normal usage all you need to know is that all commands are prefaced by `make`,
 which invokes GNU Make.
 
 
-Help
+Projects
 ----
 
-To see what commands are available, run:
 
 ```console
-$ make help
-make help
-  Print this help message.
-make tools-help
-  Print install help for all tools.
-make drupal
-  Build a Drupal codebase, install a site and start a web server.
-make kill-server
-  Stop the server running started during site install.
-make install
-  Install all tools.
-make test
-  Run tests.
-make vagrant
-  Add a Vagrantfile.
-make up
-  Launch Vagrant.
-make rebuild
-  Destroy the current Vagrant VM and re-provision a new one.
+$ make help-projects
+init-project-aegir             Initialize a project for deploying Aegir with Ansible (application only, no infrastructure management).
+init-project-aegirvps          Initialize a project to manage full-stack AegirVPS systems on Openstack. 
+init-project-ansible           Initialize a project for working with Ansible.
+init-project-hugo-docs         Initialize a hugo site
+init-project-openstack         Initialize a project for provisioning cloud infrastructure on an OpenStack provider.
+init-project-packer            Initialize a packer project.
+
 ```
-
-To see the tools that `drumkit` can install, and options related to them, run:
-
-```console
-$ make tools-help
-make composer
-  Install Composer.
-make composer COMPOSER_REL=1.0.0-beta1
-  Install the 1.0.0-beta1 release of Composer.
-make drush
-  Install Drush.
-make drush DRUSH_REL=8.0.5
-  Install the 8.0.5 release of Drush.
-make behat
-  Install Behat.
-make selenium
-  Install Selenium.
-```
-
