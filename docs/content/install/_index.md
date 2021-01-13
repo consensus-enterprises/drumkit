@@ -14,32 +14,26 @@ wget -O - https://drumk.it/installer | /bin/bash
 Install Tools
 -------------
 
-To see the tools that `drumkit` can install, and options related to them, run:
+Sample installation commands:
 
 ```console
-$ make tools-help
-make composer
+
+$ make composer
   Install Composer.
-make composer COMPOSER_REL=1.0.0-beta1
+$ make composer COMPOSER_REL=1.0.0-beta1
   Install the 1.0.0-beta1 release of Composer.
-make drush
+$ make drush
   Install Drush.
-make drush DRUSH_REL=8.0.5
+$ make drush DRUSH_REL=8.0.5
   Install the 8.0.5 release of Drush.
-make behat
+$ make behat
   Install Behat.
-make selenium
+$ make selenium
   Install Selenium.
 ```
 
-All of them can be installed at once by running:
-
-```console
-$ make install
-```
-
 The tools are installed locally in `.mk/.local/`. The idea here is to isolate
-them from your local system setup. this should make it easier when working as a
+them from your local system setup. This should make it easier when working as a
 team, since you'll all be using the same suite of local tools.
 
 To use these locally installed tools, run:

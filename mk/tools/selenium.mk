@@ -2,6 +2,8 @@ selenium         = $(BIN_DIR)/selenium-server.jar
 selenium_version = 2.52
 selenium_release = $(selenium-version).0
 
+# TODO: check selenium instructions for MacOS
+
 tools-help-selenium:
 	@echo "make selenium"
 	@echo "  Install Selenium."
