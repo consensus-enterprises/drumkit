@@ -3,7 +3,7 @@ BEHAT_BIN  ?= $(BIN_DIR)/behat
 BEHAT_RELATIVE_EXEC ?= ../src/behat/bin/behat
 BEHAT_SRC  ?= $(SRC_DIR)/behat
 BEHAT_EXEC ?= $(BEHAT_SRC)/bin/behat
-BEHAT_DEPS ?= php5-curl php-mbstring php-dom
+BEHAT_DEPS ?= php-curl php-mbstring php-dom
 BDE_DIR    ?= $(DRUSH_DIR)/drush-bde-env
 BDE_EXISTS ?= $(shell if [[ -d $(BDE_DIR) ]]; then echo 1; fi)
 
@@ -17,7 +17,10 @@ $(BDE_DIR): $(DRUSH_DIR)
 	@git clone https://github.com/pfrenssen/drush-bde-env.git $(BDE_DIR)
 	@$(drush) @none cc drush
 
-deps: deps-behat
+deps: 
+	@echo Checking dependencies.
+	# TODO: check if 'php -m |grep mbstring' and 'php -m |grep curl' and only call this submake if needed:
+	@make -s deps-behat
 deps-behat: apt-update deps-php composer
 	@echo Installing Behat dependencies.
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $(BEHAT_DEPS)
@@ -28,7 +31,7 @@ clean-behat:
 	@rm -f $(BEHAT_BIN)
 
 behat: init-mk composer $(BEHAT_BIN)
-init-behat: behat.yml features features/testing.feature behat
+init-behat: deps behat behat.yml features features/testing.feature
 	@echo "Next, try running 'behat' to execute the sample tests."
 
 clean-init-behat:
