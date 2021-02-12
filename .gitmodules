@@ -4,4 +4,4 @@
 	branch = master
 [submodule "lib/gmsl"]
 	path = lib/gmsl
-	url = https://gitlab+deploy-token-358947:pN8vVjFj1H2TJ6sDn-Rd@gitlab.com/consensus.enterprises/gmsl/gmsl.git
+	url = https://gitlab.com/consensus.enterprises/gmsl/gmsl.git
