@@ -8,3 +8,4 @@ composer.phar
 behat_params.sh
 .local
 .config.toml
+.DS_Store
