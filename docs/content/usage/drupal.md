@@ -70,6 +70,8 @@ local dev site.
   make install # Run Drupal installer (via drush)
 ```
 
+You may need to [roll back your version of PHP](https://stackoverflow.com/questions/34909101/how-can-i-easily-switch-between-php-versions-on-mac-osx) as more recent MacOS ships with PHP 8
+
 This will get you a working site at https://[projectname].lndo.site.
 
 ## Development Workflows
