@@ -37,8 +37,8 @@ hugo-docs-search-index:
 	@echo "Initializing search index.json."
 	@cp $(FILES_DIR)/hugo-docs/index.json docs/layouts/index.json
 
-hugo-ci-local: gitlab-runner .gitlab-ci.yml
-	gitlab-runner exec docker tests
+hugo-ci-local: gitlab-runner .gitlab-ci.yml ##Run CI tests for hugo docs project
+	gitlab-runner exec docker test
 
 .gitlab-ci.yml:
 	@echo "Copying hugo CI file"
