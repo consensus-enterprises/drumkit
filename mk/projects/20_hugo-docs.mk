@@ -17,11 +17,8 @@ docs/config.yaml: mustache
 clean-hugo-docs.conf:
 	@rm hugo-docs.conf
 
-.gitlab-ci.yml:
-	@echo "Copying CI file"
-	@cp $(FILES_DIR)/hugo-docs/.gitlab-ci.yml.tmpl .gitlab-ci.yml
 
-init-project-hugo-docs: init-project-hugo-docs-intro hugo-docs.conf init-project-hugo-docs-dir docs/config.yaml .gitlab-ci.yml hugo-docs-search-index ##@projects Initialize a hugo site
+init-project-hugo-docs: init-project-hugo-docs-intro hugo-docs.conf init-project-hugo-docs-dir docs/config.yaml hugo-docs-search-index ##@projects Initialize a hugo site
 	@git add docs
 	@git commit -m "Initialize docs site."
 	@cd docs && hugo new _index.md
@@ -39,3 +36,10 @@ init-project-hugo-docs-dir: hugo
 hugo-docs-search-index:
 	@echo "Initializing search index.json."
 	@cp $(FILES_DIR)/hugo-docs/index.json docs/layouts/index.json
+
+hugo-ci-local: gitlab-runner .gitlab-ci.yml
+	gitlab-runner exec docker tests
+
+.gitlab-ci.yml:
+	@echo "Copying hugo CI file"
+	@cp $(FILES_DIR)/hugo-docs/.gitlab-ci.yml.tmpl .gitlab-ci.yml
