@@ -1,7 +1,7 @@
 ---
 title: Development How-To's
 weight: 30
-draft: true
+draft: false
 
 ---
 
@@ -13,4 +13,4 @@ TOPICS:
 * Mustache templating
 * Making new kinds of projects
 * Documentation (see above maintaining-drumk.it)
-* Contributing to Drumkit
+* [Contributing to Drumkit](contribute)
