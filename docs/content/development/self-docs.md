@@ -4,7 +4,7 @@ weight: 50
 draft: true
 ---
 
-This text is coming from the docs folder inside the drumkit project.
+This text (what you are reading right now) is coming from the `docs` folder inside the drumkit project.
 
 However, Drumkit also has a self-documentation feature built in to provide command line assistance for the most common tasks.
 
