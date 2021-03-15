@@ -37,7 +37,7 @@ Feature: Initialize Hugo Docs Projects
 
   @unit
   Scenario: Initialize Hugo Docs Directory & Search Index
-    Given I run "unset DRUMKIT && source d && make init-project-hugo-docs-dir"
+    Given I run "unset DRUMKIT && source d && make docs"
     Then I should get:
     """
     Hugo Static Site Generator

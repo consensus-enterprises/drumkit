@@ -1,4 +1,4 @@
-.PHONY: init-project-hugo-docs
+.PHONY: init-project-hugo-docs hugo-ci-local
 
 init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/content/_index.md docs/theme/learn .gitlab-ci.yml ##@projects Initialize a hugo site
 	@echo "Initializing Hugo Docs project."
@@ -31,7 +31,7 @@ docs/layouts/index.json:
 	@cp $(FILES_DIR)/hugo-docs/index.json $@
 
 hugo-ci-local: gitlab-runner .gitlab-ci.yml ##Run CI tests for hugo docs project
-	gitlab-runner exec docker test
+	@gitlab-runner exec docker test
 
 .gitlab-ci.yml:
 	@echo "Copying hugo CI file"
