@@ -14,13 +14,13 @@ Feature: Initialize Hugo Docs Projects
       """
       Initializing Hugo Docs project
       Downloading the 
-      Your new docs site is initialized, please edit docs/config.yaml to fill in site details
+      Your new docs site has been added, configuration instructions are in docs/config.yaml
 
       """
 
   @unit
   Scenario: Initialize config.yaml file
-    When I run "unset DRUMKIT && source d && make docs/config.yaml GITLAB_GROUP=mygroup GITLAB_PROJECT_NAME=myproject"
+    When I run "unset DRUMKIT && source d && make docs/config.yaml"
     Then I should get:
     """
     Initializing config.yaml
@@ -53,7 +53,7 @@ Feature: Initialize Hugo Docs Projects
     docs/layouts
     docs/static
     """
-    When I run "make hugo-docs-search-index"
+    When I run "make docs/layouts/index.json"
     Then I should get:
     """
     Initializing search index.json
