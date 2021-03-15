@@ -1,6 +1,6 @@
 .PHONY: init-project-hugo-docs hugo-ci-local
 
-init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/content/_index.md docs/theme/learn .gitlab-ci.yml ##@projects Initialize a hugo site
+init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/themes/learn docs/content/_index.md .gitlab-ci.yml ##@projects Initialize a hugo site
 	@echo "Initializing Hugo Docs project."
 	@git add docs
 	@git commit -m "Initialize docs site."
@@ -14,13 +14,13 @@ docs: hugo
 	@echo "Download URL is $(hugo_DOWNLOAD_URL)"
 	@hugo new site docs
 
-docs/content/_index.md: docs
+docs/content/_index.md:
 	@cd docs && hugo new _index.md
 
-docs/theme/learn: docs 
+docs/themes/learn: 
 	@git submodule add https://github.com/matcornic/hugo-theme-learn.git docs/themes/learn
 
-docs/config.yaml: docs
+docs/config.yaml:
 	@echo "Initializing config.yaml."
 	@mkdir -p docs
 	@cp $(FILES_DIR)/hugo-docs/config.yaml.tmpl $@
