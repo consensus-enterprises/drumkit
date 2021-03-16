@@ -1,7 +1,6 @@
 ---
 title: Development How-To's
 weight: 30
-draft: false
 
 ---
 
@@ -14,3 +13,4 @@ TOPICS:
 * Making new kinds of projects
 * Documentation (see above maintaining-drumk.it)
 * [Contributing to Drumkit](contribute)
+* [Testing](testing)

@@ -10,8 +10,9 @@ project codebases, etc.
 
 We are using the GoLang implementation of mustache because it is available as a
 self-contained binary for easy download.  To use it in a project, you need to have installed
-mustache by running `make mustache` first; in a Makefile, ensure you have listed it
-as a dependency so it gets installed before you try to use it, e.g.:
+mustache by running `make mustache` first. 
+
+If you are using for templating in a Makefile, list it as a dependency so it gets installed before you try to use it, e.g.:
 
 ```
 config.yml: mustache
