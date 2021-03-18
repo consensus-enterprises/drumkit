@@ -9,7 +9,7 @@ Feature: Initialize Hugo Docs Projects
 
   @unit
   Scenario: Indivdual targets generate correct files
-    Given I run "unset DRUMKIT && source d && make docs"
+    When I run "unset DRUMKIT && source d && make docs"
     Then I should get:
     """
     Hugo Static Site Generator
