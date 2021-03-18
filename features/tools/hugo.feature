@@ -15,7 +15,7 @@ Feature: Download and Install Hugo
     Download URL is 
     Linux-64bit.tar.gz
     """
-    Given I run "unset DRUMKIT && source d && make -n init-project-hugo-docs-dir local_OS=Darwin"
+    Given I run "unset DRUMKIT && source d && make -n docs local_OS=Darwin"
     Then I should get:
     """
     Download URL is 
