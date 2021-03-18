@@ -61,7 +61,16 @@ Feature: Initialize Hugo Docs Projects
     path = docs/themes/learn
     url = https://github.com/matcornic/hugo-theme-learn.git
     """
-    And I run "make docs/content/_index.md"
+    And I run "make .gitlab-ci.yml"
+    Then the following files should exist:
+    """
+    .gitlab-ci.yml
+    """
+
+  @wip
+  Scenario: After the project is initialized, I can add the first content file
+  Given [The docs folder exists and hugo is installed]
+    When I run "make docs/content/_index.md"
     Then the following files should exist:
     """
     docs/content/_index.md
@@ -70,14 +79,10 @@ Feature: Initialize Hugo Docs Projects
     """
     draft: true
     """
-    And I run "make .gitlab-ci.yml"
-    Then the following files should exist:
-    """
-    .gitlab-ci.yml
-    """
 
   @wip
   Scenario: Once the project is installed, I can run CI tests on the project using gitlab-runner
+
 
   @overall
   Scenario: Initialize a Hugo Docs project.
