@@ -86,7 +86,7 @@ Feature: Initialize Hugo Docs Projects
 
   @overall @wip
   Scenario: Initialize a Hugo Docs project.
-    [This fails because of the git add command in the middle of the hugo docs setup]
+    [This fails in because of the git add command in the middle of the hugo docs setup. It works locally in behat.]
      When I run "unset DRUMKIT && source d && make init-project-hugo-docs"
      Then I should get:
      """
