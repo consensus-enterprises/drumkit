@@ -7,20 +7,23 @@ Feature: Initialize Hugo Docs Projects
   Background:
     Given I bootstrap a clean Drumkit environment
 
-  @overall
-  Scenario: Initialize a Hugo Docs project.
-     When I run "make -n init-project-hugo-docs"
-     Then I should get:
-      """
-      Initializing Hugo Docs project
-      Downloading the 
-      Your new docs site has been added, configuration instructions are in docs/config.yaml
-
-      """
-
   @unit
-  Scenario: Initialize config.yaml file
-    When I run "unset DRUMKIT && source d && make docs/config.yaml"
+  Scenario: Indivdual targets generate correct files
+    Given I run "unset DRUMKIT && source d && make docs"
+    Then I should get:
+    """
+    Hugo Static Site Generator
+    Congratulations! Your new Hugo site    
+    """
+    And the following files should exist:
+    """
+    docs/archetypes
+    docs/content
+    docs/data
+    docs/layouts
+    docs/static
+    """
+    When I run "make docs/config.yaml"
     Then I should get:
     """
     Initializing config.yaml
@@ -33,33 +36,70 @@ Feature: Initialize Hugo Docs Projects
     """
     baseUrl: "http://mygroup.gitlab.io/myproject/
     editURL: "https://gitlab.com/mygroup/myproject/tree/master/docs/content/"
-    """ 
-
-  @unit
-  Scenario: Initialize Hugo Docs Directory & Search Index
-    Given I run "unset DRUMKIT && source d && make docs"
-    Then I should get:
-    """
-    Hugo Static Site Generator
-    Congratulations! Your new Hugo site
-    """
-    And the following files should exist:
-    """
-    docs/themes/learn
-    docs/archetypes
-    docs/config.toml
-    docs/content
-    docs/data
-    docs/layouts
-    docs/static
-    .gitlab-ci.yml
     """
     When I run "make docs/layouts/index.json"
     Then I should get:
     """
-    Initializing search index.json
+    Initializing search index.json.
     """
     And the following files should exist:
     """
     docs/layouts/index.json
     """
+    When I run "make docs/themes/learn"
+    Then I should get:
+    """
+    Installing learn theme
+    """
+    And the following files should exist:
+    """
+    docs/themes/learn
+    """
+    And the file ".gitmodules" should contain:
+    """
+    submodule "docs/themes/learn"
+    path = docs/themes/learn
+    url = https://github.com/matcornic/hugo-theme-learn.git
+    """
+    When I run "make docs/content/_index.md"
+    Then the following files should exist:
+    """
+    docs/content/_index.md
+    """
+    And the file "docs/content/_index.md" should contain:
+    """
+    draft: true
+    """
+    When I run "make .gitlab-ci.yml"
+    Then the following files should exist:
+    """
+    .gitlab-ci.yml
+    """
+
+  @wip
+  Scenario: Once the project is installed, I can run CI tests on the project using gitlab-runner
+
+  @overall
+  Scenario: Initialize a Hugo Docs project.
+     When I run "make init-project-hugo-docs"
+     Then I should get:
+     """
+     Initializing Hugo Docs project
+     Downloading the 
+     Your new docs site has been added, configuration instructions are in docs/config.yaml
+     """
+     And the following files should exist:
+     """
+     docs/archetypes
+     docs/content
+     docs/data
+     docs/layouts
+     docs/static
+     docs/config.yaml
+     docs/layouts/index.json
+     docs/themes/learn
+     docs/content/_index.md
+     .gitlab-ci.yml
+     """
+
+
