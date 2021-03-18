@@ -1,0 +1,31 @@
+image:
+  name: registry.gitlab.com/consensus.enterprises/drumkit/base:latest
+  entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
+
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - test
+  - publish
+
+test:
+  stage: test
+  script:
+  - make hugo
+  - . d
+  - hugo version
+
+pages:
+  stage: publish
+  script:
+  - make hugo
+  - . d
+  - hugo
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
