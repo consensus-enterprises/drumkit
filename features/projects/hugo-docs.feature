@@ -23,7 +23,7 @@ Feature: Initialize Hugo Docs Projects
     docs/layouts
     docs/static
     """
-    When I run "make docs/config.yaml"
+    And I run "make docs/config.yaml"
     Then I should get:
     """
     Initializing config.yaml
@@ -37,7 +37,7 @@ Feature: Initialize Hugo Docs Projects
     baseUrl: "http://mygroup.gitlab.io/myproject/
     editURL: "https://gitlab.com/mygroup/myproject/tree/master/docs/content/"
     """
-    When I run "make docs/layouts/index.json"
+    And I run "make docs/layouts/index.json"
     Then I should get:
     """
     Initializing search index.json.
@@ -46,7 +46,7 @@ Feature: Initialize Hugo Docs Projects
     """
     docs/layouts/index.json
     """
-    When I run "make docs/themes/learn"
+    And I run "make docs/themes/learn"
     Then I should get:
     """
     Installing learn theme
@@ -61,7 +61,7 @@ Feature: Initialize Hugo Docs Projects
     path = docs/themes/learn
     url = https://github.com/matcornic/hugo-theme-learn.git
     """
-    When I run "make docs/content/_index.md"
+    And I run "make docs/content/_index.md"
     Then the following files should exist:
     """
     docs/content/_index.md
@@ -70,7 +70,7 @@ Feature: Initialize Hugo Docs Projects
     """
     draft: true
     """
-    When I run "make .gitlab-ci.yml"
+    And I run "make .gitlab-ci.yml"
     Then the following files should exist:
     """
     .gitlab-ci.yml
