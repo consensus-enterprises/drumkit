@@ -86,7 +86,7 @@ Feature: Initialize Hugo Docs Projects
 
   @overall
   Scenario: Initialize a Hugo Docs project.
-     When I run "make init-project-hugo-docs"
+     When I run "unset DRUMKIT && source d && make init-project-hugo-docs"
      Then I should get:
      """
      Initializing Hugo Docs project
