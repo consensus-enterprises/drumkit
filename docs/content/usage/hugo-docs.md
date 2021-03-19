@@ -27,6 +27,18 @@ The automatically generated starting point is in `docs/content/_index.md`. To pu
 
 For guidance on using hugo to layout your docs site, refer to [hugo documentation](https://gohugo.io/getting-started/usage/)
 
+### Local testing
+
+Initialization of the hugo docs site with drumkit includes the addition of a `gitlab-ci.yml` file at the root of the project.
+
+This file is used by gitlab-runner to trigger the CI tests.
+
+**If you cloned using the development script, you will need to update the URL of the .mk submodule manually for these tests to run successfully.**
+
+Edit the submodule information in `.gitmodules` at the root of the containing project. Change the URL of .mk to: https://gitlab.com/consensus.enterprises/drumkit.git
+
+
+
 ### Deployment
 
 The deployment to Gitlab Pages is managed automatically by the `.gitlab-ci.yml` file.
