@@ -1,6 +1,12 @@
 # To configure this for deployment to gitlab pages, replace "mygroup" with your group name
 # and replace all instances of "myproject" with the name of the project.
 
+# Note : You may be tempted to change "mygroup" and "myproject" to 
+# "<GITLAB_GROUP>" or "{{GITLAB_GROUP}}" in the template. *** Don't. *** 
+# There is a format checker at some point that breaks 
+# the entire process. I've forgotten exactly where. (SLD March 2021)
+
+
 baseUrl: "http://mygroup.gitlab.io/myproject/"
 languageCode: "en-US"
 defaultContentLanguage: "en"

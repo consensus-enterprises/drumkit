@@ -22,10 +22,12 @@ pages:
   script:
   - make hugo
   - . d
-  - hugo
+  - mkdir public
+  - cd docs && hugo
+  - mv public ..
   artifacts:
     paths:
     - public
   only:
-  - master
+  - main
 

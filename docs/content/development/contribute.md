@@ -45,3 +45,12 @@ Drumkit is designed to gather all the necessary binaries for a particular projec
 At this point, you will be able to make changes to the files inside drumkit (below the `.mk` folder) and push them to the drumkit repo.
 
 However, most of the impacts of using Drumkit occur at the root directory, so there is an additional layer of abstraction to consider. 
+
+#### Common points of failure
+
+When [testing](testing), for example, you need to remain aware of whether you are calling certain things (behat features, for example) from the project directory or from the `.mk` directory. Additionally, you need to keep the submodule and the project in sync. 
+
+If you make changes to the `.mk` directory and then commit them in the containing project, you must push the `.mk` branch before pushing changes to the project, or the CI process is likely to fail, being unable to retrieve the correct commit of the Drumkit project.
+
+
+
