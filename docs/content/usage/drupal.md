@@ -35,7 +35,7 @@ make init-project-drupal8
 
 This will prompt you for some information to populate your project:
 
-* Project name (no spaces), which will become the first part of the **`https://[projectname].lndo.site`** URL that Lando assigns to your project.
+* Project name (no spaces, *no underscores*! They are an illegal character in Apache, and will cause silent failures). This will become the first part of the **`https://[projectname].lndo.site`** URL that Lando assigns to your project.
 * Site name, the human-readable name for the site (used for `make install` command, etc.)
 * Database credentials, to feed to Lando to setup and wire into the Drupal install (settings.php)
 * Admin username and password for the site once installed.
