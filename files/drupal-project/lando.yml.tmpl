@@ -9,3 +9,10 @@ services:
       user: {{ DB_USER }}
       password: {{ DB_PASS }}
       database: {{ DB_NAME }}
+tooling:
+  composer:
+    service: appserver
+    cmd: /usr/local/bin/composer
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush --uri={{ PROJECT_NAME }}.lndo.site

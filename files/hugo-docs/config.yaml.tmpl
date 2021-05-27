@@ -1,14 +1,23 @@
-baseUrl: "http://{{ GITLAB_GROUP }}.gitlab.io/{{ GITLAB_PROJECT_NAME }}/"
+# To configure this for deployment to gitlab pages, replace "mygroup" with your group name
+# and replace all instances of "myproject" with the name of the project.
+
+# Note : You may be tempted to change "mygroup" and "myproject" to 
+# "<GITLAB_GROUP>" or "{{GITLAB_GROUP}}" in the template. *** Don't. *** 
+# There is a format checker at some point that breaks 
+# the entire process. I've forgotten exactly where. (SLD March 2021)
+
+
+baseUrl: "http://mygroup.gitlab.io/myproject/"
 languageCode: "en-US"
 defaultContentLanguage: "en"
 
-title: "{{ GITLAB_PROJECT_NAME }} Docs Site"
+title: "myproject Docs Site"
 theme: "learn"
 metaDataFormat: "yaml"
 defaultContentLanguageInSubdir: true
 
 params:
-  editURL: "https://gitlab.com/{{ GITLAB_GROUP }}/{{ GITLAB_PROJECT_NAME }}/tree/master/docs/content/"
+  editURL: "https://gitlab.com/mygroup/myproject/tree/master/docs/content/"
   description: "Description of project docs site"
   author: "Consensus Enterprises"
   showVisitedLinks: true
@@ -24,10 +33,10 @@ params:
 menu:
   shortcuts:
     - name: "<i class='fa fa-gitlab'></i> Gitlab repo"
-      url: "https://gitlab.com/{{ GITLAB_GROUP }}/{{ GITLAB_PROJECT_NAME }}"
+      url: "https://gitlab.com/mygroup/myproject"
       weight: 10
     - name: "<i class='fa fa-bullhorn'></i> Contributors"
-      url: "https://gitlab.com/{{ GITLAB_GROUP }}/{{ GITLAB_PROJECT_NAME }}/graphs/master"
+      url: "https://gitlab.com/mygroup/myproject/graphs/master"
       weight: 30
 
 # For search functionality

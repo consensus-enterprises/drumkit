@@ -2,26 +2,33 @@
 title: Drumkit
 
 ---
+# What is Drumkit
 
-Drumkit is a toolkit for developing Drupal sites, modules, themes and profiles.
+Drumkit is a collection of scripts and templates designed to standardize and integrate some of the most frequent tasks we encounter in the local development of [Drupal](https://en.wikipedia.org/wiki/Drupal) sites.
+
+It includes the abilty to: 
+- Initialize a new Drupal project on [Lando](https://lando.dev/)
+- Initialize and publish a collection of [Packer](https://www.packer.io/) images for use in [CI](https://en.wikipedia.org/wiki/Continuous_integration) deployment
+- Initialize and run a documentation site for the project using the [Hugo](http://gohugo.io/) static site generator
+- Install gitlab-runner locally for testing of [Gitlab CI](https://docs.gitlab.com/ee/ci/) pipelines before pushing changes
+- Integrate with [Ansible](https://en.wikipedia.org/wiki/Ansible_(software)) and [Aegir](https://www.aegirproject.org/) for provisioning and deployment to production systems
+
 
 ## Quick Start
 
-Drumkit is installed on a project-by-project basis, as a git submodule. To add `drumkit` to an existing Drupal project, run the following command in the root directory:
+Drumkit is installed on a project-by-project basis, as a git submodule. 
+
+To add `drumkit` to an existing Drupal project, run the following command *in the root directory* of the project:
 
 ```console
 wget -O - https://drumk.it/installer | /bin/bash
 ```
-
-For further details on installation procedures and options, see the [Install](install) page.
 
 ### Drumkit is self-documenting 
 
 * `make help` - Print a list of available make targets with one-line description 
 
 Note: This is not a comprehensive list of all targets in the library, but an overview of the ones that are intended to be called directly from the command line
-
-To get more information on how the self-documentation features work, run `make selfdoc-howto`
 
 ## Common Commands
 
@@ -34,12 +41,8 @@ The primary use case for drumkit is spinning up and configuring new projects, in
 * hugo document sites
 * aegir instances
 
-As such, there is a high-level target provided for each of these types of projects.
+There is a high-level target provided for each of these types of projects.
 
-A list of the currently available project types is included in the `make help`. New projects are started with commands of the form `make init-project-[project type]`
+A list of the currently available project types is included in the `make help`. 
 
-
-
-
-
-Drumkit comes with lots of other commands (GNU Make targets). For more details, see the [Usage](usage) page.
+New projects are started with commands of the form `make init-project-[project type]`
