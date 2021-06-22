@@ -1,6 +1,0 @@
-name: example
-description: example theme.
-package: Custom
-
-type: theme
-core: 8.x

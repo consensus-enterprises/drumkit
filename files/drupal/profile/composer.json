@@ -1,6 +1,0 @@
-{
-    "name": "drupal/example",
-    "description": "example theme.",
-    "type": "drupal-profile",
-    "license": "GPL-2.0+"
-}

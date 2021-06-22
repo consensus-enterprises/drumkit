@@ -8,13 +8,11 @@ Feature: Initialize Drupal projects with Lando.
     Given I bootstrap a clean Drumkit environment
 
   Scenario: Initialize a Drupal project.
-     When I run "make -n init-project-drupal-deps local_OS=Linux"
+     When I run "make -n init-project-drupal-deps"
      Then I should get:
      """
-     Ensuring PHP dependencies are installed.
      Installing Behat.
      Ensuring Docker is installed.
-     in docker group.
      Ensuring Lando is installed.
      """
      When I run "make -n init-project-drupal"
