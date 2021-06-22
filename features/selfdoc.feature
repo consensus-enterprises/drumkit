@@ -21,7 +21,6 @@ Feature: Selfdoc for Drumkit development
   """
   ansible
   help
-  drupal
   projects
   """
   And I run "make help-projects"
