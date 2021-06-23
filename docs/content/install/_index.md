@@ -22,10 +22,6 @@ $ make composer
   Install Composer.
 $ make composer COMPOSER_REL=1.0.0-beta1
   Install the 1.0.0-beta1 release of Composer.
-$ make drush
-  Install Drush.
-$ make drush DRUSH_REL=8.0.5
-  Install the 8.0.5 release of Drush.
 $ make behat
   Install Behat.
 $ make selenium

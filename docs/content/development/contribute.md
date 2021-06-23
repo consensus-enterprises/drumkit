@@ -14,12 +14,21 @@ mkdir myproject
 cd myproject
 git init
 
-wget -O - https://drumk.it/install-dev | /bin/bash
+wget -O - https://drumk.it/installer | /bin/bash
 source d
 ```
-**This installation will only work if you are a member of the `drumkit` project and have a public key on GitLab.** 
+**If you are a member of the `drumkit` project and have a public key on GitLab, you can set up your project to push directly to the remote following the ensuing instructions. Otherwise you will need to fork the project and make pull requests from your fork of the repo.** 
 
-Otherwise you will need to fork the project and make pull requests from your fork of the repo.
+Because we have a hard requirement for 2FA in this project, you cannot push changes without setting up SSH. *However*, the CI pipeline requires the submodule URL to be specified using https, or it would require an SSH key pair to be available on the image.
+
+*Once you have installed drumkit in your project directory*
+```
+cd .mk
+git config url."git@gitlab.com:".pushInsteadOf https://gitlab.com/
+git remote -v
+```
+
+At this point, you should see that the origin is using `https` for `fetch`, and `ssh` for `push`. This is now properly configured for developing and pushing changes to `drumkit` itself, not just the surrounding project.
 
 ### What happens
 
