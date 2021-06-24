@@ -38,11 +38,14 @@ This file is used by gitlab-runner to trigger the CI tests.
 Edit the submodule information in `.gitmodules` at the root of the containing project. Change the URL of .mk to: https://gitlab.com/consensus.enterprises/drumkit.git
 
 
-
 ### Deployment
 
 The deployment to Gitlab Pages is managed automatically by the `.gitlab-ci.yml` file.
 
 At the bottom of the file, under `pages`, the `publish` stage will run `hugo` in the docs folder, which generates a set of static HTML files in the `public` folder, which is then made available through Gitlab pages.
 
+
 The address at Gitlab Pages will be `http://<GITLAB_GROUP>.gitlab.io/<GITLAB_PROJECT_NAME>/`
+
+To set up your Gitlab Pages, you need to update the configuration in `docs/config.yaml`, which is set to "http://mygroup.gitlab.io/myproject". 
+

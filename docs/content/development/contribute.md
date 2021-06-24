@@ -14,12 +14,21 @@ mkdir myproject
 cd myproject
 git init
 
-wget -O - https://drumk.it/install-dev | /bin/bash
+wget -O - https://drumk.it/installer | /bin/bash
 source d
 ```
-**This installation will only work if you are a member of the `drumkit` project and have a public key on GitLab.** 
+**If you are a member of the `drumkit` project and have a public key on GitLab, you can set up your project to push directly to the remote following the ensuing instructions. Otherwise you will need to fork the project and make pull requests from your fork of the repo.** 
 
-Otherwise you will need to fork the project and make pull requests from your fork of the repo.
+Because we have a hard requirement for 2FA in this project, you cannot push changes without setting up SSH. *However*, the CI pipeline requires the submodule URL to be specified using https, or it would require an SSH key pair to be available on the image.
+
+*Once you have installed drumkit in your project directory*
+```
+cd .mk
+git config url."git@gitlab.com:".pushInsteadOf https://gitlab.com/
+git remote -v
+```
+
+At this point, you should see that the origin is using `https` for `fetch`, and `ssh` for `push`. This is now properly configured for developing and pushing changes to `drumkit` itself, not just the surrounding project.
 
 ### What happens
 
@@ -45,3 +54,12 @@ Drumkit is designed to gather all the necessary binaries for a particular projec
 At this point, you will be able to make changes to the files inside drumkit (below the `.mk` folder) and push them to the drumkit repo.
 
 However, most of the impacts of using Drumkit occur at the root directory, so there is an additional layer of abstraction to consider. 
+
+#### Common points of failure
+
+When [testing](testing), for example, you need to remain aware of whether you are calling certain things (behat features, for example) from the project directory or from the `.mk` directory. Additionally, you need to keep the submodule and the project in sync. 
+
+If you make changes to the `.mk` directory and then commit them in the containing project, you must push the `.mk` branch before pushing changes to the project, or the CI process is likely to fail, being unable to retrieve the correct commit of the Drumkit project.
+
+
+

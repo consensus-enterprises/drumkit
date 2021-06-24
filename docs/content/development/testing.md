@@ -33,9 +33,11 @@ Some of the projects have a `ci-local` target (or a `<project>-ci-local` target)
 
 However, there is a limitation in `gitlab-runner`: You cannot navigate into the `.mk` directory and run the pipeline at that level, because it cannot parse the relative paths to the subdirectory, which must be used as the repo for the pipeline. [More info on the gitlab ticket - not ours to fix](https://gitlab.com/gitlab-org/gitlab-runner/-/issues/2054)
 
+
 ## Testing the output from Drumkit
 
 The ultimate test of Drumkit is that it pushes working code to the (surrounding/containing) project you are working on with it.
 
 Process:
 If you are developing Drumkit, per se, you should test and push the project as well as the drumkit code. This ensures that any modifications we make to (for example) `.gitlab-ci.yml` templates produces the correct files in the end.
+

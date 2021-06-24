@@ -61,6 +61,13 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
     return $this->process->getErrorOutput();
   }
 
+  protected function getStdErr() {
+    if ($this->process->isSuccessful()) {
+      return $this->process->getErrorOutput();
+    }
+    return $this->process->getErrorOutput();
+  }
+
   /**
    * Run a command in a sub-process, and set its output.
    */
@@ -145,7 +152,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   {
     if ($this->ignoreFailures) {
       return $this->exec($command);
-    } 
+    }
     $this->succeed($command);
   }
 
@@ -200,7 +207,7 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
    */
   public function iShouldGet(PyStringNode $expectedOutput)
   {
-    $output = $this->getOutput();
+    $output = $this->getOutput() . $this->getStdErr();
     foreach ($expectedOutput->getStrings() as $string) {
       $string = trim($string);
       if (!empty($string) && strpos($output, $string) === FALSE) {
