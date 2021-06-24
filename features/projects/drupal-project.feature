@@ -1,4 +1,4 @@
-@init @drupal8 @project
+@init @drupal @project
 Feature: Initialize Drupal projects with Lando.
   In order to start a new Drupal project in a Lando environment
   As a Drupal Developer
