@@ -30,7 +30,7 @@ git init
 
 wget -O - https://drumk.it/installer | /bin/bash
 . d
-make init-project-drupal8
+make init-project-drupal
 ```
 
 This will prompt you for some information to populate your project:
@@ -113,7 +113,7 @@ recent `make snapshot` was taken.
 By passing a name or short description to these targets, one can save and
 restore multiple snapshots at different states or stages of development. The
 [code providing this
-feature](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/drupal8/50_backup.mk)
+feature](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/drupal-project/50_backup.mk)
 largely manages these symlinks, creating and using them, as well as listing or
 removing them using `make ls-snaps`, `make rm-snap` and `make rm-all-snaps`.
 
