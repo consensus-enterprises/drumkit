@@ -31,6 +31,21 @@ Feature: Selfdoc for Drumkit development
   init-project-hugo-docs
   init-project-packer
   """
+  And I run "make help-category"
+  Then I should get:
+  """
+  Available help categories:
+  """
+  And I run "make help-hugo"
+  Then I should get:
+  """
+  hugo-ci-local
+  """
+  And I run "make help-testing"
+  Then I should get:
+  """
+  hugo-ci-local
+  """
 
   Scenario: I can see documentation that only exists in the local drumkit mk.d files
   Given I bootstrap Drumkit

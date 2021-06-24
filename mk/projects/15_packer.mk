@@ -19,10 +19,10 @@ init-project-packer-static: mustache
 	@make -s $(PACKER_SH_SCRIPTS) $(PACKER_JSON_DIR)/40-$$CONTAINER_PROJECT_NAME.json
 
 init-project-packer: init-project-packer-intro init-project-packer-static ##@projects Initialize a packer project.
-	@make -s init-project-packer-vars
+	@make -s init-project-packer-vars 
 	@echo "Finished initializing Drumkit Packer project."
 
-$(MK_D)/20_ci.mk:
+$(MK_D)/20_ci.mk: ##@testing Create .gitlab-ci.yml file for new 
 	@echo "Initializing CI makefile."
 	@mkdir -p $(MK_D)
 	@mustache ENV $(FILES_DIR)/packer/20_ci.mk.tmpl > $@
