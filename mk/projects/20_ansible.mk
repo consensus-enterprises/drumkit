@@ -7,7 +7,7 @@ include $(SELF_DIR)ansible/*.mk
 
 init-project-ansible-intro:
 	@echo "Initializing Drumkit Ansible project."
-init-project-ansible: init-project-ansible-intro roles/consensus.utils ansible.cfg ansible-add-host ansible-add-group README.md ##@projects Initialize a project for working with Ansible.
+init-project-ansible: init-project-ansible-intro roles/consensus.utils ansible.cfg ansible-add-host ansible-add-group README.md ##@projects@ansible Initialize a project for working with Ansible.
 	@echo "Finished initializing Drumkit Ansible project."
 
 ansible-clean-examples:

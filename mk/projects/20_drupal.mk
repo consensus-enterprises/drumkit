@@ -28,7 +28,7 @@ $(MK_D)/10_variables.mk:
 	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
 
 init-project-drupal-deps: deps-php behat docker lando
-init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase ##@projects Initialize a project for developing Drupal 8 with Lando.
+init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase ##@projects@drupal Initialize a project for developing Drupal 8 with Lando.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@echo "Finished initializing Drupal drumkit."
 	@echo "You can spin up your project using the following commands:"

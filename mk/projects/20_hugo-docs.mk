@@ -1,6 +1,6 @@
 .PHONY: init-project-hugo-docs hugo-ci-local
 
-init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/themes/learn docs/content/_index.md .gitlab-ci.yml ##@projects Initialize a hugo site
+init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/themes/learn docs/content/_index.md .gitlab-ci.yml ##@projects@hugo Initialize a hugo site
 	@echo "Initializing Hugo Docs project."
 	@git add docs
 	@git commit -m "Initialize docs site."
@@ -37,7 +37,7 @@ docs/layouts/index.json:
 	@echo "Initializing search index.json."
 	@cp $(FILES_DIR)/hugo-docs/index.json $@
 
-hugo-ci-local: gitlab-runner .gitlab-ci.yml ##Run CI tests for hugo docs project
+hugo-ci-local: gitlab-runner .gitlab-ci.yml ##@hugo@testing Run CI tests for hugo docs project
 	@echo "Running gitlab tests for hugo"
 	@gitlab-runner exec docker test
 
