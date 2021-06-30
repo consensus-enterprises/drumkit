@@ -1,6 +1,6 @@
 .PHONY: init-project-hugo-docs hugo-ci-local
 
-init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/themes/learn docs/content/_index.md .gitlab-ci.yml ##@projects@hugo Initialize a hugo site
+init-project-hugo-docs: docs docs/config.yaml docs/layouts/index.json docs/themes/learn docs/content/_index.md .gitlab-ci.yml ##@projects@hugo Create a new hugo docs site at the root level of the project
 	@echo "Initializing Hugo Docs project."
 	@git add docs
 	@git commit -m "Initialize docs site."
