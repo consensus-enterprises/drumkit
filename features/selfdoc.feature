@@ -14,7 +14,7 @@ Feature: Selfdoc for Drumkit development
   help-category
   [category] Aggregate and print all short self-documentation messages tagged with this category in all included makefiles.
   selfdoc-howto
-  Print a brief message explaining how to write self-documenting makefiles
+  Print instructions explaining how to write self-documenting makefiles
   """
   And I run "make help-categories"
   Then I should get:
