@@ -37,6 +37,9 @@ init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drup
 	@echo "  make install"
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 
+drupal-docs: ##@drupal Get link to online documentation
+	@echo "For detailed documentation on using Lando Drupal projects with Drumkit, see https://drumk.it/usage/drupal/"
+
 drupal-composer-codebase: composer composer.json .gitignore .env
 # N.B. Using `composer.json` as a target here may not work in the long run,
 # since there are lots of project types that might want to initialize a
