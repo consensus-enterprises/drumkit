@@ -1,4 +1,7 @@
-image: registry.gitlab.com/consensus.enterprises/drumkit/php
+image: 
+  name: registry.gitlab.com/consensus.enterprises/drumkit/php
+  entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
+
 
 stages:
   - test
