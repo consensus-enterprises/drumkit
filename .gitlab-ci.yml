@@ -1,4 +1,7 @@
-image: ubuntu:bionic
+image: 
+  name: registry.gitlab.com/consensus.enterprises/drumkit/php
+  entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
+
 
 stages:
   - test
@@ -10,17 +13,6 @@ variables:
 
 fast-tests: &test-defaults
   stage: test
-  before_script:
-    # Install Git and GNU Make
-    - apt-get update -yqq
-    - apt-get install -yqq git make unzip
-    # Install Behat dependencies
-    - apt-get install -yqq curl php-cli php-mbstring php-curl php-xml php-gd
-    # TODO: Figure out a way to intall these system packages as dependecies of
-    # the targets that use them.
-    - apt-get install -yqq python3-minimal python3-pip python3-yaml python3-jinja2
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - pip3 install jinja2-cli matrix-client
   script:
     - source d
     - make clean-ansible  # Clean up Ansible config from Drumkit itself.
