@@ -1,4 +1,4 @@
-image: ubuntu:bionic
+image: registry.gitlab.com/consensus.enterprises/drumkit/php
 
 stages:
   - test
