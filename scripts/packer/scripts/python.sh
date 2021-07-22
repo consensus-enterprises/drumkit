@@ -12,6 +12,7 @@ apt-get install -yqq \
   python3-apt \
   python3-setuptools \
   python3-wheel \
+  python3-zip \
 > /dev/null
 update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 pip3 install jinja2-cli matrix-client ansible

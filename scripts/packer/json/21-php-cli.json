@@ -1,0 +1,45 @@
+{
+  "builders": [
+    {
+      "commit": true,
+      "image": "{{user `repo_url`}}/base:latest",
+      "pull": false,
+      "type": "docker"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "repository": "{{user `repo_url`}}/{{user `image_name`}}",
+        "tags": [
+          "0.0.x"
+        ],
+        "type": "docker-tag"
+      },
+      {
+        "repository": "{{user `repo_url`}}/{{user `image_name`}}",
+        "tags": [
+          "latest"
+        ],
+        "type": "docker-tag"
+      },
+      {
+        "type": "docker-push"
+      }
+    ]
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/packer/scripts/php-cli.sh",
+        "scripts/packer/scripts/cleanup.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "image_name": "php",
+    "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
+  }
+}
+
