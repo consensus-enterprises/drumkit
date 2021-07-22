@@ -1,4 +1,4 @@
-CONTAINER_REGISTRY_URL ?= https://gitlab.com/consensus.enterprises/drumkit/container_registry
+CONTAINER_REGISTRY_URL ?= registry.gitlab.com/consensus.enterprises/drumkit
 CONTAINER_PROJECT_NAME = drumkit
 
 local_ref = $(shell git rev-parse HEAD)
@@ -29,5 +29,3 @@ ci-images: clone
 
 ci-local: gitlab-runner
 	gitlab-runner exec docker tests
-
-
