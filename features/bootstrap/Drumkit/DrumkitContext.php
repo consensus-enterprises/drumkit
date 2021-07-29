@@ -255,6 +255,14 @@ class DrumkitContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @Given I am in the :dir directory
+   */
+  public function iAmInTheDirectory($dir)
+  {
+    chdir($dir);
+  }
+
+  /**
    * Execute a script in our project, even if we've moved to a temporary directory.
    *
    * @When I execute :script
