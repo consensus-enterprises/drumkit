@@ -14,4 +14,5 @@ apt-get -y -qq install \
   apt-utils \
   apt-transport-https \
   ca-certificates \
+  sudo \
 > /dev/null
