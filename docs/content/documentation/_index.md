@@ -19,15 +19,11 @@ $ git clone --recursive https://gitlab.com/consensus.enterprises/drumkit.git
 $ cd drumkit
 $ git remote add sandbox https://gitlab.com/<username>/drumkit.git
 $ make hugo  # this should install Hugo
+$ cd docs # The docs site is contained inside the drumkit project
 $ hugo serve
 ```
 
-Your local Drumkit docs site should now be available for browsing:
-[http://127.0.0.1:8000/](http://localhost:1313/). When you find a typo, an
-error, unclear or missing explanations or instructions, hit ctrl-c, to stop the
-server, and start editing. Find the page you’d like to edit; everything is in
-the `docs/content/` directory. Make your changes, commit and push them, and start a pull
-request:
+Your local Drumkit docs site should now be available for browsing. The default address is [http://localhost:1313/](http://localhost:1313/), but hugo will give you the port when it starts. (Sometimes 1313 is already in use, and then it uses a different port). When you find a typo, an error, unclear or missing explanations or instructions, hit ctrl-c, to stop the server, and start editing. Find the page you’d like to edit; everything is in the `docs/content/` directory. Make your changes, commit and push them, and start a pull request:
 
 ```console
 $ git checkout -b fix_typo
