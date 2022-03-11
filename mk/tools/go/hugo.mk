@@ -3,7 +3,7 @@
 local_OS          ?= $(shell uname)
 
 hugo_NAME         ?= Hugo
-hugo_RELEASE      ?= 0.74.3
+hugo_RELEASE      ?= 0.94.1
 
 ifeq ($(local_OS),Darwin)
         hugo_OS   ?= macOS
