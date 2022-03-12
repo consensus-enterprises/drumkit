@@ -22,7 +22,8 @@ Feature: Install Go apps locally
       Downloading the
       Installing the
       release of Hugo.
-      Hugo Static Site Generator v
+      hugo v
+      extended
       """
     When I run "make hugo"
     Then I should get:

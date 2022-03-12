@@ -12,8 +12,8 @@ Feature: Initialize Hugo Docs Projects
     When I run "unset DRUMKIT && source d && make docs"
     Then I should get:
     """
-    Hugo Static Site Generator
     Congratulations! Your new Hugo site    
+    Just a few more steps and you're ready to go
     """
     And the following files should exist:
     """
