@@ -5,8 +5,16 @@ ansible_DEPENDENCIES = python3-minimal python3-paramiko python3-pip python3-yaml
 ansible_BIN_DIR      = bin
 ansible_PARENT       = ansible
 
+ansible_installed = $(shell test -f "$(BIN_DIR)/ansible")
 
-ansible: ansible.cfg $(BOOTSTRAP_D) $(BOOTSTRAP_D)/40_ansible.sh
+ansible:
+ifneq ($(ansible_installed),)
+	$(MAKE-QUIET) ansible-real
+else
+	$(ECHO) "Ansible already installed."
+endif
+
+ansible-real: ansible.cfg $(BOOTSTRAP_D) $(BOOTSTRAP_D)/40_ansible.sh
 ansible.cfg:
 	@echo "Deploying Ansible config file."
 	@cp $(FILES_DIR)/ansible/ansible.cfg $(PROJECT_ROOT)
