@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  # N.B. Names can only be lowercase; otherwise we'd use '{{ ENVIRONMENT_NAME }}'.
+  name: {{ ENVIRONMENT_NAME_LC }}
+  labels:
+    component: environment
+    environment: {{ ENVIRONMENT_NAME }}
+    cluster: {{ CLUSTER_NAME }}
