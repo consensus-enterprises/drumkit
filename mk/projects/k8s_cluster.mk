@@ -1,3 +1,6 @@
+SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+include $(SELF_DIR)k8s_cluster/clusters.mk
+
 K8S_CLUSTER_DEFAULT_TARGET_NAME = UNSTABLE
 K8S_CLUSTER_RESOURCES_DIR =.mk/mk/projects/k8s_cluster
 K8S_CLUSTER_TARGET_NAME  ?= $(K8S_CLUSTER_DEFAULT_TARGET_NAME)
