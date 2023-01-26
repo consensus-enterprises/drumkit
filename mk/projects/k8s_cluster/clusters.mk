@@ -9,7 +9,6 @@ K8S_TOKEN         ?= $(shell $(kubectl) --namespace=kube-system describe secrets
 K8S_INGRESS_VER    = v1.3.0
 K8S_CERT_MGR_VER   = v1.9.1
 K8S_DASHBOARD_URL ?= http://localhost:$(K8S_DASHBOARD_PORT)/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
-OS_CLOUD           = vexxhost-envision-logisticsapp
 
 #####################
 # Terraform plugins #

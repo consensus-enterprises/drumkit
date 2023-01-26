@@ -1,7 +1,7 @@
 variable "openstack_cloud" {
   description = "The key for this project's cloud in `clouds.yaml`."
   type = string
-  default = "vexxhost-envision-logisticsapp"
+  default = "CHANGE_ME"
 }
 
 # We are hoping to supply multiple keys when provisioning clusters, but have
