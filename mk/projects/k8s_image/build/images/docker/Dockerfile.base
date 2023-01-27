@@ -1,0 +1,12 @@
+FROM webdevops/php-nginx:8.1
+
+# Copy in provisioning scripts
+COPY ./build/images/scripts/ /tmp/scripts
+
+# Run provisioning scripts
+RUN /tmp/scripts/apt.sh
+RUN /tmp/scripts/utils.sh
+RUN /tmp/scripts/cleanup.sh
+
+# Clean up provisioning scripts
+RUN rm -rf /tmp/scripts
