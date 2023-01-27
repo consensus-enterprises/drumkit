@@ -26,14 +26,15 @@ K8S_CLUSTER_SYMLINKS = \
 init-k8s-cluster: $(K8S_CLUSTER_BASE_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_TEMPLATE_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_SYMLINKS)
+init-k8s-cluster: $(K8S_CLUSTER_DIR)/.gitignore
 init-k8s-cluster: drumkit/mk.d/25_cluster_$(K8S_CLUSTER_TARGET_NAME).mk
 init-k8s-cluster: ## Initialize configuration and Drumkit targets to create and manage Kubernetes clusters on Openstack.
 	$(ECHO) "To build a cluster, you will need to specify which Openstack cloud"
 	$(ECHO) "you would like to use in 'build/clusters/base/variables.tf'."
-	$(ECHO) "Replace the 'default' for the "openstack_cloud" variable with the"
+	$(ECHO) "Replace the 'default' for the 'openstack_cloud' variable with the"
 	$(ECHO) "appropriate key from '~/.config/openstack/clouds.yaml'."
 	$(ECHO)
-	$(ECHO) "In addition, you will need to specify this name in 'Makefile' as:
+	$(ECHO) "In addition, you will need to specify this name in 'Makefile' as:"
 	$(ECHO) "    OS_CLOUD = <your-cloud-name>"
 	$(ECHO)
 
