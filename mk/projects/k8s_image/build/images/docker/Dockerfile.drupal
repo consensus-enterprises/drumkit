@@ -1,0 +1,33 @@
+FROM registry.gitlab.com/consensus.enterprises/clients/envision-recycling/logistics-app/base:latest
+
+# Install OS-level app dependencies
+COPY ./build/images/scripts/app.sh /tmp/app.sh
+RUN /tmp/app.sh
+RUN rm /tmp/app.sh
+
+# Prepare app directory
+RUN rm -rf /var/www/html/
+RUN mkdir -p /var/www/html/
+
+# Copy in Composer-related files
+COPY ./patches/ /var/www/html/patches
+COPY ./drupal_scaffold/ /var/www/html/drupal_scaffold
+COPY ./composer.* /var/www/html/
+
+# Prepare a clean copy of our codebase
+COPY ./.git/ /tmp/app/.git
+COPY ./web/ /tmp/app/web
+WORKDIR /tmp/app
+RUN git clean -fxd web/
+RUN mv /tmp/app/web /var/www/html/web
+RUN rm -rf /tmp/app/.git
+
+# Copy in Nginx config.
+COPY ./build/images/files/nginx.conf /opt/docker/etc/nginx/vhost.conf
+
+# Copy in scripts.
+COPY ./build/images/files/install-drupal.sh /install-drupal.sh
+
+# Build the codebase.
+WORKDIR /var/www/html
+RUN composer install --no-progress
