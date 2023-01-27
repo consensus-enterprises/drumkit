@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    #cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    #cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+    kubernetes.io/ingress.class: "nginx"
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#custom-max-body-size
+    nginx.ingress.kubernetes.io/proxy-body-size: "64m"
+spec:
+  rules:
+    - http:
+        paths:
+          ################
+          # URL ROUTING #
+          ################
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: drupal-cluster-ip-service
+                port:
+                  number: 80

@@ -1,0 +1,7 @@
+resources:
+- app-variables.yaml
+- component-drupal.yaml
+- component-mariadb.yaml
+- ingress-service.yaml
+- job-install-drupal.yaml
+- registry-credentials.yaml
