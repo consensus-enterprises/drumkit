@@ -16,19 +16,26 @@ K8S_ENVIRONMENT_TEMPLATE_FILES = \
     $(K8S_ENVIRONMENT_DIR)/$(K8S_ENVIRONMENT_NAME)/kustomization.yaml\
     $(K8S_ENVIRONMENT_DIR)/$(K8S_ENVIRONMENT_NAME)/namespace.yaml
 
+init-k8s-environment: init-k8s-environment-intro
 init-k8s-environment: $(K8S_ENVIRONMENT_BASE_FILES)
 init-k8s-environment: $(K8S_ENVIRONMENT_TEMPLATE_FILES)
 init-k8s-environment: drumkit/mk.d/35_environment_$(K8S_ENVIRONMENT_NAME).mk
 init-k8s-environment: ## Initialize configuration and Drumkit targets to create and manage environments on Kubernetes clusters.
-	$(ECHO) "TBD."
+
+init-k8s-environment-intro:
+	@$(ECHO) ">>> $(WHITE)Creating '$(K8S_ENVIRONMENT_NAME)' environment.$(RESET) <<<"
+	@$(ECHO)
 
 drumkit/mk.d/35_environment_$(K8S_ENVIRONMENT_NAME).mk:
-	mkdir -p $(@D)
-	CLUSTER_NAME=$(K8S_CLUSTER_NAME) ENVIRONMENT_NAME=$(K8S_ENVIRONMENT_NAME) ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_ENVIRONMENT_RESOURCES_DIR)/drumkit/mk.d/35_environment_$(K8S_ENVIRONMENT_DEFAULT_NAME).mk > $@
+	@$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
+	@mkdir -p $(@D)
+	@CLUSTER_NAME=$(K8S_CLUSTER_NAME) ENVIRONMENT_NAME=$(K8S_ENVIRONMENT_NAME) ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_ENVIRONMENT_RESOURCES_DIR)/drumkit/mk.d/35_environment_$(K8S_ENVIRONMENT_DEFAULT_NAME).mk > $@
 
 $(K8S_ENVIRONMENT_TEMPLATE_FILES):
-	mkdir -p $(@D)
-	CLUSTER_NAME=$(K8S_CLUSTER_NAME) ENVIRONMENT_NAME=$(K8S_ENVIRONMENT_NAME) ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_ENVIRONMENT_TEMPLATE_DIR)/$(@F) > $@
+	@$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
+	@mkdir -p $(@D)
+	@CLUSTER_NAME=$(K8S_CLUSTER_NAME) ENVIRONMENT_NAME=$(K8S_ENVIRONMENT_NAME) ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_ENVIRONMENT_TEMPLATE_DIR)/$(@F) > $@
 $(K8S_ENVIRONMENT_BASE_FILES):
-	mkdir -p $(@D)
-	ENVIRONMENT_NAME=$(K8S_ENVIRONMENT_NAME) ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_ENVIRONMENT_RESOURCES_DIR)/$@ > $@
+	@$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
+	@mkdir -p $(@D)
+	@ENVIRONMENT_NAME=$(K8S_ENVIRONMENT_NAME) ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_ENVIRONMENT_RESOURCES_DIR)/$@ > $@
