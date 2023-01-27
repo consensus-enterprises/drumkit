@@ -1,0 +1,67 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3 # Default: 10
+  selector:
+    matchLabels:
+      component: mariadb
+  template:
+    metadata:
+      labels:
+        component: mariadb
+    spec:
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: data-persistent-volume-claim
+      containers:
+        - name: mariadb-container
+          image: mariadb
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+              subPath: mariadb-data
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DATABASE_ROOT_PASSWORD
+            - name: MARIADB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DATABASE_USER
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DATABASE_PASSWORD
+            - name: MARIADB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DATABASE_NAME
+---
+###########################
+# Cluster IP Service
+###########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: mariadb
+  ports:
+    - port: 3306
+      targetPort: 3306

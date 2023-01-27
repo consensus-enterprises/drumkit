@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-variables
+data:
+  DATABASE_HOST: mariadb-cluster-ip-service
+  DATABASE_NAME: db
+  DATABASE_PORT: "3306"
+  DATABASE_USER: db
+  DRUPAL_ADMIN_EMAIL: aegir_root@localhost
+  DRUPAL_ADMIN_USER: aegir_root
+  DRUPAL_INSTALL_PROFILE: standard
+  DRUPAL_SITE_NAME: "Drupal App"

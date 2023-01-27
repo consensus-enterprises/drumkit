@@ -1,0 +1,75 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal-deployment
+spec:
+  #replicas: 3
+  replicas: 1
+  revisionHistoryLimit: 3 # Default: 10
+  selector:
+    matchLabels:
+      component: drupal
+  template:
+    metadata:
+      labels:
+        component: drupal
+    spec:
+      volumes:
+        - name: drupal-files
+          persistentVolumeClaim:
+            claimName: files-persistent-volume-claim
+      containers:
+        - name: drupal-container
+          image: {{ DRUPAL_CONTAINER_REGISTRY_URL }}/drupal:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: drupal-files
+              mountPath: /var/www/html/web/sites/default/files
+              subPath: drupal-files
+          env:
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DATABASE_NAME
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DATABASE_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DATABASE_PASSWORD
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DATABASE_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DATABASE_PORT
+      imagePullSecrets:
+      - name: registry-credentials
+---
+###########################
+# Cluster IP Service
+###########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: drupal
+  ports:
+    - port: 80
+      targetPort: 80
