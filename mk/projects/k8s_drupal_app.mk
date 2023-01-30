@@ -55,10 +55,6 @@ init-k8s-drupal-app-intro:
 	$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
 	$(ECHO)
 
-init-k8s-drupal-app-intro:
-	$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
-	$(ECHO)
-
 drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_NAME).mk:
 	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
