@@ -29,6 +29,7 @@ init-k8s-cluster: $(K8S_CLUSTER_TEMPLATE_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_SYMLINKS)
 init-k8s-cluster: $(K8S_CLUSTER_DIR)/.gitignore
 init-k8s-cluster: drumkit/mk.d/25_cluster_$(K8S_CLUSTER_NAME).mk
+init-k8s-cluster: drumkit/bootstrap.d/40_kubernetes.sh
 init-k8s-cluster: ## Initialize configuration and Drumkit targets to create and manage Kubernetes clusters on Openstack.
 	$(ECHO)
 	$(ECHO) "To build a cluster, you will need to specify which Openstack cloud"
@@ -48,6 +49,12 @@ $(K8S_CLUSTER_DIR)/.gitignore:
 	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@cp $(K8S_CLUSTER_RESOURCES_DIR)/$(K8S_CLUSTER_DIR)/$(@F) $@
+
+drumkit/bootstrap.d/40_kubernetes.sh:
+	$(ECHO) "$(YELLOW)Creating 'kubectl' alias: '$(@F)'.$(RESET)"
+	$(ECHO) "$(WHITE)Remember to re-bootstrap Drumkit.'.$(RESET)"
+	@mkdir -p $(@D)
+	@cp $(K8S_CLUSTER_RESOURCES_DIR)/$@ $@
 
 drumkit/mk.d/25_cluster_$(K8S_CLUSTER_NAME).mk:
 	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
