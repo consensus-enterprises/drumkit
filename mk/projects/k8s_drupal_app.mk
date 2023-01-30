@@ -55,16 +55,20 @@ init-k8s-drupal-app-intro:
 	@$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
 	@$(ECHO)
 
+init-k8s-drupal-app-intro:
+	$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
+	$(ECHO)
+
 drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_NAME).mk:
-	@$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
+	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@DRUPAL_APP_ENVIRONMENT=$(K8S_ENVIRONMENT_NAME) DRUPAL_APP_ENVIRONMENT_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) DRUPAL_APP_CLUSTER=$(K8S_CLUSTER_NAME) mustache ENV $(K8S_DRUPAL_APP_RESOURCES_DIR)/drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_DEFAULT_NAME).mk > $@
 
 $(K8S_DRUPAL_APP_TEMPLATE_FILES):
-	@$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
+	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@DRUPAL_APP_ENVIRONMENT=$(K8S_ENVIRONMENT_NAME) DRUPAL_APP_ENVIRONMENT_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) mustache ENV $(K8S_DRUPAL_APP_TEMPLATE_DIR)/$(@F) > $@
 $(K8S_DRUPAL_APP_BASE_FILES):
-	@$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
+	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@DRUPAL_APP_ENVIRONMENT=$(K8S_ENVIRONMENT_NAME) DRUPAL_APP_ENVIRONMENT_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL) mustache ENV $(K8S_DRUPAL_APP_RESOURCES_DIR)/$@ > $@
