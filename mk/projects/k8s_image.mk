@@ -9,8 +9,8 @@ init-k8s-images: init-k8s-base-image
 init-k8s-images: init-k8s-drupal-image
 
 init-k8s-images-intro:
-	@$(ECHO) ">>> $(WHITE)Creating images.$(RESET) <<<"
-	@$(ECHO)
+	$(ECHO) ">>> $(WHITE)Creating images.$(RESET) <<<"
+	$(ECHO)
 
 ##############
 # Base image #
@@ -34,7 +34,7 @@ init-k8s-base-image: ## Initialize configuration and Drumkit targets to create a
 	$(ECHO)
 
 drumkit/mk.d/15_base_image.mk $(K8S_BASE_IMAGE_FILES):
-	@$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
+	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@cp $(K8S_IMAGE_RESOURCES_DIR)/$@ $@
 
@@ -66,7 +66,7 @@ init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create
 	@$(ECHO)
 
 drumkit/mk.d/15_drupal_image.mk $(K8S_DRUPAL_IMAGE_FILES):
-	@$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
+	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@cp $(K8S_IMAGE_RESOURCES_DIR)/$@ $@
 
