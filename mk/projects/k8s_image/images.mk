@@ -1,7 +1,7 @@
 VCS_DOMAIN                ?= gitlab.com
 VCS_GROUP_NAMESPACE       ?= consensus.enterprises/clients/$(CLIENT_NAME)
 CONTAINER_REGISTRY_DOMAIN ?= registry.$(VCS_DOMAIN)
-CONTAINER_REGISTRY_URL    ?= $(CONTAINER_REGISTRY_DOMAIN)/$(VCS_GROUP_NAMESPACE)/$(PROJECT_NAME)
+CONTAINER_REGISTRY_URL    ?= $(CONTAINER_REGISTRY_DOMAIN)/$(call lc,$(VCS_GROUP_NAMESPACE))/$(call lc,$(PROJECT_NAME))
 DOCKERFILE_DIR            ?= build/images/docker
 DOCKERFILE_PATH           ?= $(DOCKERFILE_DIR)/Dockerfile
 DOCKER_IMAGE_TAG          ?= latest
