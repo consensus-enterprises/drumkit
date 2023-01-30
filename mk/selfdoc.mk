@@ -15,7 +15,7 @@
 HELP_CATEGORIES ?= $(shell grep -h -E '^[a-zA-Z0-9_-]+:.*?\#\#@[^ ]* .*$$' $(MAKEFILE_LIST) | perl -nle'/\#\#@([^ ]+?) /; @a = split /[@ ]/, $$1; print join "\n", @a' | sort -u)
   
 help-message-header:
-	@$(ECHO) "$(BOLD)$(GREY)Available 'make' commands:$(RESET)"
+	$(ECHO) "$(BOLD)$(GREY)Available 'make' commands:$(RESET)"
 
 help: help-selfdoc
 help-selfdoc: help-message-header
@@ -27,8 +27,8 @@ help-category: ##@help [category] Aggregate and print all short self-documentati
 ifeq ($(category),) # No category supplied: display the help categories doc
 	@make -s help-categories
 else ifeq ($(shell echo $(HELP_CATEGORIES)|grep $(category)),)
-	@$(ECHO) ""
-	@$(ECHO) "$(BOLD)$(GREY)Unrecognized help category: $(category)$(RESET)"
+	$(ECHO) ""
+	$(ECHO) "$(BOLD)$(GREY)Unrecognized help category: $(category)$(RESET)"
 	@make -s help-categories
 else
 	@grep -h -E '^[a-zA-Z0-9_-]+:.*?##@?.*?@$(category)' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?##@[^ ]*? "}; \
@@ -36,13 +36,13 @@ else
 endif
 
 help-categories: ##@help List all available help categories.
-	@$(ECHO) ""
-	@$(ECHO) "$(BOLD)Available help categories:$(RESET)"
-	@$(ECHO) ""
+	$(ECHO) ""
+	$(ECHO) "$(BOLD)Available help categories:$(RESET)"
+	$(ECHO) ""
 	@for categ in $(HELP_CATEGORIES); do echo $$categ; done
-	@$(ECHO) ""
-	@$(ECHO) "To see help for a particular category, try $(BOLD)$(CYAN)make help-[category].$(RESET)"
-	@$(ECHO) ""
+	$(ECHO) ""
+	$(ECHO) "To see help for a particular category, try $(BOLD)$(CYAN)make help-[category].$(RESET)"
+	$(ECHO) ""
 
 # Magical make-fu: achieving dyamic definition of targets like "make
 # help-[category]" using a pattern rule (% matches anything not otherwise
@@ -53,41 +53,41 @@ help-%:
 
 selfdoc-howto: ##@help Print instructions explaining how to write self-documenting makefiles
 	@echo
-	@$(ECHO) "\t$(BOLD)$(GREY)WRITING SELF-DOCUMENTING MAKEFILES$(RESET)"
+	$(ECHO) "\t$(BOLD)$(GREY)WRITING SELF-DOCUMENTING MAKEFILES$(RESET)"
 	@echo	
-	@$(ECHO) "\t$(BOLD)To add a one-line description of a target that will display in $(YELLOW)make help-selfdoc$(RESET):"
-	@$(ECHO) "\tAt the end of the list of dependencies for the target, add a pair of octothorpes (##) followed by"
-	@$(ECHO) "\tthe text you want to have printed."
+	$(ECHO) "\t$(BOLD)To add a one-line description of a target that will display in $(YELLOW)make help-selfdoc$(RESET):"
+	$(ECHO) "\tAt the end of the list of dependencies for the target, add a pair of octothorpes (##) followed by"
+	$(ECHO) "\tthe text you want to have printed."
 	@echo
-	@$(ECHO) "\t$(BOLD)BASIC SYNTAX:$(RESET)"
-	@$(ECHO) "\ttarget-name: ## Description of the current target."
+	$(ECHO) "\t$(BOLD)BASIC SYNTAX:$(RESET)"
+	$(ECHO) "\ttarget-name: ## Description of the current target."
 	@echo
-	@$(ECHO) "\t$(BOLD)NOTE:$(RESET)"
-	@$(ECHO) "\t* The list of dependencies may be empty."
-	@$(ECHO) "\t* Use $(YELLOW)[]$(RESET) to indicate arguments to the make target."
+	$(ECHO) "\t$(BOLD)NOTE:$(RESET)"
+	$(ECHO) "\t* The list of dependencies may be empty."
+	$(ECHO) "\t* Use $(YELLOW)[]$(RESET) to indicate arguments to the make target."
 	@echo
-	@$(ECHO) "\t* You can assign the target to one or more help categories by adding any number of '@foo' '@bar' tags between"
-	@$(ECHO) "\tthe '##'' indicators and the text. The message will then appear when the user runs 'make help-foo' "
+	$(ECHO) "\t* You can assign the target to one or more help categories by adding any number of '@foo' '@bar' tags between"
+	$(ECHO) "\tthe '##'' indicators and the text. The message will then appear when the user runs 'make help-foo' "
 	@echo
-	@$(ECHO) "\tYou can also introduce new categories this way. If it is the first use of a paricular category, it will be"
-	@$(ECHO) "\tautomatically added to the list produced by 'make help-categories'. "
+	$(ECHO) "\tYou can also introduce new categories this way. If it is the first use of a paricular category, it will be"
+	$(ECHO) "\tautomatically added to the list produced by 'make help-categories'. "
 	@echo
-	@$(ECHO) "\t$(BOLD)COMPLETE SYNTAX:$(RESET)"
-	@$(ECHO) "\ttarget-name: list dependencies ##@foo @bar [argument1 argument2] Description of the current target."
+	$(ECHO) "\t$(BOLD)COMPLETE SYNTAX:$(RESET)"
+	$(ECHO) "\ttarget-name: list dependencies ##@foo @bar [argument1 argument2] Description of the current target."
 	@echo
-	@$(ECHO) "\t'[argument1 argument2] Description of the current target.' will appear in the " 
-	@$(ECHO) "\tlists of targets when you run $(YELLOW)make help-selfdoc$(RESET), $(YELLOW)make help-foo$(RESET), and $(YELLOW)make help-bar$(RESET)"
+	$(ECHO) "\t'[argument1 argument2] Description of the current target.' will appear in the " 
+	$(ECHO) "\tlists of targets when you run $(YELLOW)make help-selfdoc$(RESET), $(YELLOW)make help-foo$(RESET), and $(YELLOW)make help-bar$(RESET)"
 	@echo	
-	@$(ECHO) "\t$(YELLOW)foo$(RESET) and $(YELLOW)bar$(RESET) will appear in the list when you run $(YELLOW)make help-categories$(RESET)"
+	$(ECHO) "\t$(YELLOW)foo$(RESET) and $(YELLOW)bar$(RESET) will appear in the list when you run $(YELLOW)make help-categories$(RESET)"
 	@echo
-	@$(ECHO) "\t$(GREY)Run $(YELLOW)make help-selfdoc$(GREY) to see more examples.$(RESET)"
+	$(ECHO) "\t$(GREY)Run $(YELLOW)make help-selfdoc$(GREY) to see more examples.$(RESET)"
 	@echo
-	@$(ECHO) "\t$(BOLD)To Add Multi-line help (like this one)... $(RESET)"
+	$(ECHO) "\t$(BOLD)To Add Multi-line help (like this one)... $(RESET)"
 	@echo
-	@$(ECHO) "\tWe use the .PHONY feature of makefiles to generate arbitrary targets which use ECHO"
-	@$(ECHO) "\tto make multi-line output. To ensure that they are listed as possible help targets:"
-	@$(ECHO) "\t* Start their target name with 'help-' and"
-	@$(ECHO) "\t* Include a useful one-line description as above."
+	$(ECHO) "\tWe use the .PHONY feature of makefiles to generate arbitrary targets which use ECHO"
+	$(ECHO) "\tto make multi-line output. To ensure that they are listed as possible help targets:"
+	$(ECHO) "\t* Start their target name with 'help-' and"
+	$(ECHO) "\t* Include a useful one-line description as above."
 	@echo
-	@$(ECHO) "\tThis message came from mk/selfdoc.mk if you want to look at an example."
+	$(ECHO) "\tThis message came from mk/selfdoc.mk if you want to look at an example."
 	@echo

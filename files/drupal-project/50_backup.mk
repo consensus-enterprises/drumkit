@@ -12,7 +12,7 @@ RESTORE_FILE  := $(BACKUP_DIR)/$(LATEST_FILE)
 
 backup: ## Backup a timestampped database dump of the local site instance.
 	@$(MAKE-QUIET) backup-real
-	@$(ECHO) "$(YELLOW)Generated backup for $(GREY)$(SITE_URL)$(YELLOW) at $(GREY)$(BACKUP_DIR)/$(BACKUP_FILE)$(YELLOW).$(RESET)"
+	$(ECHO) "$(YELLOW)Generated backup for $(GREY)$(SITE_URL)$(YELLOW) at $(GREY)$(BACKUP_DIR)/$(BACKUP_FILE)$(YELLOW).$(RESET)"
 backup-real:
 	mkdir -p $(BACKUP_DIR)
 	# Note that we call the Drush command directly here, since we want to avoid any verbose or debug output.
@@ -23,18 +23,18 @@ latest-symlink:
 	cd $(BACKUP_DIR); ln -s $(BACKUP_FILE) $(LATEST_FILE)
 clean-backups:
 	rm -f $(TMP_DIR)/backups/*
-	@$(ECHO) "$(YELLOW)Deleted all backups.$(RESET)"
+	$(ECHO) "$(YELLOW)Deleted all backups.$(RESET)"
 
 restore-validate:
 ifneq ($(RESTORE_FILE), $(BACKUP_DIR)/$(LATEST_FILE))
-	@$(ECHO) "$(RED)$(BOLD)RESTORE_FILE$(RESET)$(RED) is only valid when restoring a single site's database.$(RESET)"
+	$(ECHO) "$(RED)$(BOLD)RESTORE_FILE$(RESET)$(RED) is only valid when restoring a single site's database.$(RESET)"
 	@exit 1
 endif
 restore: restore-validate ## Restore a database dump to the local site instance.
 	@$(MAKE-QUIET) restore-real
 restore-real:
 	$(LANDO) db-import $(RESTORE_FILE) $(QUIET)
-	@$(ECHO) "$(YELLOW)Restored $(GREY)$(SITE_URL)$(YELLOW) from backup at $(GREY)$(RESTORE_FILE)$(YELLOW).$(RESET)"
+	$(ECHO) "$(YELLOW)Restored $(GREY)$(SITE_URL)$(YELLOW) from backup at $(GREY)$(RESTORE_FILE)$(YELLOW).$(RESET)"
 
 snapshot: ## Take a snapshot of the database for easy restore. Optionally, name the snapshot w/ 'SNAP=<name>'.
 	@$(MAKE-QUIET) snapshot-real LATEST_FILE=$(SNAPSHOT_FILE)
@@ -43,13 +43,13 @@ snapshot-real:
 ifneq ($(SNAPSHOT_FILE), $(LATEST_DEFAULT))
 	@$(MAKE-QUIET) latest-symlink LATEST_FILE=$(LATEST_DEFAULT) TIMESTAMP=$(TIMESTAMP)
 endif
-	@$(ECHO) "$(YELLOW)Generated snapshot for $(GREY)$(SITE_URL)$(YELLOW) at $(GREY)$(BACKUP_DIR)/$(SNAPSHOT_FILE)$(YELLOW).$(RESET)"
+	$(ECHO) "$(YELLOW)Generated snapshot for $(GREY)$(SITE_URL)$(YELLOW) at $(GREY)$(BACKUP_DIR)/$(SNAPSHOT_FILE)$(YELLOW).$(RESET)"
 
 restore-snapshot: ## Restore the latest snapshot database dump into the local site instance. Optionally, restore a named snapshot w/ 'SNAP=<name>'.
 	@$(MAKE-QUIET) restore-snapshot-real LATEST_FILE=$(SNAPSHOT_FILE)
 restore-snapshot-real:
 	@$(MAKE-QUIET) restore-real LATEST_FILE=$(SNAPSHOT_FILE) $(QUIET)
-	@$(ECHO) "$(YELLOW)Restored $(GREY)$(SITE_URL)$(YELLOW) from snapshot at $(GREY)$(RESTORE_FILE)$(YELLOW).$(RESET)"
+	$(ECHO) "$(YELLOW)Restored $(GREY)$(SITE_URL)$(YELLOW) from snapshot at $(GREY)$(RESTORE_FILE)$(YELLOW).$(RESET)"
 
 ls-snaps: snapshot-list
 snapshot-list: ## Show the named snapshots available. (alias: ls-snaps)

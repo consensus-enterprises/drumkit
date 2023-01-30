@@ -11,9 +11,9 @@ web/index.php: composer
 build-real:
 	mkdir -p $(COMPOSER_CACHE_DIR)
 	mkdir -p vendor
-	@$(ECHO) "$(YELLOW)Beginning build of codebase. (Be patient. This may take a while.)$(RESET)"
+	$(ECHO) "$(YELLOW)Beginning build of codebase. (Be patient. This may take a while.)$(RESET)"
 	$(LANDO) composer --ansi create-project --no-progress $(QUIET)
-	@$(ECHO) "$(YELLOW)Completed build of codebase.$(RESET)"
+	$(ECHO) "$(YELLOW)Completed build of codebase.$(RESET)"
 
 clean-composer-cache: ## Clean Composer cache.
 ifneq ("$(wildcard $(COMPOSER_CACHE_DIR))","")
@@ -22,7 +22,7 @@ ifneq ("$(wildcard $(COMPOSER_CACHE_DIR))","")
 endif
 
 clean-build: ## Clean Composer built code.
-	@$(ECHO) "$(YELLOW)Beginning clean of composer-built code.$(RESET)"
+	$(ECHO) "$(YELLOW)Beginning clean of composer-built code.$(RESET)"
 	@chmod -R +w web
 	@# We want to keep the .env, .lando.local.yml, and settings.local.php because
 	@# they contain machine-specific config. Also, tmp/backups has database
@@ -38,11 +38,11 @@ clean-build: ## Clean Composer built code.
 	@if [ -d web/themes/contrib/ ] ; then rm -r web/themes/contrib/ ; fi
 	@if [ -d drush/Commands/contrib/ ] ; then rm -r drush/Commands/contrib/ ; fi
 	@if [ -d web/private/scripts/quicksilver/ ] ; then rm -r web/private/scripts/quicksilver/ ; fi
-	@$(ECHO) "$(YELLOW)Completed clean of composer-built code.$(RESET)"
+	$(ECHO) "$(YELLOW)Completed clean of composer-built code.$(RESET)"
 
 update: ## Run composer update
 	@$(MAKE-QUIET) update-real
 update-real:
-	@$(ECHO) "$(YELLOW)Beginning update of codebase. (Be patient. This may take a while.)$(RESET)"
+	$(ECHO) "$(YELLOW)Beginning update of codebase. (Be patient. This may take a while.)$(RESET)"
 	$(LANDO) composer --ansi update --no-progress $(QUIET)
-	@$(ECHO) "$(YELLOW)Completed update of codebase.$(RESET)"
+	$(ECHO) "$(YELLOW)Completed update of codebase.$(RESET)"

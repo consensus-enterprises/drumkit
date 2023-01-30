@@ -134,12 +134,12 @@ like `drumkit/mk.d/60_migrate.mk`, with contenst like:
 
 ```
 migrate:  ## Migrate content from old prod environment into local.
-  @$(ECHO) "$(YELLOW)Migrating Live content.$(RESET)"
+  $(ECHO) "$(YELLOW)Migrating Live content.$(RESET)"
   $(DRUSH) -y en migration_live
   @$(MAKE) migrate-users
   @$(MAKE) migrate-files
   @$(MAKE) migrate-nodes
-  @$(ECHO) "$(YELLOW)Finished migrating Live content.$(RESET)"
+  $(ECHO) "$(YELLOW)Finished migrating Live content.$(RESET)"
 
 migrate-users: ## Migrate users and their data from old prod environment.
   $(DRUSH) migrate-import --group=users

@@ -18,9 +18,9 @@ SITE_INSTALL_CMD = site:install $(INSTALL_PROFILE)\
 install: ## Install Drupal site.
 				@$(MAKE-QUIET) install-real
 install-real:
-				@$(ECHO) "$(YELLOW)Beginning installation of $(GREY)$(SITE_URL)$(YELLOW). (Be patient. This may take a while.)$(RESET)"
+				$(ECHO) "$(YELLOW)Beginning installation of $(GREY)$(SITE_URL)$(YELLOW). (Be patient. This may take a while.)$(RESET)"
 				$(DRUSH) $(SITE_INSTALL_CMD) $(QUIET)
-				@$(ECHO) "$(YELLOW)Completed installation of $(GREY)$(SITE_URL).$(RESET)"
+				$(ECHO) "$(YELLOW)Completed installation of $(GREY)$(SITE_URL).$(RESET)"
 
 uninstall: ## Uninstall Drupal site.
 				@$(MAKE-QUIET) uninstall-real
@@ -29,7 +29,7 @@ uninstall-real:
 				chmod 700 web/sites/$(SITE_URL)/
 				rm -rf web/sites/$(SITE_URL)/files/config*
 				rm -f web/sites/$(SITE_URL)/settings.php
-				@$(ECHO) "$(YELLOW)Deleted $(GREY)$(SITE_URL).$(RESET)"
+				$(ECHO) "$(YELLOW)Deleted $(GREY)$(SITE_URL).$(RESET)"
 
 locale: ## Check and update Locale module for translation updates.
 				$(DRUSH) locale-check && $(DRUSH) locale-update && $(DRUSH) cr
