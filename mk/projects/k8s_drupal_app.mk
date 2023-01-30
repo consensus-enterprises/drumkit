@@ -25,35 +25,35 @@ init-k8s-drupal-app: $(K8S_DRUPAL_APP_BASE_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_TEMPLATE_FILES)
 init-k8s-drupal-app: drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_NAME).mk
 init-k8s-drupal-app: ## Initialize configuration and Drumkit targets to create and manage Drupal apps on Kubernetes clusters.
-	@$(ECHO) "You must update database and admin passwords in"
-	@$(ECHO) "'build/app/$(K8S_ENVIRONMENT_NAME)/app-secrets.yaml'"
-	@$(ECHO)
-	@$(ECHO) "You must also generate a token to allow Kubernetes to pull images."
-	@$(ECHO) "by running 'make gitlab-pull-secret'. This token must be entered in"
-	@$(ECHO) "build/app/base/registry-credentials.yaml"
-	@$(ECHO)
-	@$(ECHO) "You should customize the site name and install profile in"
-	@$(ECHO) "'build/app/base/app-variables.yaml'"
-	@$(ECHO)
-	@$(ECHO) "You should enable automatic HTTPS certificate generation (via Let's Encrypt)"
-	@$(ECHO) "by un-commenting the appropriate line in"
-	@$(ECHO) "'build/app/base/ingress-service.yaml'"
-	@$(ECHO)
-	@$(ECHO) "Additional app variables can be provided in"
-	@$(ECHO) "'build/app/$(K8S_ENVIRONMENT_NAME)/app-variables.patch.yaml'"
-	@$(ECHO)
-	@$(ECHO) "If you want to customise the database image, you can update it in"
-	@$(ECHO) "'build/app/base/component-mariadb.yaml'"
-	@$(ECHO)
-	@$(ECHO) "Any special routing that the app requires can be done in"
-	@$(ECHO) "'build/app/base/ingress-service.yaml'"
-	@$(ECHO)
-#	@$(ECHO) "Advanced users can also customize Drumkit behaviour in"
-#	@$(ECHO) "'drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_NAME).mk'"
+	$(ECHO) "You must update database and admin passwords in"
+	$(ECHO) "'build/app/$(K8S_ENVIRONMENT_NAME)/app-secrets.yaml'"
+	$(ECHO)
+	$(ECHO) "You must also generate a token to allow Kubernetes to pull images."
+	$(ECHO) "by running 'make gitlab-pull-secret'. This token must be entered in"
+	$(ECHO) "build/app/base/registry-credentials.yaml"
+	$(ECHO)
+	$(ECHO) "You should customize the site name and install profile in"
+	$(ECHO) "'build/app/base/app-variables.yaml'"
+	$(ECHO)
+	$(ECHO) "You should enable automatic HTTPS certificate generation (via Let's Encrypt)"
+	$(ECHO) "by un-commenting the appropriate line in"
+	$(ECHO) "'build/app/base/ingress-service.yaml'"
+	$(ECHO)
+	$(ECHO) "Additional app variables can be provided in"
+	$(ECHO) "'build/app/$(K8S_ENVIRONMENT_NAME)/app-variables.patch.yaml'"
+	$(ECHO)
+	$(ECHO) "If you want to customise the database image, you can update it in"
+	$(ECHO) "'build/app/base/component-mariadb.yaml'"
+	$(ECHO)
+	$(ECHO) "Any special routing that the app requires can be done in"
+	$(ECHO) "'build/app/base/ingress-service.yaml'"
+	$(ECHO)
+#	$(ECHO) "Advanced users can also customize Drumkit behaviour in"
+#	$(ECHO) "'drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_NAME).mk'"
 
 init-k8s-drupal-app-intro:
-	@$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
-	@$(ECHO)
+	$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
+	$(ECHO)
 
 init-k8s-drupal-app-intro:
 	$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
