@@ -10,9 +10,10 @@ RUN rm -rf /var/www/html/
 RUN mkdir -p /var/www/html/
 
 # Copy in Composer-related files
-COPY ./patches/ /var/www/html/patches
-COPY ./drupal_scaffold/ /var/www/html/drupal_scaffold
 COPY ./composer.* /var/www/html/
+# Uncomment the lines below if they are relevant for your project.
+#COPY ./patches/ /var/www/html/patches
+#COPY ./drupal_scaffold/ /var/www/html/drupal_scaffold
 
 # Prepare a clean copy of our codebase
 COPY ./.git/ /tmp/app/.git
