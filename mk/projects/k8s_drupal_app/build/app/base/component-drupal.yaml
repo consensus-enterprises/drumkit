@@ -56,6 +56,11 @@ spec:
                 configMapKeyRef:
                   name: app-variables
                   key: DATABASE_PORT
+            - name: DRUPAL_HASH_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DRUPAL_HASH_SALT
       imagePullSecrets:
       - name: registry-credentials
 ---
