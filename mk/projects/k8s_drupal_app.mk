@@ -68,3 +68,6 @@ $(K8S_DRUPAL_APP_BASE_FILES):
 	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@DRUPAL_APP_ENVIRONMENT=$(K8S_ENVIRONMENT_NAME) DRUPAL_APP_ENVIRONMENT_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL) mustache ENV $(K8S_DRUPAL_APP_RESOURCES_DIR)/$@ > $@
+
+generate-encoded-drupal-hash-salt: ## Generate a hash salt for Drupal, and base64 encode it, for use in `app-secrets.yaml`.
+	$(ECHO) -n `ddev drush php-eval 'echo \Drupal\Component\Utility\Crypt::randomBytesBase64(55) . "\n";'` | base64
