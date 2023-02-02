@@ -7,10 +7,13 @@ K8S_CLUSTER_NAME  ?= $(K8S_CLUSTER_DEFAULT_NAME)
 K8S_CLUSTER_TEMPLATE_DIR  = $(K8S_CLUSTER_RESOURCES_DIR)/$(K8S_CLUSTER_DIR)/$(K8S_CLUSTER_DEFAULT_NAME)
 K8S_CLUSTER_DIR = build/clusters
 
-K8S_CLUSTER_BASE_FILES = \
+K8S_CLUSTER_FILES = \
     $(K8S_CLUSTER_DIR)/base/providers.tf \
     $(K8S_CLUSTER_DIR)/base/variables.tf \
-    $(K8S_CLUSTER_DIR)/base/versions.tf
+    $(K8S_CLUSTER_DIR)/base/versions.tf \
+    $(K8S_CLUSTER_DIR)/.gitignore \
+    drumkit/mk.d/25_cluster_$(K8S_CLUSTER_NAME).mk \
+    drumkit/bootstrap.d/40_kubernetes.sh
 
 K8S_CLUSTER_TEMPLATE_FILES = \
     $(K8S_CLUSTER_DIR)/$(K8S_CLUSTER_NAME)/cluster.tf \
@@ -24,12 +27,9 @@ K8S_CLUSTER_SYMLINKS = \
 
 # @TODO: Prompt for the Openstack cloud key during init, and pre-populate these vars.
 init-k8s-cluster: init-k8s-cluster-intro
-init-k8s-cluster: $(K8S_CLUSTER_BASE_FILES)
+init-k8s-cluster: $(K8S_CLUSTER_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_TEMPLATE_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_SYMLINKS)
-init-k8s-cluster: $(K8S_CLUSTER_DIR)/.gitignore
-init-k8s-cluster: drumkit/mk.d/25_cluster_$(K8S_CLUSTER_NAME).mk
-init-k8s-cluster: drumkit/bootstrap.d/40_kubernetes.sh
 init-k8s-cluster: ## Initialize configuration and Drumkit targets to create and manage Kubernetes clusters on Openstack.
 	$(ECHO)
 	$(ECHO) "To build a cluster, you will need to specify which Openstack cloud"
@@ -40,35 +40,37 @@ init-k8s-cluster: ## Initialize configuration and Drumkit targets to create and 
 	$(ECHO) "In addition, you will need to specify this name in 'Makefile' as:"
 	$(ECHO) "    OS_CLOUD = <your-cloud-name>"
 	$(ECHO)
+	$(ECHO) "Created a 'kubectl' alias that uses the correct kubeconfig."
+	$(ECHO) "$(WHITE)Remember to re-bootstrap Drumkit.'.$(RESET)"
 
 init-k8s-cluster-intro:
 	$(ECHO) ">>> $(WHITE)Creating '$(K8S_CLUSTER_NAME)' cluster.$(RESET) <<<"
 	$(ECHO)
 
-$(K8S_CLUSTER_DIR)/.gitignore:
-	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
-	@mkdir -p $(@D)
-	@cp $(K8S_CLUSTER_RESOURCES_DIR)/$(K8S_CLUSTER_DIR)/$(@F) $@
+K8S_CLUSTER_MUSTACHE_VARS = \
+    PROJECT_NAME=$(PROJECT_NAME) \
+    CLUSTER_NAME=$(K8S_CLUSTER_NAME) \
+    CLUSTER_NAME_LC=$(call lc,$(K8S_CLUSTER_NAME))
 
-drumkit/bootstrap.d/40_kubernetes.sh:
-	$(ECHO) "$(YELLOW)Creating 'kubectl' alias: '$(@F)'.$(RESET)"
-	$(ECHO) "$(WHITE)Remember to re-bootstrap Drumkit.'.$(RESET)"
-	@mkdir -p $(@D)
-	@cp $(K8S_CLUSTER_RESOURCES_DIR)/$@ $@
-
-drumkit/mk.d/25_cluster_$(K8S_CLUSTER_NAME).mk:
-	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
-	@mkdir -p $(@D)
-	@PROJECT_NAME=$(PROJECT_NAME) CLUSTER_NAME=$(K8S_CLUSTER_NAME) CLUSTER_NAME_LC=$(call lc,$(K8S_CLUSTER_NAME)) mustache ENV $(K8S_CLUSTER_RESOURCES_DIR)/drumkit/mk.d/25_cluster_$(K8S_CLUSTER_DEFAULT_NAME).mk > $@
+.template: mustache
+	$(ECHO) "$(YELLOW)Creating file: '$(TEMPLATE_TARGET)'.$(RESET)"
+	@mkdir -p $(TEMPLATE_TARGETDIR)
+	@$(TEMPLATE_VARS) mustache ENV $(TEMPLATE_SOURCE) > $(TEMPLATE_TARGET)
 
 $(K8S_CLUSTER_TEMPLATE_FILES):
-	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
-	@mkdir -p $(@D)
-	@CLUSTER_NAME=$(K8S_CLUSTER_NAME) CLUSTER_NAME_LC=$(call lc,$(K8S_CLUSTER_NAME)) mustache ENV $(K8S_CLUSTER_TEMPLATE_DIR)/$(@F) > $@
-$(K8S_CLUSTER_BASE_FILES):
-	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
-	@mkdir -p $(@D)
-	@CLUSTER_NAME=$(K8S_CLUSTER_NAME) CLUSTER_NAME_LC=$(call lc,$(K8S_CLUSTER_NAME)) mustache ENV $(K8S_CLUSTER_RESOURCES_DIR)/$@ > $@
+	@$(make) .template \
+        TEMPLATE_VARS=$(K8S_CLUSTER_TEMPLATE_VARS) \
+        TEMPLATE_SOURCE=$(K8S_CLUSTER_TEMPLATE_DIR)/$(@F) \
+        TEMPLATE_TARGETDIR=$(@D) \
+        TEMPLATE_TARGET=$@ 
+
+$(K8S_CLUSTER_FILES):
+	@$(make) .template \
+        TEMPLATE_VARS=$(K8S_CLUSTER_TEMPLATE_VARS) \
+        TEMPLATE_SOURCE=$(K8S_CLUSTER_RESOURCES_DIR)/$@ \
+        TEMPLATE_TARGETDIR=$(@D) \
+        TEMPLATE_TARGET=$@ 
+
 $(K8S_CLUSTER_SYMLINKS):
 	$(ECHO) "$(YELLOW)Creating symlink: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
