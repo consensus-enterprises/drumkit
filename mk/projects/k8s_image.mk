@@ -43,14 +43,17 @@ drumkit/mk.d/15_base_image.mk $(K8S_BASE_IMAGE_FILES):
 ################
 
 K8S_DRUPAL_IMAGE_FILES = \
-    $(K8S_IMAGE_DIR)/docker/Dockerfile.drupal \
     $(K8S_IMAGE_DIR)/scripts/app.sh \
     $(K8S_IMAGE_DIR)/files/install-drupal.sh \
     $(K8S_IMAGE_DIR)/files/nginx.conf \
     $(K8S_IMAGE_DIR)/files/start-drupal.sh \
     web/sites/default/settings.php
 
+K8S_DRUPAL_IMAGE_TEMPLATE_FILES = \
+    $(K8S_IMAGE_DIR)/docker/Dockerfile.drupal
+
 init-k8s-drupal-image: $(K8S_DRUPAL_IMAGE_FILES)
+init-k8s-drupal-image: $(K8S_DRUPAL_IMAGE_TEMPLATE_FILES)
 init-k8s-drupal-image: drumkit/mk.d/15_drupal_image.mk
 init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create and manage Drupal image.
 	$(ECHO) "To alter the 'drupal' image, you will need to update"
@@ -72,3 +75,7 @@ drumkit/mk.d/15_drupal_image.mk $(K8S_DRUPAL_IMAGE_FILES):
 	@mkdir -p $(@D)
 	@cp $(K8S_IMAGE_RESOURCES_DIR)/$@ $@
 
+$(K8S_DRUPAL_IMAGE_TEMPLATE_FILES):
+	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
+	@mkdir -p $(@D)
+	@DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL) mustache ENV $(K8S_IMAGE_RESOURCES_DIR)/$@ > $@
