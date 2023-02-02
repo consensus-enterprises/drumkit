@@ -36,7 +36,7 @@ init-k8s-base-image: ## Initialize configuration and Drumkit targets to create a
 drumkit/mk.d/15_base_image.mk $(K8S_BASE_IMAGE_FILES):
 	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
-	@cp $(K8S_IMAGE_RESOURCES_DIR)/$@ $@
+	@PROJECT_NAME=$(PROJECT_NAME) mustache ENV $(K8S_IMAGE_RESOURCES_DIR)/$@ > $@
 
 ################
 # Drupal image #
@@ -50,11 +50,11 @@ K8S_DRUPAL_IMAGE_FILES = \
     web/sites/default/settings.php
 
 K8S_DRUPAL_IMAGE_TEMPLATE_FILES = \
-    $(K8S_IMAGE_DIR)/docker/Dockerfile.drupal
+    $(K8S_IMAGE_DIR)/docker/Dockerfile.drupal \
+    drumkit/mk.d/15_drupal_image.mk
 
 init-k8s-drupal-image: $(K8S_DRUPAL_IMAGE_FILES)
 init-k8s-drupal-image: $(K8S_DRUPAL_IMAGE_TEMPLATE_FILES)
-init-k8s-drupal-image: drumkit/mk.d/15_drupal_image.mk
 init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create and manage Drupal image.
 	$(ECHO) "To alter the 'drupal' image, you will need to update"
 	$(ECHO) "'build/images/docker/Dockerfile.drupal', then run:"
@@ -70,7 +70,7 @@ init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create
 	$(ECHO) "'build/images/files/install-drupal.sh'"
 	$(ECHO)
 
-drumkit/mk.d/15_drupal_image.mk $(K8S_DRUPAL_IMAGE_FILES):
+$(K8S_DRUPAL_IMAGE_FILES):
 	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
 	@cp $(K8S_IMAGE_RESOURCES_DIR)/$@ $@
@@ -78,4 +78,4 @@ drumkit/mk.d/15_drupal_image.mk $(K8S_DRUPAL_IMAGE_FILES):
 $(K8S_DRUPAL_IMAGE_TEMPLATE_FILES):
 	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
-	@DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL) mustache ENV $(K8S_IMAGE_RESOURCES_DIR)/$@ > $@
+	@PROJECT_NAME=$(PROJECT_NAME) DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL) mustache ENV $(K8S_IMAGE_RESOURCES_DIR)/$@ > $@

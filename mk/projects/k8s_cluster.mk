@@ -59,7 +59,7 @@ drumkit/bootstrap.d/40_kubernetes.sh:
 drumkit/mk.d/25_cluster_$(K8S_CLUSTER_NAME).mk:
 	$(ECHO) "$(YELLOW)Creating makefile: '$(@F)'.$(RESET)"
 	@mkdir -p $(@D)
-	@CLUSTER_NAME=$(K8S_CLUSTER_NAME) CLUSTER_NAME_LC=$(call lc,$(K8S_CLUSTER_NAME)) mustache ENV $(K8S_CLUSTER_RESOURCES_DIR)/drumkit/mk.d/25_cluster_$(K8S_CLUSTER_DEFAULT_NAME).mk > $@
+	@PROJECT_NAME=$(PROJECT_NAME) CLUSTER_NAME=$(K8S_CLUSTER_NAME) CLUSTER_NAME_LC=$(call lc,$(K8S_CLUSTER_NAME)) mustache ENV $(K8S_CLUSTER_RESOURCES_DIR)/drumkit/mk.d/25_cluster_$(K8S_CLUSTER_DEFAULT_NAME).mk > $@
 
 $(K8S_CLUSTER_TEMPLATE_FILES):
 	$(ECHO) "$(YELLOW)Creating file: '$(@F)'.$(RESET)"
