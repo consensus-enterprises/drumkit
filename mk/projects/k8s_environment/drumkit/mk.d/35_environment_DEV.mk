@@ -2,6 +2,7 @@
 # The '{{ ENVIRONMENT_NAME }}' environment #
 #########################
 
+# TODO: Update the below description to accurately reflect the purpose of this environment. For example:
 # This environment will be used to deploy an instance of the app for
 # development purposes. This environment is explicitly volatile, and can be
 # destroyed or rebuilt at any time. Thus, it will run on the '{{ CLUSTER_NAME }}'

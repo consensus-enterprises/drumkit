@@ -2,6 +2,7 @@
 # The '{{ CLUSTER_NAME }}' cluster #
 ##########################
 
+# TODO: Update the below description to accurately reflect the purpose of this cluster. For example:
 # This cluster will be used for environments that are not intended to be stable.
 # That is, where the hosted data does not matter and/or they are not expected
 # to always be available; eg. 'dev', 'staging'.
