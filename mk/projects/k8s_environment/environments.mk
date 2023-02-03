@@ -42,4 +42,3 @@ NAMESPACE      ?= $(call lc, $(ENVIRONMENT_NAME))
 	@$(make) .k8s-use-cluster K8S_CLUSTER_NAME=$(CLUSTER_NAME)
 	$(ECHO) "$(YELLOW)Setting environment to $(WHITE)$(ENVIRONMENT_NAME)$(RESET) on the $(CLUSTER_NAME) cluster."
 	@$(kubectl) config use-context $(ENVIRONMENT_NAME)
-

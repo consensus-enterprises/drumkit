@@ -32,7 +32,7 @@ K8S_DRUPAL_APP_TEMPLATE_FILES = \
 K8S_DRUPAL_APP_DRUMKIT_FILES= \
     drumkit/mk.d/$(K8S_DRUPAL_APP_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_NAME).mk
 
-init-k8s-drupal-app: init-k8s-drupal-app-intro
+init-k8s-drupal-app: .init-k8s-drupal-app-intro
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_TEMPLATE_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_DRUMKIT_FILES)
@@ -67,7 +67,7 @@ init-k8s-drupal-app: ## Initialize configuration and Drumkit targets to create a
 #	$(ECHO) "Advanced users can also customize Drumkit behaviour in"
 #	$(ECHO) "'drumkit/mk.d/45_drupal_app_$(K8S_ENVIRONMENT_NAME).mk'"
 
-init-k8s-drupal-app-intro:
+.init-k8s-drupal-app-intro:
 	$(ECHO) ">>> $(WHITE)Creating Drupal app.$(RESET) <<<"
 	$(ECHO)
 

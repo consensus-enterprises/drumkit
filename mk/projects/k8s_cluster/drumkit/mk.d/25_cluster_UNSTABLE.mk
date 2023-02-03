@@ -22,4 +22,3 @@ clean-tf-init-{{ CLUSTER_NAME }}:
 {{ CLUSTER_NAME }}-start-dashboard: ##@{{ PROJECT_NAME }} Start the Kubernetes dashboard for the '{{ CLUSTER_NAME }}' cluster.
 	@$(make) .k8s-info K8S_DASHBOARD_PORT=8001
 	@$(make) .k8s-proxy K8S_CLUSTER_NAME={{ CLUSTER_NAME }} K8S_DASHBOARD_PORT=8001
-

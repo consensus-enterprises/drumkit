@@ -35,7 +35,7 @@ K8S_CLUSTER_DRUMKIT_FILES= \
     drumkit/mk.d/$(K8S_CLUSTER_DRUMKIT_PREFIX)_$(K8S_CLUSTER_NAME).mk
 
 # @TODO: Prompt for the Openstack cloud key during init, and pre-populate these vars.
-init-k8s-cluster: init-k8s-cluster-intro
+init-k8s-cluster: .init-k8s-cluster-intro
 init-k8s-cluster: $(K8S_CLUSTER_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_TEMPLATE_FILES)
 init-k8s-cluster: $(K8S_CLUSTER_SYMLINKS)
@@ -55,9 +55,9 @@ init-k8s-cluster: ## Initialize configuration and Drumkit targets to create and 
 	$(ECHO) $(K8S_CLUSTER_DRUMKIT_FILES)
 	$(ECHO)
 	$(ECHO) "Created a 'kubectl' alias that uses the correct kubeconfig."
-	$(ECHO) "$(WHITE)Remember to re-bootstrap Drumkit.'.$(RESET)"
+	$(ECHO) "$(WHITE)Remember to re-bootstrap Drumkit.$(RESET)"
 
-init-k8s-cluster-intro:
+.init-k8s-cluster-intro:
 	$(ECHO) ">>> $(WHITE)Creating '$(K8S_CLUSTER_NAME)' cluster.$(RESET) <<<"
 	$(ECHO)
 
