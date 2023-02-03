@@ -82,4 +82,3 @@ variable "cluster_labels" {
     master_lb_floating_ip_enabled = "true"
   }
 }
-

@@ -9,11 +9,11 @@ K8S_IMAGE_TEMPLATE_VARS = \
     PROJECT_NAME=$(PROJECT_NAME) \
     DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL)
 
-init-k8s-images: init-k8s-images-intro
+init-k8s-images: .init-k8s-images-intro
 init-k8s-images: init-k8s-base-image
 init-k8s-images: init-k8s-drupal-image
 
-init-k8s-images-intro:
+.init-k8s-images-intro:
 	$(ECHO) ">>> $(WHITE)Creating images.$(RESET) <<<"
 	$(ECHO)
 

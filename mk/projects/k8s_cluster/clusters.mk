@@ -109,4 +109,3 @@ $(TF_CLUSTER_DIR)/.terraform.lock.hcl: .mk/.local/bin/terraform
 .k8s-proxy:
 	$(ECHO) "$(YELLOW)Starting local kubectl proxy. Use CTRL-C to stop the proxy.$(RESET)"
 	@kubectl --kubeconfig=.kube/config-$(K8S_CLUSTER_NAME) proxy --port=$(K8S_DASHBOARD_PORT)
-

@@ -16,4 +16,3 @@
 	$(ECHO) "$(YELLOW)Deleting app from '$(ENVIRONMENT_NAME)'.$(RESET)"
 	@$(make) .k8s-use-environment ENVIRONMENT_NAME=$(ENVIRONMENT_NAME) CLUSTER_NAME=$(CLUSTER_NAME)
 	@$(kubectl) delete -k build/app/$(ENVIRONMENT_NAME)/
-

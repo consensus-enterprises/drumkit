@@ -33,4 +33,3 @@ gitlab-pull-secret: .gitlab-pull-secret-prompt ## Generate a secret to allow Kub
          read -s -p "Gitlab token:" TOKEN; echo; echo;\
          echo "Use this token to allow Kubernetes to pull images from our private registry:"; echo -n "  ";\
          echo -n "{\"auths\":{\"$(CONTAINER_REGISTRY_DOMAIN)\":{\"auth\":\"`echo -n "$$USERNAME:$$TOKEN"|base64`\"}}}"|base64
-

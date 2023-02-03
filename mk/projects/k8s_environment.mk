@@ -26,13 +26,13 @@ K8S_ENVIRONMENT_TEMPLATE_FILES = \
 K8S_ENVIRONMENT_DRUMKIT_FILES= \
     drumkit/mk.d/$(K8S_ENVIRONMENT_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_NAME).mk
 
-init-k8s-environment: init-k8s-environment-intro
+init-k8s-environment: .init-k8s-environment-intro
 init-k8s-environment: $(K8S_ENVIRONMENT_FILES)
 init-k8s-environment: $(K8S_ENVIRONMENT_TEMPLATE_FILES)
 init-k8s-environment: $(K8S_ENVIRONMENT_DRUMKIT_FILES)
 init-k8s-environment: ## Initialize configuration and Drumkit targets to create and manage environments on Kubernetes clusters.
 
-init-k8s-environment-intro:
+.init-k8s-environment-intro:
 	$(ECHO) ">>> $(WHITE)Creating '$(K8S_ENVIRONMENT_NAME)' environment.$(RESET) <<<"
 	$(ECHO)
 	$(ECHO) "You should update the documentation in the following files to reflect"

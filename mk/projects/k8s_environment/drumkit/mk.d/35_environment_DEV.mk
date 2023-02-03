@@ -22,4 +22,3 @@
 
 {{ ENVIRONMENT_NAME }}-delete-environment: ##@{{ PROJECT_NAME }} Delete the '{{ ENVIRONMENT_NAME }}' environment.
 	@$(make) .k8s-delete-environment CLUSTER_NAME={{ CLUSTER_NAME }} ENVIRONMENT_NAME={{ ENVIRONMENT_NAME }}
-
