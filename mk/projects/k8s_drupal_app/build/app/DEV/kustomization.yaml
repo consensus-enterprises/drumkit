@@ -9,3 +9,14 @@ resources:
 
 patchesStrategicMerge:
   - app-variables.patch.yaml
+  - ingress-service.patch.yaml
+
+patchesJson6902:
+- target:
+    version: v1
+    kind: Ingress
+    name: ingress-service
+  patch: |-
+    - op: add
+      path: /spec/rules/0/host
+      value: {{ DRUPAL_APP_ENVIRONMENT_LC }}.{{ CLIENT_NAME }}.{{ HOSTING_DOMAIN }}

@@ -1,5 +1,6 @@
 resources:
 - app-variables.yaml
+- cert-manager.yaml
 - component-drupal.yaml
 - component-mariadb.yaml
 - ingress-service.yaml
