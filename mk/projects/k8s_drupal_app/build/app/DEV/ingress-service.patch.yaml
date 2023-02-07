@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+spec:
+  tls:
+    - hosts:
+      - {{ DRUPAL_APP_ENVIRONMENT_LC }}.{{ CLIENT_NAME }}.{{ HOSTING_DOMAIN }}
+      secretName: {{ DRUPAL_APP_ENVIRONMENT_LC }}-app-env-tls-prod-letsencrypt-server
