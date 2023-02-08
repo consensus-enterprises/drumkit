@@ -4,17 +4,7 @@ default:
   suites:
     default:
       contexts:
-        - Drumkit\DrumkitContext
-        - Drupal\DrupalExtension\Context\DrupalContext
-        - Drupal\DrupalExtension\Context\MinkContext
-        - Drupal\DrupalExtension\Context\MessageContext
-        - Drupal\DrupalExtension\Context\DrushContext
-  extensions:
-    Behat\MinkExtension:
-      goutte: ~
-      selenium2: ~
-    Drupal\DrupalExtension:
-      blackbox: ~
+         - consensus\BehatTerminalContext\Context\TerminalContext
   gherkin:
     filters:
       tags: "~@wip&&~@slow&&~@disabled&&~@noisy"
