@@ -108,4 +108,12 @@ class DrumkitContext extends TerminalContext implements SnippetAcceptingContext 
     $this->iRun("mkdir roles && cp -r " . $this->getOrigDir() . " ./roles");
   }
 
+  /**
+   * @When I run the Drumkit command :cmd
+   */
+  public function iRunTheDrumkitCommand($cmd)
+  {
+    $this->iRun("source d && $cmd");
+  }
+
 }
