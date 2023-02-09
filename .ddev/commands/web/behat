@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Description: Run Behat inside its container.
+## Usage: behat [flags] [args]
+## Example: "ddev behat" or "ddev behat -dl"
+
+bin/behat --stop-on-failure $@

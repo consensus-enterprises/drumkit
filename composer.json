@@ -11,5 +11,8 @@
             "name": "Dan Friedman"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin/"
+    }
 }
