@@ -2,6 +2,7 @@ MK_D = drumkit/mk.d
 BOOTSTRAP_D = drumkit/bootstrap.d
 MK_D_EXISTS ?= $(shell if [[ -d $(MK_D) ]]; then echo 1; fi)
 MK_D_NONEMPTY ?= $(shell if [[ `ls -A $(MK_D)` ]]; then echo 1; fi)
+make := $(MAKE) -s
 
 drumkit $(MK_D) $(BOOTSTRAP_D):
 	@mkdir -p $@
