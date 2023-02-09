@@ -1,10 +1,10 @@
 default:
-  autoload:
-    - "%paths.base%/features/bootstrap"
   suites:
     default:
+      paths:
+        - "%paths.base%/features/bootstrap"
       contexts:
-         - consensus\BehatTerminalContext\Context\TerminalContext
+        - Drumkit\DrumkitContext
   gherkin:
     filters:
       tags: "~@wip&&~@slow&&~@disabled&&~@noisy"
