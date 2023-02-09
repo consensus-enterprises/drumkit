@@ -3,6 +3,7 @@ default:
     default:
       paths:
         - "%paths.base%/features/bootstrap"
+        - "%paths.base%/mk/projects"
       contexts:
         - Drumkit\DrumkitContext
   gherkin:

@@ -254,4 +254,7 @@ omit_containers: [db, dba, ddev-ssh-agent]
 # See https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/ for more
 # information on the commands that can be extended and the tasks you can define
 # for them. Example:
-#hooks:
+hooks:
+  post-start:
+    - exec: sudo apt -qq update
+    - exec: sudo apt -yqq install make
