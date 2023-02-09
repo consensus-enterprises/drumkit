@@ -16,6 +16,7 @@ mutagen_enabled: false
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
+webimage_extra_packages: [ "make" ]
 nodejs_version: "16"
 
 # Key features of ddev's config.yaml:
@@ -254,7 +255,4 @@ omit_containers: [db, dba, ddev-ssh-agent]
 # See https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/ for more
 # information on the commands that can be extended and the tasks you can define
 # for them. Example:
-hooks:
-  post-start:
-    - exec: sudo apt -qq update
-    - exec: sudo apt -yqq install make
+#hooks:
