@@ -4,4 +4,5 @@
 ## Usage: behat [flags] [args]
 ## Example: "ddev behat" or "ddev behat -dl"
 
-bin/behat --stop-on-failure $@
+#bin/behat --stop-on-failure $@
+bin/behat $@
