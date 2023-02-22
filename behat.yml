@@ -1,20 +1,12 @@
 default:
-  autoload:
-    - "%paths.base%/features/bootstrap"
   suites:
     default:
+      paths:
+        - "%paths.base%/features/bootstrap"
+        - "%paths.base%/mk/tasks"
+        - "%paths.base%/mk/projects"
       contexts:
         - Drumkit\DrumkitContext
-        - Drupal\DrupalExtension\Context\DrupalContext
-        - Drupal\DrupalExtension\Context\MinkContext
-        - Drupal\DrupalExtension\Context\MessageContext
-        - Drupal\DrupalExtension\Context\DrushContext
-  extensions:
-    Behat\MinkExtension:
-      goutte: ~
-      selenium2: ~
-    Drupal\DrupalExtension:
-      blackbox: ~
   gherkin:
     filters:
       tags: "~@wip&&~@slow&&~@disabled&&~@noisy"
