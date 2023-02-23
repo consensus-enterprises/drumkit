@@ -11,8 +11,6 @@ Feature: Kubernetes Cluster
        init-k8s-cluster
        """
 
-
-  @wip
   Scenario: Initialize Kubernetes cluster configuration
     Given I bootstrap Drumkit
      When I run the Drumkit command "make init-k8s-cluster"
