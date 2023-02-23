@@ -3,15 +3,18 @@ include $(SELF_DIR)k8s_image/images.mk
 
 K8S_IMAGE_RESOURCES_DIR =.mk/mk/projects/k8s_image
 K8S_IMAGE_DIR = build/images
-K8S_IMAGE_DRUMKIT_PREFIX= 15_image
 
 K8S_IMAGE_TEMPLATE_VARS = \
     PROJECT_NAME=$(PROJECT_NAME) \
     DRUPAL_CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL)
 
+K8S_IMAGE_DRUMKIT_FILES = \
+    drumkit/mk.d/15_images.mk
+
 init-k8s-images: .init-k8s-images-intro
 init-k8s-images: init-k8s-base-image
 init-k8s-images: init-k8s-drupal-image
+init-k8s-images: $(K8S_IMAGE_DRUMKIT_FILES)
 
 .init-k8s-images-intro:
 	$(ECHO) ">>> $(WHITE)Creating images.$(RESET) <<<"
@@ -25,8 +28,7 @@ K8S_BASE_IMAGE_FILES = \
     $(K8S_IMAGE_DIR)/docker/Dockerfile.base \
     $(K8S_IMAGE_DIR)/scripts/apt.sh \
     $(K8S_IMAGE_DIR)/scripts/cleanup.sh \
-    $(K8S_IMAGE_DIR)/scripts/utils.sh \
-    drumkit/mk.d/$(K8S_IMAGE_DRUMKIT_PREFIX)_base.mk
+    $(K8S_IMAGE_DIR)/scripts/utils.sh
 
 init-k8s-base-image: $(K8S_BASE_IMAGE_FILES)
 init-k8s-base-image: ## Initialize configuration and Drumkit targets to create and manage base image.
@@ -48,8 +50,7 @@ K8S_DRUPAL_IMAGE_FILES = \
     $(K8S_IMAGE_DIR)/files/nginx.conf \
     $(K8S_IMAGE_DIR)/files/start-drupal.sh \
     web/sites/default/settings.php \
-    $(K8S_IMAGE_DIR)/docker/Dockerfile.drupal \
-    drumkit/mk.d/$(K8S_IMAGE_DRUMKIT_PREFIX)_drupal.mk
+    $(K8S_IMAGE_DIR)/docker/Dockerfile.drupal
 
 init-k8s-drupal-image: $(K8S_DRUPAL_IMAGE_FILES)
 init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create and manage Drupal image.
@@ -67,11 +68,11 @@ init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create
 	$(ECHO) "'build/images/files/install-drupal.sh'"
 	$(ECHO)
 
-################
-# Both images  #
-################
+##################################
+# Create image and Drumkit files #
+##################################
 
-$(K8S_DRUPAL_IMAGE_FILES) $(K8S_BASE_IMAGE_FILES):
+$(K8S_DRUPAL_IMAGE_FILES) $(K8S_BASE_IMAGE_FILES) $(K8S_IMAGE_DRUMKIT_FILES):
 	@$(make) .template \
         TEMPLATE_VARS=$(K8S_IMAGE_TEMPLATE_VARS) \
         TEMPLATE_SOURCE=$(K8S_IMAGE_RESOURCES_DIR)/$@ \

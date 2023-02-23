@@ -13,7 +13,6 @@ Feature: Image config initialization
       Creating file: 'build/images/scripts/apt.sh'.
       Creating file: 'build/images/scripts/cleanup.sh'.
       Creating file: 'build/images/scripts/utils.sh'.
-      Creating file: 'drumkit/mk.d/15_image_base.mk'.
       To alter the 'base' image, you will need to update
       'build/images/docker/Dockerfile.base', then run:
       'make docker-image-base'
@@ -27,7 +26,6 @@ Feature: Image config initialization
       Creating file: 'build/images/files/start-drupal.sh'.
       Creating file: 'web/sites/default/settings.php'.
       Creating file: 'build/images/docker/Dockerfile.drupal'.
-      Creating file: 'drumkit/mk.d/15_image_drupal.mk'.
 
       To alter the 'drupal' image, you will need to update
       'build/images/docker/Dockerfile.drupal', then run:
@@ -41,6 +39,8 @@ Feature: Image config initialization
 
       To change how Drupal is installed, you can update:
       'build/images/files/install-drupal.sh'
+
+      Creating file: 'drumkit/mk.d/15_images.mk'.
       """
       And the following files should exist:
       """
@@ -48,13 +48,12 @@ Feature: Image config initialization
       build/images/scripts/apt.sh
       build/images/scripts/cleanup.sh
       build/images/scripts/utils.sh
-      drumkit/mk.d/15_image_base.mk
       build/images/scripts/app.sh
       build/images/files/install-drupal.sh
       build/images/files/nginx.conf
       build/images/files/start-drupal.sh
       web/sites/default/settings.php
       build/images/docker/Dockerfile.drupal
-      drumkit/mk.d/15_image_drupal.mk
+      drumkit/mk.d/15_images.mk
       """
 
