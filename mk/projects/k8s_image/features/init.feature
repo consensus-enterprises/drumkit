@@ -9,6 +9,7 @@ Feature: Image config initialization
      When I run the Drumkit command "make init-k8s-images"
      Then I should get:
       """
+      Creating image configuration.
       Creating file: 'build/images/docker/Dockerfile.base'.
       Creating file: 'build/images/scripts/apt.sh'.
       Creating file: 'build/images/scripts/cleanup.sh'.

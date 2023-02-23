@@ -17,7 +17,7 @@ init-k8s-images: init-k8s-drupal-image
 init-k8s-images: $(K8S_IMAGE_DRUMKIT_FILES)
 
 .init-k8s-images-intro:
-	$(ECHO) ">>> $(WHITE)Creating images.$(RESET) <<<"
+	$(ECHO) ">>> $(WHITE)Creating image configuration.$(RESET) <<<"
 	$(ECHO)
 
 ##############
