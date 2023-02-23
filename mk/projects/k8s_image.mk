@@ -73,7 +73,7 @@ init-k8s-drupal-image: ## Initialize configuration and Drumkit targets to create
 
 $(K8S_DRUPAL_IMAGE_FILES) $(K8S_BASE_IMAGE_FILES):
 	@$(make) .template \
-        TEMPLATE_VARS=$(K8S_IMAGEE_VARS) \
+        TEMPLATE_VARS=$(K8S_IMAGE_TEMPLATE_VARS) \
         TEMPLATE_SOURCE=$(K8S_IMAGE_RESOURCES_DIR)/$@ \
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
