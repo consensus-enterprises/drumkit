@@ -1,7 +1,6 @@
-image: 
+image:
   name: registry.gitlab.com/consensus.enterprises/drumkit/php
   entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
-
 
 stages:
   - test
@@ -11,29 +10,45 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   DEBIAN_FRONTEND: noninteractive
 
-fast-tests: &test-defaults
+new-tests:
   stage: test
-  script:
-    - source d
-    - make clean-ansible  # Clean up Ansible config from Drumkit itself.
-    - make run-behat-ci
-
-slow-tests:
-  <<: *test-defaults
+  image:
+    #name: drud/ddev-webserver:v1.21.2
+    name: drud/ddev-webserver:v1.19.0
+    entrypoint: [""] # See above
   variables:
-    BEHAT_CI_TAGS: '@slow&&~@wip'
-
-# This test will fail (on purpose), in order to test that failure notifications are sent.
-noisy-tests:
-  <<: *test-defaults
-  variables:
-    NOTIFY_CI_MESSAGE: Notification test; safe to ignore failures.
+    DDEV_PHP_VERSION: '8.1'
   script:
-    - source d
-    - BEHAT_CI_TAGS=success make run-behat-ci
-    - BEHAT_CI_TAGS=failure make run-behat-ci
-  when: manual
-  allow_failure: true
+      # Set version of PHP
+    - update-alternatives --set php /usr/bin/php${DDEV_PHP_VERSION}
+#    - source d
+    - apt -yqq update; apt -yqq install make
+    - composer install
+    - bin/behat --colors --stop-on-failure
+
+#fast-tests: &test-defaults
+#  stage: test
+#  script:
+#    - source d
+#    - make clean-ansible  # Clean up Ansible config from Drumkit itself.
+#    - make run-behat-ci
+#
+#slow-tests:
+#  <<: *test-defaults
+#  variables:
+#    BEHAT_CI_TAGS: '@slow&&~@wip'
+#
+## This test will fail (on purpose), in order to test that failure notifications are sent.
+#noisy-tests:
+#  <<: *test-defaults
+#  variables:
+#    NOTIFY_CI_MESSAGE: Notification test; safe to ignore failures.
+#  script:
+#    - source d
+#    - BEHAT_CI_TAGS=success make run-behat-ci
+#    - BEHAT_CI_TAGS=failure make run-behat-ci
+#  when: manual
+#  allow_failure: true
 
 pages:
   stage: publish
