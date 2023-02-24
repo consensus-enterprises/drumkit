@@ -34,4 +34,4 @@ RED        = $(strip $(call make_color,124))
 WHITE      = $(strip $(call make_color,255))
 YELLOW     = $(strip $(call make_color,94))
 CYAN       = $(strip $(call make_color,6))
-
+ORANGE     = $(strip $(call make_color,208))
