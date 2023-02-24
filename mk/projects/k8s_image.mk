@@ -15,6 +15,7 @@ init-k8s-images: .init-k8s-images-intro
 init-k8s-images: init-k8s-base-image
 init-k8s-images: init-k8s-drupal-image
 init-k8s-images: $(K8S_IMAGE_DRUMKIT_FILES)
+init-k8s-images: ## Initialize configuration and Drumkit targets to create and manage Docker images.
 
 .init-k8s-images-intro:
 	$(ECHO) ">>> $(WHITE)Creating image configuration.$(RESET) <<<"

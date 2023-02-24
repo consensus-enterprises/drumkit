@@ -4,8 +4,17 @@ Feature: Image config initialization
   As a devops engineer
   I need to be able to initialize Docker image config.
 
-  Scenario: Initialize Docker image configuration.
+  Background:
     Given I bootstrap a clean Drumkit environment
+
+  Scenario: Ensure docker image config initialization target exists
+     When I run "make"
+     Then I should get:
+      """
+      init-k8s-images
+      """
+
+  Scenario: Initialize Docker image configuration.
      When I run the Drumkit command "make init-k8s-images"
      Then I should get:
       """

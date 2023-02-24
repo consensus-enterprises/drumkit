@@ -6,9 +6,18 @@ Feature: Clean up Docker image makefiles, config and scripts.
 
   Background:
     Given I bootstrap a clean Drumkit environment
-      And I run the Drumkit command "make init-k8s-images"
+
+  Scenario: Ensure clean-k8s-images target is defined.
+     When I run "make"
+     Then I should get:
+      """
+      clean-k8s-images
+      """
+
+  Scenario: Remove project makefiles.
+    Given I run the Drumkit command "make init-k8s-images"
       And the following files should exist:
-      """ 
+      """
       build/images/docker/Dockerfile.base
       build/images/scripts/apt.sh
       build/images/scripts/cleanup.sh
@@ -21,11 +30,9 @@ Feature: Clean up Docker image makefiles, config and scripts.
       build/images/docker/Dockerfile.drupal
       drumkit/mk.d/15_images.mk
       """
-
-  Scenario: Remove project makefiles.
      When I run the Drumkit command "make clean-k8s-images"
      Then I should get:
-      """ 
+      """
       Removing file: 'build/images/docker/Dockerfile.base'.
       Removing file: 'build/images/scripts/apt.sh'.
       Removing file: 'build/images/scripts/cleanup.sh'.
@@ -38,7 +45,7 @@ Feature: Clean up Docker image makefiles, config and scripts.
       Removing file: 'build/images/docker/Dockerfile.drupal'.
       """
       And the following files should not exist:
-      """ 
+      """
       build/images/docker/Dockerfile.base
       build/images/scripts/apt.sh
       build/images/scripts/cleanup.sh
