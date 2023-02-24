@@ -57,7 +57,7 @@ init-k8s-drupal-app: ## Initialize configuration and Drumkit targets to create a
 	$(ECHO) "'build/app/base/app-variables.yaml'"
 	$(ECHO)
 	$(ECHO) "Automatic HTTPS certificate generation is now enabled using"
-	$(ECHO) "the Let's Encrypt Staging server. You can switch this to production in 
+	$(ECHO) "the Let's Encrypt Staging server. You can switch this to production in"
 	$(ECHO) "'build/app/base/ingress-service.yaml'"
 	$(ECHO)
 	$(ECHO) "You should update the documentation in the following files to reflect"
@@ -100,6 +100,15 @@ $(K8S_DRUPAL_APP_DRUMKIT_FILES):
         TEMPLATE_SOURCE=$(K8S_DRUPAL_APP_RESOURCES_DIR)/$(@D)/$(K8S_DRUPAL_APP_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_DEFAULT_NAME).mk \
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
+
+.clean-k8s-drupal-app-intro:
+	$(ECHO) ">>> $(WHITE)Cleaning up configuration and Drumkit targets for managing Kubernetes drupal-apps.$(RESET) <<<"
+	$(ECHO)
+
+clean-k8s-drupal-app: .clean-k8s-drupal-app-intro
+clean-k8s-drupal-app: ## Remove configuration and Drumkit targets for managing Drupal apps on Kubernetes.
+	@$(make) .remove \
+        FILES_TO_REMOVE="$(K8S_DRUPAL_APP_FILES) $(K8S_DRUPAL_APP_TEMPLATE_FILES) $(K8S_DRUPAL_APP_DRUMKIT_FILES)"
 
 generate-encoded-drupal-hash-salt: ## Generate a hash salt for Drupal, and base64 encode it, for use in `app-secrets.yaml`.
 	$(ECHO) -n `ddev drush php-eval 'echo \Drupal\Component\Utility\Crypt::randomBytesBase64(55) . "\n";'` | base64
