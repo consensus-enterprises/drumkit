@@ -5,7 +5,7 @@ Feature: Install Kubernetes tools locally
   I need to be able run minikube
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove minikube
     When I run "make clean-minikube"

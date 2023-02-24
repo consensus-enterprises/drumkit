@@ -5,7 +5,7 @@ Feature: Install Go apps locally
   I need to be able to install Go apps
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove Hugo
     When I run "make clean-hugo"

@@ -5,7 +5,7 @@ Feature: Install Behat locally
   I need to be able run Behat
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove Behat
     When I run "make clean-behat"

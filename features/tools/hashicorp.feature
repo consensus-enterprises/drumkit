@@ -5,7 +5,7 @@ Feature: Install Hashicorp tools locally
   I need to be able run packer
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove packer
     When I run "make clean-packer"

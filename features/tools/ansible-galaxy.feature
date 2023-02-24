@@ -5,7 +5,7 @@ Feature: Install Ansible Galaxy locally
   I need to be able run Ansible Galaxy
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove Ansible Galaxy
     When I run "make clean-ansible-galaxy"

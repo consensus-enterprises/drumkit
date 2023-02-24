@@ -5,7 +5,7 @@ Feature: Install Composer locally
   I need to be able run Composer
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove Composer
     When I run "make clean-composer"

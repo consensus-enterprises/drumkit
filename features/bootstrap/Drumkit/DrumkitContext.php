@@ -61,7 +61,7 @@ class DrumkitContext extends TerminalContext implements SnippetAcceptingContext 
   }
 
   /**
-   * @Given I bootstrap a clean drumkit environment
+   * @Given I bootstrap a clean Drumkit environment
    */
   public function iBootstrapACleanDrumkitEnvironment()
   {
@@ -72,7 +72,7 @@ class DrumkitContext extends TerminalContext implements SnippetAcceptingContext 
   }
 
   /**
-   * @Given I bootstrap drumkit
+   * @Given I bootstrap Drumkit
    */
   public function iBootstrapDrumkit()
   {

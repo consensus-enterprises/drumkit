@@ -5,7 +5,7 @@ Feature: Install mustache locally
   I need to be able run mustache
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove mustache
     When I run "make clean-mustache"

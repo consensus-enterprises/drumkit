@@ -5,7 +5,7 @@ Feature: Install Drush locally
   I need to be able run Drush
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove Drush
     When I run "make clean-drush"

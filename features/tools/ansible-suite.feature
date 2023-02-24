@@ -5,7 +5,7 @@ Feature: Install Ansible and related tools locally
   I need to be able run Ansible
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   Scenario: Remove Ansible
     When I run "make clean-ansible"

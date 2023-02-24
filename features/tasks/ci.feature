@@ -5,7 +5,7 @@ Feature: Run CI
   I need to be able run Behat in CI
 
   Background:
-    Given I bootstrap a clean drumkit environment
+    Given I bootstrap a clean Drumkit environment
 
   @slow
   Scenario: Install behat when running CI, unless it is already installed.
