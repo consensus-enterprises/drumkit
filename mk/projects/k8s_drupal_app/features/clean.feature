@@ -1,5 +1,5 @@
 @k8s @clean-k8s-drupal-app
-Feature: Clean up Docker image makefiles, config and scripts.
+Feature: Clean up Drupal app makefiles, config and scripts.
   In order to update Drupal apps on Kubernetes clusters,
   As a developer
   I need to be able to remove configuration and Drumkit targets that create and manage Drupal apps on Kubernetes clusters.
