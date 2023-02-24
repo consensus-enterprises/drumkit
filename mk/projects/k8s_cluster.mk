@@ -87,3 +87,12 @@ $(K8S_CLUSTER_DRUMKIT_FILES):
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
 
+.clean-k8s-cluster-intro:
+	$(ECHO) ">>> $(WHITE)Cleaning up configuration and Drumkit targets for managing Kubernetes clusters.$(RESET) <<<"
+	$(ECHO)
+
+clean-k8s-cluster: .clean-k8s-cluster-intro
+clean-k8s-cluster: ## Remove configuration and Drumkit targets for managing Kubernetes clusters.
+	@$(make) .remove \
+        FILES_TO_REMOVE="$(K8S_CLUSTER_FILES) $(K8S_CLUSTER_TEMPLATE_FILES) $(K8S_CLUSTER_SYMLINKS) $(K8S_CLUSTER_DRUMKIT_FILES)"
+
