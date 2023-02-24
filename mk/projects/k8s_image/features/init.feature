@@ -1,11 +1,11 @@
-@k8s @k8s-init-images
+@k8s @init-k8s-images
 Feature: Image config initialization
   In order to build Docker images for Drupal apps on Kubernetes
   As a devops engineer
   I need to be able to initialize Docker image config.
 
   Scenario: Initialize Docker image configuration.
-    Given I bootstrap Drumkit
+    Given I bootstrap a clean Drumkit environment
      When I run the Drumkit command "make init-k8s-images"
      Then I should get:
       """

@@ -78,3 +78,13 @@ $(K8S_DRUPAL_IMAGE_FILES) $(K8S_BASE_IMAGE_FILES) $(K8S_IMAGE_DRUMKIT_FILES):
         TEMPLATE_SOURCE=$(K8S_IMAGE_RESOURCES_DIR)/$@ \
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
+
+.clean-k8s-images-intro:
+	$(ECHO) ">>> $(WHITE)Cleaning up Docker image makefiles, config and scripts.$(RESET) <<<"
+	$(ECHO)
+
+clean-k8s-images: .clean-k8s-images-intro
+clean-k8s-images: ## Remove makefiles, config and scripts for Kubernetes Docker images.
+	@$(make) .remove \
+        FILES_TO_REMOVE="$(K8S_BASE_IMAGE_FILES) $(K8S_DRUPAL_IMAGE_FILES) $(K8S_IMAGE_DRUMKIT_FILES)"
+
