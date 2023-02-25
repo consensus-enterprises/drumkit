@@ -83,9 +83,21 @@ class DrumkitContext extends TerminalContext implements SnippetAcceptingContext 
 
   public function iInitializeDrumkit()
   {
+    $this->initializeTypicalGitRepo();
     $this->iRun("echo 'include .mk/GNUmakefile' > Makefile");
-    $this->iRun("git init");
     $this->iRun("make init-drumkit");
+  }
+
+  /**
+   * Initialize typical a Git repo.
+   */
+  public function initializeTypicalGitRepo()
+  {
+    $this->iRun("git init");
+    $this->iRun("git config user.email 'you@example.com'");
+    $this->iRun("git config user.name 'Your Name'");
+    $this->iRun("git add .");
+    $this->iRun("git commit -m'Initial commit.'");
   }
 
   /**
