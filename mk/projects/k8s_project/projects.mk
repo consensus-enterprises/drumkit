@@ -1,12 +1,5 @@
 BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
 
-.confirm-proceed:
-	if [ $$CONFIRM == 'y' ]; then \
-            echo -e "CONFIRM variable set. Proceeding without confirmation prompt." ; \
-        else \
-            echo -e -n "Proceed? [y/N] " && read ans && [ $${ans:-N} = y ] ; \
-        fi
-
 .k8s-init-branch-environment:
 	$(ECHO) "Setting up an environment for branch $(BRANCH_NAME)."
 	@$(make) init-k8s-environment \
