@@ -26,26 +26,16 @@ Feature: New environment to test a branch.
     Given I run "git checkout -b test-branch"
       And I run "git add ."
       And I run "git commit -m'Initial commit.'"
+      And I run "echo PROJECT_NAME=test-project >> Makefile"
+      And I run "echo CLIENT_NAME=test-client >> Makefile"
       And I run the Drumkit command "make init-k8s-project"
      When I run the Drumkit command "make new-branch-environment CONFIRM=y"
      Then I should get:
       """
       Setting up an environment for branch test-branch.
-
       Creating 'test-branch' environment.
-      Creating file: 'build/environments/test-branch/kustomization.yaml'.
-      Creating file: 'build/environments/test-branch/namespace.yaml'.
-      Creating file: 'drumkit/mk.d/35_environment_test-branch.mk'.
-
       Creating Drupal app.
-      Creating file: 'build/app/test-branch/app-secrets.yaml'.
-      Creating file: 'build/app/test-branch/app-variables.patch.yaml'.
-      Creating file: 'build/app/test-branch/ingress-service.patch.yaml'.
-      Creating file: 'build/app/test-branch/kustomization.yaml'.
-      Creating file: 'drumkit/mk.d/45_drupal_app_test-branch.mk'.
-
-      You must update database and admin passwords in
-      'build/app/test-branch/app-secrets.yaml'
+      Creating file: 'build/app/test-branch/component-drupal.patch.yaml'.
 
       Next step, run: make test-branch-create-environment
       """
@@ -56,8 +46,18 @@ Feature: New environment to test a branch.
       drumkit/mk.d/35_environment_test-branch.mk
       build/app/test-branch/app-secrets.yaml
       build/app/test-branch/app-variables.patch.yaml
+      build/app/test-branch/component-drupal.patch.yaml
+      build/app/test-branch/job-install-drupal.patch.yaml
       build/app/test-branch/ingress-service.patch.yaml
       build/app/test-branch/kustomization.yaml
       drumkit/mk.d/45_drupal_app_test-branch.mk
       build/app/test-branch/app-secrets.yaml
+      """
+      And the file "build/app/test-branch/component-drupal.patch.yaml" should contain:
+      """
+      image: registry.gitlab.com/consensus.enterprises/clients/test-client/test-project/drupal:test-branch
+      """
+      And the file "build/app/test-branch/job-install-drupal.patch.yaml" should contain:
+      """
+      image: registry.gitlab.com/consensus.enterprises/clients/test-client/test-project/drupal:test-branch
       """
