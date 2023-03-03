@@ -28,7 +28,9 @@ Feature: Clean up Drupal app makefiles, config and scripts.
       build/app/base/registry-credentials.yaml
       build/app/DEV/app-secrets.yaml
       build/app/DEV/app-variables.patch.yaml
+      build/app/DEV/component-drupal.patch.yaml
       build/app/DEV/ingress-service.patch.yaml
+      build/app/DEV/job-install-drupal.patch.yaml
       build/app/DEV/kustomization.yaml
       drumkit/mk.d/45_drupal_app_DEV.mk
       """
@@ -45,7 +47,9 @@ Feature: Clean up Drupal app makefiles, config and scripts.
       Removing file: 'build/app/base/registry-credentials.yaml'.
       Removing file: 'build/app/DEV/app-secrets.yaml'.
       Removing file: 'build/app/DEV/app-variables.patch.yaml'.
+      Removing file: 'build/app/DEV/component-drupal.patch.yaml'.
       Removing file: 'build/app/DEV/ingress-service.patch.yaml'.
+      Removing file: 'build/app/DEV/job-install-drupal.patch.yaml'.
       Removing file: 'build/app/DEV/kustomization.yaml'.
       Removing file: 'drumkit/mk.d/45_drupal_app_DEV.mk'.
       """
@@ -61,7 +65,9 @@ Feature: Clean up Drupal app makefiles, config and scripts.
       build/app/base/registry-credentials.yaml
       build/app/DEV/app-secrets.yaml
       build/app/DEV/app-variables.patch.yaml
+      build/app/DEV/component-drupal.patch.yaml
       build/app/DEV/ingress-service.patch.yaml
+      build/app/DEV/job-install-drupal.patch.yaml
       build/app/DEV/kustomization.yaml
       drumkit/mk.d/45_drupal_app_DEV.mk
       """

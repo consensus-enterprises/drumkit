@@ -9,7 +9,9 @@ resources:
 
 patchesStrategicMerge:
   - app-variables.patch.yaml
+  - component-drupal.patch.yaml
   - ingress-service.patch.yaml
+  - job-install-drupal.patch.yaml
 
 patchesJson6902:
 - target:
