@@ -68,7 +68,7 @@ $(TF_CLUSTER_DIR)/.terraform.lock.hcl: .mk/.local/bin/terraform
 	@$(kubectl) config set-credentials admin --token=$(K8S_TOKEN)
 
 # Switch to the specified cluster's kubeconfig.
-.k8s-use-cluster:
+.k8s-use-cluster: $(KUBECONFIG_DIR)
 	$(ECHO) "$(YELLOW)Switching to '$(K8S_CLUSTER_NAME)' cluster.$(RESET)"
 	@ln -sf config-$(K8S_CLUSTER_NAME) $(KUBECONFIG)
 
