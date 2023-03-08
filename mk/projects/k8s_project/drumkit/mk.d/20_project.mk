@@ -10,3 +10,6 @@ build-branch-image: ##@{{ PROJECT_NAME }} Build a test Drupal Docker image using
 
 refresh: ##@{{ PROJECT_NAME }} Update the environment for the current branch with the latest changes.
 	@$(make) .refresh-branch-environment
+
+clean-branch-environment: ##@{{ PROJECT_NAME }} Delete environment and app resources for the current branch.
+	@$(make) .clean-branch-environment

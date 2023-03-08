@@ -40,3 +40,20 @@ BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
 .build-branch-image: .confirm-proceed
 .build-branch-image: ## Build a test Drupal Docker image using the current branch.
 	@DOCKER_IMAGE_TAG=$(BRANCH_NAME) $(make) docker-image-drupal
+
+.k8s-clean-branch-environment:
+	@$(make) clean-k8s-environment \
+            K8S_ENVIRONMENT_NAME=$(BRANCH_NAME)
+	@$(make) clean-k8s-drupal-app \
+            K8S_DRUPAL_APP_IMAGE_TAG=$(BRANCH_NAME) \
+            K8S_ENVIRONMENT_NAME=$(BRANCH_NAME)
+
+.clean-branch-environment-intro:
+	$(ECHO) "You are about to delete the branch environment for: '$(BRANCH_NAME)'."
+
+.clean-branch-environment: .clean-branch-environment-intro
+.clean-branch-environment: .confirm-proceed
+.clean-branch-environment: # Create a new environment for the current branch.
+#	$(make) $(BRANCH_NAME)-delete-app
+#	$(make) $(BRANCH_NAME)-delete-environment
+	$(make) .k8s-clean-branch-environment

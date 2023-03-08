@@ -64,12 +64,21 @@ $(K8S_ENVIRONMENT_DRUMKIT_FILES):
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
 
-.clean-k8s-environment-intro:
+.clean-k8s-environments-intro:
 	$(ECHO) ">>> $(WHITE)Cleaning up configuration and Drumkit targets for managing Kubernetes environments.$(RESET) <<<"
 	$(ECHO)
 
-clean-k8s-environment: .clean-k8s-environment-intro
-clean-k8s-environment: ## Remove configuration and Drumkit targets for managing Kubernetes environments.
+clean-k8s-environments: .clean-k8s-environments-intro
+clean-k8s-environments: ## Remove configuration and Drumkit targets for managing Kubernetes environments.
 	@$(make) .remove \
         FILES_TO_REMOVE="$(K8S_ENVIRONMENT_FILES) $(K8S_ENVIRONMENT_TEMPLATE_FILES) $(K8S_ENVIRONMENT_DRUMKIT_FILES)"
 
+.clean-k8s-environment-intro:
+	$(ECHO) ">>> $(WHITE)You are about to delete resources for managing the $(K8S_EVIRONMENT_NAME) Kubernetes environment.$(RESET) <<<"
+	$(ECHO)
+
+clean-k8s-environment: .clean-k8s-environment-intro
+clean-k8s-environment: confirm
+clean-k8s-environment: ## [K8S_ENVIRONMENT_NAME] Remove configuration and Drumkit targets for managing a particular Kubernetes environment.
+	@$(make) .remove \
+        FILES_TO_REMOVE="$(K8S_ENVIRONMENT_TEMPLATE_FILES) $(K8S_ENVIRONMENT_DRUMKIT_FILES)"
