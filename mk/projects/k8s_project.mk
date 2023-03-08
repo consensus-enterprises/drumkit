@@ -1,5 +1,6 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(SELF_DIR)k8s_project/projects.mk
+include $(SELF_DIR)k8s_project/drupal_projects.mk
 
 K8S_PROJECT_TEMPLATE_VARS = \
     PROJECT_NAME=$(PROJECT_NAME) \
