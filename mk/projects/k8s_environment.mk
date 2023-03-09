@@ -1,9 +1,10 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(SELF_DIR)k8s_environment/environments.mk
 
-K8S_ENVIRONMENT_DEFAULT_NAME = DEV
+# TODO #124: change this to DEFAULT or similar to avoid confusion:
+K8S_ENVIRONMENT_DEFAULT_NAME=DEV
+
 K8S_ENVIRONMENT_RESOURCES_DIR =.mk/mk/projects/k8s_environment
-K8S_ENVIRONMENT_NAME  ?= $(K8S_ENVIRONMENT_DEFAULT_NAME)
 K8S_ENVIRONMENT_TEMPLATE_DIR  = $(K8S_ENVIRONMENT_RESOURCES_DIR)/$(K8S_ENVIRONMENT_DIR)/$(K8S_ENVIRONMENT_DEFAULT_NAME)
 K8S_ENVIRONMENT_DIR = build/environments
 K8S_ENVIRONMENT_DRUMKIT_PREFIX= 35_environment
@@ -14,7 +15,7 @@ K8S_ENVIRONMENT_TEMPLATE_VARS = \
     ENVIRONMENT_NAME_LC=$(call lc,$(K8S_ENVIRONMENT_NAME)) \
     CLUSTER_NAME=$(K8S_CLUSTER_NAME)
 
-K8S_ENVIRONMENT_FILES = \
+K8S_BASE_ENVIRONMENT_FILES = \
     $(K8S_ENVIRONMENT_DIR)/base/kustomization.yaml \
     $(K8S_ENVIRONMENT_DIR)/base/storage_data.yaml \
     $(K8S_ENVIRONMENT_DIR)/base/storage_files.yaml
@@ -26,8 +27,15 @@ K8S_ENVIRONMENT_TEMPLATE_FILES = \
 K8S_ENVIRONMENT_DRUMKIT_FILES= \
     drumkit/mk.d/$(K8S_ENVIRONMENT_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_NAME).mk
 
+.checkvar-%:
+	@if [ "${${*}}" = "" ]; then \
+        echo "Variable $* not set"; \
+        exit 1; \
+    fi
+
+init-k8s-environment: .checkvar-K8S_ENVIRONMENT_NAME
 init-k8s-environment: .init-k8s-environment-intro
-init-k8s-environment: $(K8S_ENVIRONMENT_FILES)
+init-k8s-environment: $(K8S_BASE_ENVIRONMENT_FILES)
 init-k8s-environment: $(K8S_ENVIRONMENT_TEMPLATE_FILES)
 init-k8s-environment: $(K8S_ENVIRONMENT_DRUMKIT_FILES)
 init-k8s-environment: ## Initialize configuration and Drumkit targets to create and manage environments on Kubernetes clusters.
@@ -44,13 +52,13 @@ init-k8s-environment: ## Initialize configuration and Drumkit targets to create 
 	$(ECHO)
 
 $(K8S_ENVIRONMENT_TEMPLATE_FILES):
-	@$(make) .template \
+	$(make) .template \
         TEMPLATE_VARS=$(K8S_ENVIRONMENT_TEMPLATE_VARS) \
         TEMPLATE_SOURCE=$(K8S_ENVIRONMENT_TEMPLATE_DIR)/$(@F) \
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
 
-$(K8S_ENVIRONMENT_FILES):
+$(K8S_BASE_ENVIRONMENT_FILES):
 	@$(make) .template \
         TEMPLATE_VARS=$(K8S_ENVIRONMENT_TEMPLATE_VARS) \
         TEMPLATE_SOURCE=$(K8S_ENVIRONMENT_RESOURCES_DIR)/$@ \
@@ -71,14 +79,14 @@ $(K8S_ENVIRONMENT_DRUMKIT_FILES):
 clean-k8s-environments: .clean-k8s-environments-intro
 clean-k8s-environments: ## Remove configuration and Drumkit targets for managing Kubernetes environments.
 	@$(make) .remove \
-        FILES_TO_REMOVE="$(K8S_ENVIRONMENT_FILES) $(K8S_ENVIRONMENT_TEMPLATE_FILES) $(K8S_ENVIRONMENT_DRUMKIT_FILES)"
+        FILES_TO_REMOVE="$(K8S_ENVIRONMENT_TEMPLATE_FILES) $(K8S_ENVIRONMENT_DRUMKIT_FILES)"
 
 .clean-k8s-environment-intro:
 	$(ECHO) ">>> $(WHITE)You are about to delete resources for managing the $(K8S_EVIRONMENT_NAME) Kubernetes environment.$(RESET) <<<"
 	$(ECHO)
 
 clean-k8s-environment: .clean-k8s-environment-intro
-clean-k8s-environment: confirm
+clean-k8s-environment: .confirm-proceed
 clean-k8s-environment: ## [K8S_ENVIRONMENT_NAME] Remove configuration and Drumkit targets for managing a particular Kubernetes environment.
 	@$(make) .remove \
         FILES_TO_REMOVE="$(K8S_ENVIRONMENT_TEMPLATE_FILES) $(K8S_ENVIRONMENT_DRUMKIT_FILES)"
