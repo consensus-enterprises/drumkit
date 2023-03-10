@@ -27,12 +27,6 @@ K8S_ENVIRONMENT_TEMPLATE_FILES = \
 K8S_ENVIRONMENT_DRUMKIT_FILES= \
     drumkit/mk.d/$(K8S_ENVIRONMENT_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_NAME).mk
 
-.checkvar-%:
-	@if [ "${${*}}" = "" ]; then \
-        echo "Variable $* not set"; \
-        exit 1; \
-    fi
-
 init-k8s-environment: .checkvar-K8S_ENVIRONMENT_NAME
 init-k8s-environment: .init-k8s-environment-intro
 init-k8s-environment: $(K8S_BASE_ENVIRONMENT_FILES)
