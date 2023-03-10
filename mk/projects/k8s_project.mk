@@ -17,6 +17,7 @@ $(K8S_PROJECT_DRUMKIT_FILES):
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
 
+init-k8s-project: .checkvar-PROJECT_NAME
 init-k8s-project: .init-k8s-project-intro
 init-k8s-project: $(K8S_PROJECT_DRUMKIT_FILES)
 init-k8s-project: ## Initialize Drumkit targets to manage a Drupal project on Kubernetes.

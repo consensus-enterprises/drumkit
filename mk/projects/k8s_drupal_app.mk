@@ -2,9 +2,7 @@ SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(SELF_DIR)k8s_drupal_app/drupal-apps.mk
 
 K8S_DRUPAL_APP_RESOURCES_DIR =.mk/mk/projects/k8s_drupal_app
-K8S_DRUPAL_APP_TEMPLATE_DIR  = $(K8S_DRUPAL_APP_RESOURCES_DIR)/$(K8S_DRUPAL_APP_DIR)/$(K8S_ENVIRONMENT_DEFAULT_NAME)
-# TODO #124: Why were we doing this?
-#K8S_ENVIRONMENT_NAME := DEV
+K8S_DRUPAL_APP_TEMPLATE_DIR  = $(K8S_DRUPAL_APP_RESOURCES_DIR)/$(K8S_DRUPAL_APP_DIR)/$(K8S_ENVIRONMENT_TEMPLATE_NAME)
 K8S_HOSTING_DEFAULT_DOMAIN = aegir.dev
 K8S_HOSTING_DOMAIN := $(K8S_HOSTING_DEFAULT_DOMAIN)
 K8S_HOSTING_DEFAULT_EMAIL_DOMAIN ?= consensus.enterprises
@@ -26,7 +24,7 @@ K8S_DRUPAL_APP_TEMPLATE_VARS = \
     DRUPAL_CONTAINER_REGISTRY_URL=$(K8S_DRUPAL_CONTAINER_REGISTRY_URL) \
     DRUPAL_CONTAINER_IMAGE_TAG=$(K8S_DRUPAL_APP_IMAGE_TAG)
 
-K8S_DRUPAL_APP_FILES = \
+K8S_DRUPAL_APP_BASE_FILES = \
     $(K8S_DRUPAL_APP_DIR)/base/app-variables.yaml \
     $(K8S_DRUPAL_APP_DIR)/base/cert-manager.yaml \
     $(K8S_DRUPAL_APP_DIR)/base/component-drupal.yaml \
@@ -47,8 +45,9 @@ K8S_DRUPAL_APP_TEMPLATE_FILES = \
 K8S_DRUPAL_APP_DRUMKIT_FILES= \
     drumkit/mk.d/$(K8S_DRUPAL_APP_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_NAME).mk
 
+init-k8s-drupal-app: .checkvar-K8S_ENVIRONMENT_NAME
 init-k8s-drupal-app: .init-k8s-drupal-app-intro
-init-k8s-drupal-app: $(K8S_DRUPAL_APP_FILES)
+init-k8s-drupal-app: $(K8S_DRUPAL_APP_BASE_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_TEMPLATE_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_DRUMKIT_FILES)
 init-k8s-drupal-app: ## Initialize configuration and Drumkit targets to create and manage Drupal apps on Kubernetes clusters.
@@ -93,7 +92,7 @@ $(K8S_DRUPAL_APP_TEMPLATE_FILES):
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
 
-$(K8S_DRUPAL_APP_FILES):
+$(K8S_DRUPAL_APP_BASE_FILES):
 	@$(make) .template \
         TEMPLATE_VARS=$(K8S_DRUPAL_APP_TEMPLATE_VARS) \
         TEMPLATE_SOURCE=$(K8S_DRUPAL_APP_RESOURCES_DIR)/$@ \
@@ -103,7 +102,7 @@ $(K8S_DRUPAL_APP_FILES):
 $(K8S_DRUPAL_APP_DRUMKIT_FILES):
 	@$(make) .template \
         TEMPLATE_VARS=$(K8S_DRUPAL_APP_TEMPLATE_VARS) \
-        TEMPLATE_SOURCE=$(K8S_DRUPAL_APP_RESOURCES_DIR)/$(@D)/$(K8S_DRUPAL_APP_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_DEFAULT_NAME).mk \
+        TEMPLATE_SOURCE=$(K8S_DRUPAL_APP_RESOURCES_DIR)/$(@D)/$(K8S_DRUPAL_APP_DRUMKIT_PREFIX)_$(K8S_ENVIRONMENT_TEMPLATE_NAME).mk \
         TEMPLATE_TARGETDIR=$(@D) \
         TEMPLATE_TARGET=$@
 
@@ -111,10 +110,11 @@ $(K8S_DRUPAL_APP_DRUMKIT_FILES):
 	$(ECHO) ">>> $(WHITE)Cleaning up configuration and Drumkit targets for managing Kubernetes drupal-apps.$(RESET) <<<"
 	$(ECHO)
 
+clean-k8s-drupal-app: .checkvar-K8S_ENVIRONMENT_NAME
 clean-k8s-drupal-app: .clean-k8s-drupal-app-intro
 clean-k8s-drupal-app: ## Remove configuration and Drumkit targets for managing Drupal apps on Kubernetes.
 	@$(make) .remove \
-        FILES_TO_REMOVE="$(K8S_DRUPAL_APP_FILES) $(K8S_DRUPAL_APP_TEMPLATE_FILES) $(K8S_DRUPAL_APP_DRUMKIT_FILES)"
+        FILES_TO_REMOVE="$(K8S_DRUPAL_APP_TEMPLATE_FILES) $(K8S_DRUPAL_APP_DRUMKIT_FILES)"
 
 generate-encoded-drupal-hash-salt: ## Generate a hash salt for Drupal, and base64 encode it, for use in `app-secrets.yaml`.
 	$(ECHO) -n `ddev drush php-eval 'echo \Drupal\Component\Utility\Crypt::randomBytesBase64(55) . "\n";'` | base64

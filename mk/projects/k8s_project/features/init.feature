@@ -14,8 +14,15 @@ Feature: Initialize Kubernetes project makefiles.
       init-k8s-project
       """
 
+  Scenario: Fail without project name.
+	 When I fail to run "make init-k8s-project"
+     Then I should get:
+      """
+      Variable PROJECT_NAME not set
+      """
+
   Scenario: Initialize project makefiles.
-     When I run the Drumkit command "make init-k8s-project"
+     When I run the Drumkit command "make init-k8s-project PROJECT_NAME=foobar"
      Then I should get:
       """
       Creating project makefiles.

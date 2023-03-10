@@ -15,7 +15,7 @@ Feature: Clean up project makefiles.
       """
 
   Scenario: Remove project makefiles.
-    Given I run the Drumkit command "make init-k8s-project"
+    Given I run the Drumkit command "make init-k8s-project PROJECT_NAME=foo"
       And the following files should exist:
       """
       drumkit/mk.d/20_project.mk

@@ -53,7 +53,7 @@ BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
 
 .clean-branch-environment: .clean-branch-environment-intro
 .clean-branch-environment: .confirm-proceed
-.clean-branch-environment: # Create a new environment for the current branch.
+.clean-branch-environment: # Delete environment and app config for the current branch.
 #	$(make) $(BRANCH_NAME)-delete-app
 #	$(make) $(BRANCH_NAME)-delete-environment
 	$(make) .k8s-clean-branch-environment

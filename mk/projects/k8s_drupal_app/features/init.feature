@@ -14,8 +14,15 @@ Feature: Image config initialization
       init-k8s-drupal-app
       """
 
+  Scenario: Fail without environment name.
+	 When I fail to run "make init-k8s-drupal-app"
+     Then I should get:
+      """
+      Variable K8S_ENVIRONMENT_NAME not set
+      """
+
   Scenario: Initialize Drupal app configuration.
-     When I run the Drumkit command "make init-k8s-drupal-app"
+     When I run the Drumkit command "make init-k8s-drupal-app K8S_ENVIRONMENT_NAME=DEV"
      Then I should get:
       """
       Creating Drupal app.
