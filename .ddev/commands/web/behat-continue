@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Description: Run Behat inside its container, and ignore failures.
+## Usage: behat-continue [flags] [args]
+## Example: "ddev behat-continue" or "ddev behat-continue -dl"
+
+bin/behat $@;
