@@ -10,7 +10,7 @@ drumkit $(MK_D) $(BOOTSTRAP_D):
 d:
 	@ln -s .mk/d .
 
-BOOTSTRAP_FILES = $(shell cd .mk/ && ls $(BOOTSTRAP_D)/*)
+BOOTSTRAP_FILES = $(shell if [[ -d .mk ]];then cd .mk/; fi && ls $(BOOTSTRAP_D)/*)
 $(BOOTSTRAP_FILES):
 	@ln -s ../../.mk/$@ $@
 init-drumkit: d $(MK_D) $(BOOTSTRAP_D) $(BOOTSTRAP_FILES)
