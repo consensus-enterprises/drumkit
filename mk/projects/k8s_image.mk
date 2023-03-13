@@ -1,7 +1,7 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(SELF_DIR)k8s_image/images.mk
 
-K8S_IMAGE_RESOURCES_DIR =.mk/mk/projects/k8s_image
+K8S_IMAGE_RESOURCES_DIR ?= .mk/mk/projects/k8s_image
 K8S_IMAGE_DIR = build/images
 K8S_IMAGE_DRUMKIT_PREFIX= 15_image
 
