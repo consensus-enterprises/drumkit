@@ -128,4 +128,14 @@ class DrumkitContext extends TerminalContext implements SnippetAcceptingContext 
     $this->iRun("source d && $cmd");
   }
 
+  /**
+   * @Given a git repo on branch :branch
+   */
+  public function aGitRepoOnBranch($branch)
+  {
+    $this->iRun("git checkout -b test-branch");
+    $this->iRun("git add .");
+    $this->iRun("git commit -m'Initial commit.'");
+  }
+
 }
