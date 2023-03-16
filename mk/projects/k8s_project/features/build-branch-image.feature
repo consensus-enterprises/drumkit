@@ -6,12 +6,13 @@ Feature: Build a Docker image with the latest code from a branch.
 
   Background:
     Given I bootstrap a clean Drumkit environment
-      And I run "git checkout -b test-branch"
-      And I run "git add ."
-      And I run "git commit -m'Initial commit.'"
+      And a git repo on branch "test-branch"
+     # TODO: add call to .prompt for PROJECT_NAME to makefile;
+	 # Also: ensure PROJECT_NAME is persisted in a variables file.
+      And I run "echo PROJECT_NAME=test-project >> Makefile"
+      And I run "echo CLIENT_NAME=test-client >> Makefile"
       And I run the Drumkit command "make init-k8s-project"
       And I run the Drumkit command "make init-k8s-images"
-      And I run the Drumkit command "make new-branch-environment CONFIRM=y"
 
   Scenario: Ensure build-branch-image target does not exist by default.
     Given I bootstrap a clean Drumkit environment
@@ -49,5 +50,21 @@ Feature: Build a Docker image with the latest code from a branch.
 
   # @TODO: Move to docker-in-docker (dind) in CI, so that we can actually test this
   # N.B. We will likely need Dockerfile fixtures and such to make this work.
-  @wip
+  @wip @minikube @dind
   Scenario: Build a Docker image from the current branch.
+   Then I should get:
+	"""
+    You are about to update the Docker image for the 'test-branch' branch.
+    Authenticating with existing credentials...
+    Login Succeeded
+    Building
+    FINISHED                                                                                              
+    [internal] load build definition from Dockerfile.drupal
+    exporting to image
+    exporting layers
+    writing image
+    naming to
+    The push refers to repository
+    Preparing 
+    test-branch: digest:
+	"""
