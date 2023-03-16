@@ -47,6 +47,7 @@ K8S_DRUPAL_APP_DRUMKIT_FILES= \
 
 init-k8s-drupal-app: .checkvar-K8S_ENVIRONMENT_NAME
 init-k8s-drupal-app: .init-k8s-drupal-app-intro
+init-k8s-drupal-app: init-k8s-images
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_BASE_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_TEMPLATE_FILES)
 init-k8s-drupal-app: $(K8S_DRUPAL_APP_DRUMKIT_FILES)

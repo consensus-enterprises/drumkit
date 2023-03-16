@@ -25,15 +25,12 @@ BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
 .refresh-branch-environment: .refresh-branch-environment-intro
 .refresh-branch-environment: .confirm-proceed
 .refresh-branch-environment: # Update the environment for the current branch with the latest changes.
-	@$(make) build-branch-image CONFIRM=y
-	$(make) .re-create \
-            FILENAME=build/app/$(BRANCH_NAME)/component-drupal.patch.yaml \
-            K8S_DRUPAL_APP_IMAGE_TAG=$(BRANCH_NAME) \
-            K8S_ENVIRONMENT_NAME=$(BRANCH_NAME)
+	$(make) build-branch-image CONFIRM=y
 	$(make) .redeploy-drupal-app \
             DRUPAL_APP_ENVIRONMENT=$(BRANCH_NAME) \
             CONFIRM=y
 
+# TODO: move .re-create to its own task, add tests:
 .re-create:
 	rm $(FILENAME)
 	$(make) $(FILENAME)
