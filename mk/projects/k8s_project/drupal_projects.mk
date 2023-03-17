@@ -1,6 +1,12 @@
+K8S_PROJECT_SCRIPT_DIR := $(dir $(lastword $(MAKEFILE_LIST)))scripts
+
+.wait-for-drupal-pod: # Return when the Drupal pod in question is in Running state.
+	@$(K8S_PROJECT_SCRIPT_DIR)/wait-for-drupal-pod.sh
+
 # @TODO: Figure out how to make this work with multiple application pods.
+.run-command-on-drupal-pod: .wait-for-drupal-pod
 .run-command-on-drupal-pod: # Run a command on the Drupal container.
-	@kubectl exec -it `kubectl get pods --selector "component=drupal" --template '{{range .items}}{{.metadata.name}}{{end}}'` -- $(REMOTE_COMMAND)
+	@kubectl exec -it `$(K8S_PROJECT_SCRIPT_DIR)/get-running-drupal-pod-id.sh` -- $(REMOTE_COMMAND)
 
 # Deleting the application deployment is needed, for now, because only one pod can
 # connect to our PVCs. So, during a rollout, a new pod will fail, because the
@@ -19,6 +25,10 @@
 	$(kubectl) delete deployment/drupal-deployment
 	@$(ECHO) "$(YELLOW)==> Re-deploying Drupal component.$(RESET)"
 	$(make) $(DRUPAL_APP_ENVIRONMENT)-deploy-app
+	@sleep 1
+	$(make) .run-drupal-database-updates
+
+.run-drupal-database-updates:
 	@$(ECHO) "$(YELLOW)==> Running Drupal database updates.$(RESET)"
 	@$(make) run-command-on-drupal-pod REMOTE_COMMAND="bin/drush updatedb:status"
 	@echo -n "Proceed with database updates? [y/N] " && read ans && [ $${ans:-N} = y ]
