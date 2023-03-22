@@ -4,10 +4,10 @@ title: Drumkit
 ---
 # What is Drumkit
 
-Drumkit is a collection of scripts and templates designed to standardize and integrate some of the most frequent tasks we encounter in the local development of [Drupal](https://en.wikipedia.org/wiki/Drupal) sites.
+Drumkit is a collection of scripts and templates designed to standardize and integrate some of the most frequent tasks we encounter.
 
 It includes the abilty to: 
-- Initialize a new Drupal project on [Lando](https://lando.dev/)
+- Initialize a new [Drupal](https://en.wikipedia.org/wiki/Drupal) project on [Lando](https://lando.dev/)
 - Initialize and publish a collection of [Packer](https://www.packer.io/) images for use in [CI](https://en.wikipedia.org/wiki/Continuous_integration) deployment
 - Initialize and run a documentation site for the project using the [Hugo](http://gohugo.io/) static site generator
 - Install gitlab-runner locally for testing of [Gitlab CI](https://docs.gitlab.com/ee/ci/) pipelines before pushing changes
