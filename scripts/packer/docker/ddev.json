@@ -4,7 +4,10 @@
       "image": "{{user `repo_url`}}/docker:latest",
       "type": "docker",
       "privileged": "true",
-      "commit": "true"
+      "commit": "true",
+      "changes": [
+        "USER ddev"
+      ]
     }
   ],
   "post-processors": [
@@ -31,20 +34,14 @@
   "provisioners": [
     {
       "scripts": [
-        "build/packer/scripts/ddev.sh"
-      ],
-      "type": "shell"
-    },
-    {
-      "scripts": [
-        "build/packer/scripts/cleanup.sh"
+        "scripts/packer/scripts/ddev.sh",
+        "scripts/packer/scripts/cleanup.sh"
       ],
       "type": "shell"
     }
-
   ],
   "variables": {
-    "image_name": "docker",
+    "image_name": "ddev",
     "ubuntu_version": "20.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }

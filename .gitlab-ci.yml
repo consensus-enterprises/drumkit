@@ -1,5 +1,5 @@
 image:
-  name: registry.gitlab.com/consensus.enterprises/drumkit/php
+  name: registry.gitlab.com/consensus.enterprises/drumkit/ddev
   entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
 
 stages:
@@ -10,19 +10,25 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   DEBIAN_FRONTEND: noninteractive
 
-new-tests:
+tests:
   stage: test
-  image:
-    #name: drud/ddev-webserver:v1.21.2
-    name: drud/ddev-webserver:v1.19.0
-    entrypoint: [""] # See above
   variables:
-    DDEV_PHP_VERSION: '8.1'
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    FF_NETWORK_PER_BUILD: 'true' # Allow service containers to see each other; see https://docs.gitlab.com/ee/ci/services/#connecting-services
+    DEBIAN_FRONTEND: noninteractive
+  services:
+    - name: docker:20-dind
+      alias: docker
+      command: ["--tls=false"]
   script:
-      # Set version of PHP
-    - update-alternatives --set php /usr/bin/php${DDEV_PHP_VERSION}
-#    - source d
-    - apt -yqq update; apt -yqq install make
+    # We must chown the code in our own home dir because we still, after many years, cannot stop Gitlab CI from checking it out as root. See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/2750
+    - sudo chown -R ddev:ddev .
+    - ddev config global --instrumentation-opt-in=true
+    - ddev mutagen reset && ddev config global --mutagen-enabled=false
+    - ddev start
+    - until [ -f /tmp/quit ]; do sleep 5; done
     - composer install
     - bin/behat --colors --stop-on-failure
 

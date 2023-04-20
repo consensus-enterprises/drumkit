@@ -9,3 +9,5 @@ behat_params.sh
 .local
 .config.toml
 .DS_Store
+.clone
+.ddev
