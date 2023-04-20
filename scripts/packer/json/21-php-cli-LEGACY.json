@@ -12,7 +12,7 @@
       {
         "repository": "{{user `repo_url`}}/{{user `image_name`}}",
         "tags": [
-          "0.0.x"
+          "{{user `ubuntu_version`}}-1"
         ],
         "type": "docker-tag"
       },
@@ -39,6 +39,7 @@
   ],
   "variables": {
     "image_name": "php",
+    "ubuntu_version": "20.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }

@@ -1,9 +1,10 @@
 {
   "builders": [
     {
-      "commit": true,
-      "image": "{{user `repo_url`}}/focal:latest",
-      "type": "docker"
+      "image": "{{user `repo_url`}}/base:latest",
+      "type": "docker",
+      "privileged": "true",
+      "commit": "true"
     }
   ],
   "post-processors": [
@@ -30,15 +31,21 @@
   "provisioners": [
     {
       "scripts": [
-        "scripts/packer/scripts/utils.sh",
-        "scripts/packer/scripts/cleanup.sh"
+        "build/packer/scripts/docker.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "scripts": [
+        "build/packer/scripts/cleanup.sh"
       ],
       "type": "shell"
     }
+
   ],
   "variables": {
-    "image_name": "base",
+    "image_name": "docker",
+    "ubuntu_version": "20.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }
-
