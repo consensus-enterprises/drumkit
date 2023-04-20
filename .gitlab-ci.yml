@@ -28,9 +28,8 @@ tests:
     - ddev config global --instrumentation-opt-in=true
     - ddev mutagen reset && ddev config global --mutagen-enabled=false
     - ddev start
-    - until [ -f /tmp/quit ]; do sleep 5; done
-    - composer install
-    - bin/behat --colors --stop-on-failure
+    - ddev composer install
+    - ddev behat
 
 #fast-tests: &test-defaults
 #  stage: test
