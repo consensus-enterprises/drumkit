@@ -19,6 +19,13 @@ COPY ./composer.* /var/www/html/
 COPY ./.git/ /tmp/app/.git
 COPY ./web/ /tmp/app/web
 WORKDIR /tmp/app
+RUN if [ -d web/core/ ] ; then rm -r web/core/ ; fi
+RUN if [ -d web/libraries/ ] ; then rm -r web/libraries/ ; fi
+RUN if [ -d web/modules/contrib/ ] ; then rm -r web/modules/contrib/ ; fi
+RUN if [ -d web/profiles/contrib/ ] ; then rm -r web/profiles/contrib/ ; fi
+RUN if [ -d web/themes/contrib/ ] ; then rm -r web/themes/contrib/ ; fi
+RUN if [ -d drush/Commands/contrib/ ] ; then rm -r drush/Commands/contrib/ ; fi
+RUN if [ -d web/private/scripts/quicksilver/ ] ; then rm -r web/private/scripts/quicksilver/ ; fi
 RUN git clean -fxd web/
 RUN mv /tmp/app/web /var/www/html/web
 RUN rm -rf /tmp/app/.git
