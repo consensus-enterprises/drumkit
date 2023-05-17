@@ -61,6 +61,32 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: DRUPAL_HASH_SALT
+            - name: ADMIN_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DRUPAL_ADMIN_USER
+            - name: ADMIN_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DRUPAL_ADMIN_EMAIL
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DRUPAL_ADMIN_PASSWORD
+            - name: INSTALL_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DRUPAL_INSTALL_PROFILE
+            - name: SITE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-variables
+                  key: DRUPAL_SITE_NAME
+
       imagePullSecrets:
       - name: registry-credentials
 ---
