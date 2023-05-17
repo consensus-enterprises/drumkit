@@ -26,7 +26,7 @@ RUN if [ -d web/profiles/contrib/ ] ; then rm -r web/profiles/contrib/ ; fi
 RUN if [ -d web/themes/contrib/ ] ; then rm -r web/themes/contrib/ ; fi
 RUN if [ -d drush/Commands/contrib/ ] ; then rm -r drush/Commands/contrib/ ; fi
 RUN if [ -d web/private/scripts/quicksilver/ ] ; then rm -r web/private/scripts/quicksilver/ ; fi
-RUN git clean -fxd web/
+RUN git clean -fd web/
 RUN mv /tmp/app/web /var/www/html/web
 RUN rm -rf /tmp/app/.git
 
