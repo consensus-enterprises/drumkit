@@ -38,7 +38,7 @@ COPY ./build/images/files/install-drupal.sh /install-drupal.sh
 
 # Build the codebase.
 WORKDIR /var/www/html
-RUN composer install --no-progress
+RUN composer install --no-progress --no-dev
 
 # Override the entrypoint, to run our `chown`. See `build/images/files/start-drupal.sh`
 COPY ./build/images/files/start-drupal.sh /opt/docker/bin/entrypoint.d/
