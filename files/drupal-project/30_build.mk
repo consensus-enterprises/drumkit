@@ -12,7 +12,7 @@ build-real:
 	mkdir -p $(COMPOSER_CACHE_DIR)
 	mkdir -p vendor
 	$(ECHO) "$(YELLOW)Beginning build of codebase. (Be patient. This may take a while.)$(RESET)"
-	$(LANDO) composer --ansi create-project --no-progress $(QUIET)
+	$(DDEV) composer --ansi create-project --no-progress $(QUIET)
 	$(ECHO) "$(YELLOW)Completed build of codebase.$(RESET)"
 
 clean-composer-cache: ## Clean Composer cache.
@@ -24,10 +24,10 @@ endif
 clean-build: ## Clean Composer built code.
 	$(ECHO) "$(YELLOW)Beginning clean of composer-built code.$(RESET)"
 	@chmod -R +w web
-	@# We want to keep the .env, .lando.local.yml, and settings.local.php because
-	@# they contain machine-specific config. Also, tmp/backups has database
-	@# backups and .idea contains IDE configuration.
-	@git clean -dfx -e '/.env' -e '/.lando.local.yml' -e '/web/sites/default/settings.local.php' -e '/.idea' -e '/tmp/backups/'
+	@# We want to keep the .env, any DDEV config.*.yaml files, and
+	@# settings.local.php because they contain machine-specific config. Also,
+	@# tmp/backups has database backups and .idea contains IDE configuration.
+	@git clean -dfx -e '/.env' -e '/.ddev/config.*.yaml' -e '/web/sites/default/settings.local.php' -e '/.idea' -e '/tmp/backups/'
 	@# Git clean won't delete repos that composer cloned; so delete these. See
 	@# composer.json -> extra.installer-paths for the list of places these repos
 	@# could end up.
@@ -44,5 +44,5 @@ update: ## Run composer update
 	@$(MAKE-QUIET) update-real
 update-real:
 	$(ECHO) "$(YELLOW)Beginning update of codebase. (Be patient. This may take a while.)$(RESET)"
-	$(LANDO) composer --ansi update --no-progress $(QUIET)
+	$(DDEV) composer --ansi update --no-progress $(QUIET)
 	$(ECHO) "$(YELLOW)Completed update of codebase.$(RESET)"

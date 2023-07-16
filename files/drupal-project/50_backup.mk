@@ -33,7 +33,7 @@ endif
 restore: restore-validate ## Restore a database dump to the local site instance.
 	@$(MAKE-QUIET) restore-real
 restore-real:
-	$(LANDO) db-import $(RESTORE_FILE) $(QUIET)
+	$(DDEV) db-import $(RESTORE_FILE) $(QUIET)
 	$(ECHO) "$(YELLOW)Restored $(GREY)$(SITE_URL)$(YELLOW) from backup at $(GREY)$(RESTORE_FILE)$(YELLOW).$(RESET)"
 
 snapshot: ## Take a snapshot of the database for easy restore. Optionally, name the snapshot w/ 'SNAP=<name>'.

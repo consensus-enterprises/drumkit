@@ -8,9 +8,10 @@ weight: 10
 
 `make init-project-drupal`
 
-This will initialize a [Lando](https://lando.dev)-based Drupal 8 project, using
-the standard [Composer](https://getcomposer.org) `composer create-project`
-workflow to initialize a Drupal codebase from the standard
+This will initialize a [DDEV](https://ddev.com)-based Drupal 8
+project, using the standard [Composer](https://getcomposer.org)
+`composer create-project` workflow to initialize a Drupal codebase from the
+standard
 [`drupal-composer/drupal-project`](https://github.com/drupal-composer/drupal-project)
 
 Lando is a development wrapper around docker, designed to allow you to rapidly spin up local development environments. To use drumkit this way, you need to already have lando and docker installed. (See the [Lando website](https://lando.dev) for instructions.)
@@ -55,9 +56,9 @@ You may need to manually install dependencies using `brew install {package}`.
 Then it will call the `composer
 create-project` command to initialize the codebase. Finally it will create a
 handful of default make targets, in the following files, and initialize your
-`.lando.yml`:
+`.ddev/config.yaml`:
 
-* `~myproject/.mk/mk.d/20_lando.mk` - lando targets like `make start` and `make stop`
+* `~myproject/.mk/mk.d/20_ddev.mk` - DDEV targets like `make start` and `make stop`
 * `~myproject/.mk/mk.d/30_build.mk` - composer targets like `make build` and `make update`
 * `~myproject/.mk/mk.d/40_install.mk` - drush targets like `make install`
 

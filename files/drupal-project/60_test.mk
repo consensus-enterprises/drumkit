@@ -4,19 +4,19 @@
 
 tests-complete: tests tests-upstream
 tests: ## Run Behat test suite
-	lando behat
+	ddev behat
 
 tests-upstream:
-	lando behat --stop-on-failure --colors --suite=upstream --tags='~@wip'
+	ddev behat --stop-on-failure --colors --suite=upstream --tags='~@wip'
 
 tests-ci:
 	./bin/behat --stop-on-failure --colors --suite=ci
 
 tests-wip:
-	lando behat --tags=wip
+	ddev behat --tags=wip
 
 tests-js:
-	lando behat --tags=javascript
+	ddev behat --tags=javascript
 
 test-steps:
-	lando behat -dl
+	ddev behat -dl

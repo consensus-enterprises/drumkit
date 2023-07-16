@@ -1,0 +1,23 @@
+# DDEV project configuration.
+#
+# @see https://ddev.readthedocs.io/en/latest/users/configuration/config/
+
+name: {{ PROJECT_NAME }}
+type: drupal8
+docroot: web
+php_version: "7.3"
+webserver_type: nginx-fpm
+router_http_port: "80"
+router_https_port: "443"
+xdebug_enabled: false
+additional_hostnames: []
+additional_fqdns: []
+database:
+  type: mariadb
+  version: "10.4"
+nfs_mount_enabled: false
+mutagen_enabled: false
+use_dns_when_possible: true
+composer_version: "2"
+web_environment: []
+nodejs_version: "18"

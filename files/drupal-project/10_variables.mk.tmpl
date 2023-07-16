@@ -1,5 +1,5 @@
 # Set some variables for use across commands.
-SITE_URL  = {{ PROJECT_NAME }}.lndo.site
+SITE_URL  = {{ PROJECT_NAME }}.ddev.site
 SITE_NAME = "{{ SITE_NAME }}"
 
 ADMIN_USER = {{ ADMIN_USER }}
@@ -34,12 +34,12 @@ else
 endif
 
 # Normalize local development and CI commands.
-LANDO = $(shell which lando)
-ifeq ($(LANDO),)
+DDEV = $(shell which ddev)
+ifeq ($(DDEV),)
     DRUSH_CMD = ./bin/drush
     APP_PATH  =
 else
-    DRUSH_CMD = $(LANDO) drush
+    DRUSH_CMD = $(DDEV) drush
     APP_PATH  = /app/
 endif
 DRUSH = $(DRUSH_CMD) --uri=$(SITE_URL) $(DRUSH_VERBOSE) $(DRUSH_DEBUG)

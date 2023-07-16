@@ -1,6 +1,6 @@
 @init @drupal @project
-Feature: Initialize Drupal projects with Lando.
-  In order to start a new Drupal project in a Lando environment
+Feature: Initialize Drupal projects with DDEV.
+  In order to start a new Drupal project in a DDEV environment
   As a Drupal Developer
   I need to be able to initialize Drupal projects
 
@@ -13,7 +13,7 @@ Feature: Initialize Drupal projects with Lando.
      """
      Installing Behat.
      Ensuring Docker is installed.
-     Ensuring Lando is installed.
+     Ensuring DDEV is installed.
      """
      When I run "make -n init-project-drupal"
      Then I should get:
@@ -62,7 +62,7 @@ Feature: Initialize Drupal projects with Lando.
      """
      And the following files should exist:
      """
-     drumkit/mk.d/20_lando.mk
+     drumkit/mk.d/20_ddev.mk
      drumkit/mk.d/30_build.mk
      drumkit/mk.d/40_install.mk
      drumkit/mk.d/50_backup.mk
@@ -70,23 +70,20 @@ Feature: Initialize Drupal projects with Lando.
      """
   
   @unit
-  Scenario: Initialize lando config file
+  Scenario: Initialize DDEV config file
      # In real life this target is called by init-project-drupal-user-vars after user interaction
-     When I run "unset DRUMKIT && source d && make mustache .lando.yml PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
+     When I run "unset DRUMKIT && source d && make mustache .ddev/config.yaml PROJECT_NAME=mydrupalsite SITE_NAME='My Drupal Site' DB_USER=drupal8 DB_NAME=drupal8 DB_PASS=drupal8 ADMIN_USER=dev ADMIN_PASS=pwd"
      Then I should get:
      """
-     Initializing lando config file
+     Initializing DDEV config file
      """
      And the following files should exist:
      """
-     .lando.yml
+     .ddev/config.yaml
      """
-     And the file ".lando.yml" should contain:
+     And the file ".ddev/config.yaml" should contain:
      """
-     mydrupalsite
-     user: drupal8
-     password: drupal8
-     database: drupal8
+     name: mydrupalsite
      """
   
   @unit
