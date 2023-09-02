@@ -21,4 +21,4 @@ patchesJson6902:
   patch: |-
     - op: add
       path: /spec/rules/0/host
-      value: {{ DRUPAL_APP_ENVIRONMENT_LC }}.{{ CLIENT_NAME }}.{{ HOSTING_DOMAIN }}
+      value: {{ DRUPAL_APP_ENVIRONMENT_LC }}.{{ CLIENT_URL }}.{{ HOSTING_DOMAIN }}
