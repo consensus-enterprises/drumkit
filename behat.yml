@@ -11,7 +11,7 @@ default:
         - Drupal\DrupalExtension\Context\DrushContext
   extensions:
     Behat\MinkExtension:
-      goutte: ~
+      browserkit_http: ~
       selenium2: ~
     Drupal\DrupalExtension:
       blackbox: ~
