@@ -38,8 +38,8 @@
     }
   ],
   "variables": {
-    "image_name": "focal",
-    "ubuntu_version": "20.04",
+    "image_name": "jammy",
+    "ubuntu_version": "22.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }
