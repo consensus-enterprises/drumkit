@@ -38,8 +38,8 @@
     }
   ],
   "variables": {
-    "image_name": "focal",
-    "ubuntu_version": "20.04",
+    "image_name": "noble",
+    "ubuntu_version": "24.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }

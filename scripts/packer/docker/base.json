@@ -2,7 +2,7 @@
   "builders": [
     {
       "commit": true,
-      "image": "{{user `repo_url`}}/focal:latest",
+      "image": "{{user `repo_url`}}/noble:latest",
       "type": "docker"
     }
   ],
@@ -38,7 +38,7 @@
   ],
   "variables": {
     "image_name": "base",
-    "ubuntu_version": "20.04",
+    "ubuntu_version": "24.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }
