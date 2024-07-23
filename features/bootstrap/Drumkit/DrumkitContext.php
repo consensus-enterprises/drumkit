@@ -7,7 +7,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use consensus\BehatTerminalContext\Context\TerminalContext;
+use Consensus\BehatTerminalContext\Context\TerminalContext;
 
 /**
  * Defines application features from the specific context.
