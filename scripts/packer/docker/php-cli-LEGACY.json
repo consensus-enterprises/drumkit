@@ -39,7 +39,7 @@
   ],
   "variables": {
     "image_name": "php",
-    "ubuntu_version": "20.04",
+    "ubuntu_version": "24.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }

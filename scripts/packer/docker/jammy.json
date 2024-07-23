@@ -2,7 +2,7 @@
   "builders": [
     {
       "commit": true,
-      "image": "{{user `repo_url`}}/noble:latest",
+      "image": "ubuntu:{{user `ubuntu_version`}}",
       "type": "docker"
     }
   ],
@@ -30,15 +30,16 @@
   "provisioners": [
     {
       "scripts": [
-        "scripts/packer/scripts/utils.sh",
+        "scripts/packer/scripts/apt.sh",
+        "scripts/packer/scripts/purge-extra-packages.sh",
         "scripts/packer/scripts/cleanup.sh"
       ],
       "type": "shell"
     }
   ],
   "variables": {
-    "image_name": "base",
-    "ubuntu_version": "24.04",
+    "image_name": "jammy",
+    "ubuntu_version": "22.04",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
   }
 }
