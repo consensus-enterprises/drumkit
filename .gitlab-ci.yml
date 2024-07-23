@@ -1,5 +1,12 @@
 image:
   name: registry.gitlab.com/consensus.enterprises/drumkit/ddev
+  # Options to run the Docker executor with; notably run as the 'ddev' user and
+  # group. This must match the user and group that the Drumkit DDEV image
+  # creates.
+  #
+  # @see https://docs.gitlab.com/ee/ci/yaml/index.html#imagedocker
+  docker:
+    user: ddev:ddev
   entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
 
 stages:
@@ -23,8 +30,6 @@ tests:
       alias: docker
       command: ["--tls=false"]
   script:
-    # We must chown the code in our own home dir because we still, after many years, cannot stop Gitlab CI from checking it out as root. See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/2750
-    - sudo chown -R ddev:ddev .
     - ddev config global --instrumentation-opt-in=true
     - ddev mutagen reset && ddev config global --mutagen-enabled=false
     - ddev start
