@@ -100,7 +100,7 @@ $(GIT_EXECUTABLE):
 	@sudo apt-get update
 	@sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install git
 
-GITS ?= ansible ansible-doc ansible-galaxy ansible-inventory ansible-playbook ansible-pull ansible-vault
+GITS ?= ansible ansible-config ansible-connection ansible-console ansible-doc ansible-galaxy ansible-inventory ansible-playbook ansible-pull ansible-test ansible-vault
 $(foreach git,$(GITS),$(eval $(call git_template,$(git))))
 
 # vi:syntax=makefile

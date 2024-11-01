@@ -1,8 +1,8 @@
 ansible-pull_NAME         = Ansible Pull
-ansible-pull_RELEASE      = v2.8.1
-ansible-pull_DOWNLOAD_URL = https://github.com/ansible/ansible.git
-ansible-pull_DEPENDENCIES = python3-paramiko python3-pip python3-yaml python3-jinja2 python3-pycurl
-ansible-pull_BIN_DIR      = bin
+ansible-pull_RELEASE      ?= $(ansible_RELEASE)
+ansible-pull_DOWNLOAD_URL ?= $(ansible_DOWNLOAD_URL)
+ansible-pull_DEPENDENCIES ?= $(ansible_DEPENDENCIES)
+ansible-pull_BIN_DIR      ?= $(ansible_BIN_DIR)
 ansible-pull_PARENT       = ansible
 
 # vi:syntax=makefile
