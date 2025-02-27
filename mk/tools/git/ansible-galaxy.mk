@@ -1,7 +1,7 @@
 ansible-galaxy_NAME         = Ansible Galaxy
 ansible-galaxy_RELEASE      ?= $(ansible_RELEASE)
 ansible-galaxy_DOWNLOAD_URL ?= $(ansible_DOWNLOAD_URL)
-ansible-galaxy_DEPENDENCIES ?= $(ansible_DEPENDENCIES)
+ansible-galaxy_DEPENDENCIES ?= $(ansible_DEPENDENCIES) python3-resolvelib
 ansible-galaxy_BIN_DIR      ?= $(ansible_BIN_DIR)
 ansible-galaxy_PARENT       = ansible
 
