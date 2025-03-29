@@ -3,15 +3,15 @@ TIMESTAMP = $(shell date +%s)
 TMP_DIR   = tmp
 
 # Suppress Make-specific output, but allow for greater verbosity.
-VERBOSE := 1
+VERBOSE ?= 1
 QUIET   :=
 ifeq ($(VERBOSE), 0)
     MAKE-QUIET = $(MAKE) -s
     QUIET      = > /dev/null
-    DRUSH_VERBOSE =
+    DRUSH_VERBOSE ?=
 else
     MAKE-QUIET = $(MAKE)
-    DRUSH_VERBOSE = --verbose
+    DRUSH_VERBOSE ?= --verbose
 endif
 
 # Allow debug output
