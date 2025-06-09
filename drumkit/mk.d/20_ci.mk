@@ -1,6 +1,6 @@
 DRUMKIT_CONTAINER_REGISTRY_URL ?= registry.gitlab.com/consensus.enterprises/drumkit
 CONTAINER_PROJECT_NAME          = drumkit
-DRUMKIT_DOCKER_IMAGES           = docker/focal docker/jammy docker/noble docker/base docker/docker docker/ddev
+DRUMKIT_DOCKER_IMAGES           = docker/ubuntu-24.04 docker/base docker/docker docker/ddev
 
 local_ref = $(shell git rev-parse HEAD)
 clone_ref = $(shell [ -d .clone ] && (cd .clone && git rev-parse HEAD))
@@ -22,6 +22,8 @@ ci-image: packer
 	@if [ -z ${CONTAINER_SCRIPT} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_SCRIPT$(YELLOW).$(RESET)"; exit 1; fi
 	@if [ -z ${CONTAINER_PROJECT_NAME} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_PROJECT_NAME$(YELLOW).$(RESET)"; exit 1; fi
 	@if [ -z ${CONTAINER_REGISTRY_URL} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_REGISTRY_URL$(YELLOW).$(RESET)"; exit 1; fi
+	@if [ -z ${CONTAINER_REGISTRY_USERNAME} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_REGISTRY_USERNAME$(YELLOW).$(RESET)"; exit 1; fi
+	@if [ -z ${CONTAINER_REGISTRY_PASSWORD} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_REGISTRY_PASSWORD$(YELLOW).$(RESET)"; exit 1; fi
 	@echo "Building packer image for CI: $(CONTAINER_SCRIPT)"
 	@echo "Using project name: $(CONTAINER_PROJECT_NAME)"
 	@echo "Using container registry: $(DRUMKIT_CONTAINER_REGISTRY_URL)"

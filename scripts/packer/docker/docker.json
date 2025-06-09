@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "image": "{{user `repo_url`}}/base:latest",
+      "image": "{{user `repo_url`}}/base:{{user `ubuntu_version`}}",
       "type": "docker",
       "privileged": "true",
       "commit": "true"
@@ -12,19 +12,18 @@
       {
         "repository": "{{user `repo_url`}}/{{user `image_name`}}",
         "tags": [
-          "{{user `ubuntu_version`}}-1"
+          "{{user `ubuntu_version`}}-{{isotime `2006-01-02T03-04-05`}}",
+          "{{user `ubuntu_version`}}",
+          "{{user `ubuntu_codename`}}"
         ],
         "type": "docker-tag"
       },
       {
-        "repository": "{{user `repo_url`}}/{{user `image_name`}}",
-        "tags": [
-          "latest"
-        ],
-        "type": "docker-tag"
-      },
-      {
-        "type": "docker-push"
+        "type": "docker-push",
+        "login": "true",
+        "login_server": "{{user `repo_url`}}",
+        "login_username": "{{user `login_username`}}",
+        "login_password": "{{user `login_password`}}"
       }
     ]
   ],
@@ -40,6 +39,9 @@
   "variables": {
     "image_name": "docker",
     "ubuntu_version": "24.04",
-    "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}"
+    "ubuntu_codename": "noble",
+    "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
+    "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
+    "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
   }
 }
