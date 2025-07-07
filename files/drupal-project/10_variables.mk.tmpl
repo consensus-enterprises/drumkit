@@ -2,13 +2,16 @@
 SITE_URL  = {{ PROJECT_NAME }}.ddev.site
 SITE_NAME = "{{ SITE_NAME }}"
 
-ADMIN_USER = {{ ADMIN_USER }}
-ADMIN_PASS = {{ ADMIN_PASS }}
+ADMIN_USER = dev
+ADMIN_PASS = pwd
 INSTALL_PROFILE = standard
 
-DB_NAME = {{ DB_NAME }}
-DB_USER = {{ DB_USER }}
-DB_PASS = {{ DB_PASS }}
+DB_NAME = db
+DB_USER = db
+DB_PASSWORD = db
+DB_HOST = db
+DB_PORT = 3306
+
 
 TIMESTAMP = $(shell date +%s)
 TMP_DIR   = tmp 

@@ -20,3 +20,9 @@ tests-js:
 
 test-steps:
 	ddev behat -dl
+
+vnc: ## Spawn xvncviewer to see local chromedriver running.
+	@$(ECHO) "$(ORANGE)Consider using the in-browser client: $(BLUE)https://$(SITE_URL):7900/$(RESET)"
+	@$(ECHO) "$(YELLOW)Beginning spawn of xvncviewer in background.$(RESET)"
+	@xvncviewer localhost:5900
+	@$(ECHO) "$(YELLOW)Completed spawn of xvncviewer in background.$(RESET)"
