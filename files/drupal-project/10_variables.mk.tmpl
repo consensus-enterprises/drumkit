@@ -41,9 +41,15 @@ DDEV = $(shell which ddev)
 ifeq ($(DDEV),)
     DRUSH_CMD = ./bin/drush
     APP_PATH  =
+    COMPOSER  =
+    DDEV_EXEC =
+    DDEV_DB_EXEC =
 else
     DRUSH_CMD = $(DDEV) drush
     APP_PATH  = /app/
+    COMPOSER  = ddev composer --ansi
+    DDEV_EXEC = $(DDEV) exec
+    DDEV_DB_EXEC = $(DDEV) exec --service db
 endif
 DRUSH = $(DRUSH_CMD) --uri=$(SITE_URL) $(DRUSH_VERBOSE) $(DRUSH_DEBUG)
 
