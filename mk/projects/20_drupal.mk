@@ -41,9 +41,12 @@ drupal-composer-codebase: composer.json .gitignore .env
 # Composer file. But we'll use it here for expediency.
 composer.json:
 	@echo "Initializing Drupal Composer project."
+	# Calling exec composer here allows us to initiate the composer.json in a subdirectory (which DDEV disallows)
 	ddev exec composer create-project $(COMPOSER_BASE_PROJECT):$(COMPOSER_BASE_PROJECT_VERSION) tmpdir --no-interaction
 	@mv tmpdir/composer.* .
 	@rm -rf tmpdir
+	# We presume to install a site-local drush, because it's used to do a `make install`
+	ddev composer require drush/drush
 
 drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/50_ddev.sh
 
