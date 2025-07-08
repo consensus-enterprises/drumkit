@@ -5,7 +5,7 @@
 SITE_INSTALL_DIR = web/sites/$(SITE_URL)
 
 SITE_INSTALL_CMD = site:install $(INSTALL_PROFILE)\
-                       --site-name=\"$(SITE_NAME)\" \
+                       --site-name=$(SITE_NAME) \
                        --yes --locale="en" \
                         --yes --locale="en" \
                        --db-url="mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)" \
