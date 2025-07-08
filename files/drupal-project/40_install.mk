@@ -24,8 +24,6 @@ install: ## Install Drupal site.
 install-real:
 				$(ECHO) "$(YELLOW)Beginning installation of $(GREY)$(SITE_URL)$(YELLOW). (Be patient. This may take a while.)$(RESET)"
 				$(DRUSH) $(SITE_INSTALL_CMD) $(QUIET)
-				@$(ECHO) "$(YELLOW)Enforcing optional configs.$(RESET)"
-				@$(DRUSH) config-enforce:enforce --only-optional
 				$(ECHO) "$(YELLOW)Completed installation of $(GREY)$(SITE_URL).$(RESET)"
 
 uninstall: ## Uninstall Drupal site.
