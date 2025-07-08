@@ -12,7 +12,7 @@ init-project-drupal-user-vars: mustache
 
 .ddev/config.yaml:
 	$(ECHO) "Initializing DDEV config file."
-	ddev config --project-type=drupal10 --docroot=web --create-docroot
+	ddev config --project-type=drupal10 --project-name=$(PROJECT_NAME) --docroot=web --create-docroot
 	ddev start
 
 $(MK_D)/10_variables.mk:
