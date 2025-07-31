@@ -16,17 +16,17 @@ init-project-drupal-user-vars: mustache
 	$(ECHO) "Initializing DDEV config file."
 	ddev config --project-type=drupal10 --project-name=$(PROJECT_NAME) --docroot=web --create-docroot
 
-$(MK_D)/10_variables.mk: mustache
-	@echo "Initializing drumkit variables file."
-	@mkdir -p $(MK_D)
-	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
-
 init-project-drupal-deps: docker ddev
 	ddev start
 
 # MAIN TARGET entrypoint
 # Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar"
-init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase drupal-behat-deps ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
+init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps
+init-project-drupal: drupal-drumkit-dir
+init-project-drupal: drupal-composer-codebase
+init-project-drupal: drupal-behat-deps
+init-project-drupal: .gitlab-ci.yml
+init-project-drupal: ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 	$(ECHO) "Finished initializing Drupal drumkit."
@@ -35,9 +35,26 @@ init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drup
 	$(ECHO) "  make build"
 	$(ECHO) "  make install"
 
+## DRUMKIT SETUP
+drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/50_ddev.sh
+
+$(MK_D)/10_variables.mk: mustache
+	@echo "Initializing drumkit variables file."
+	@mkdir -p $(MK_D)
+	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
+
+$(MK_FILES):
+	@echo "Initializing $@"
+	@cp $(FILES_DIR)/drupal-project/$(notdir $@) $@
+
+$(BOOTSTRAP_D)/50_ddev.sh: .env
+	@echo "Setting up drumkit directory."
+	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/50_ddev.sh
+
 drupal-docs: ##@drupal Get link to online documentation
 	@echo "For detailed documentation on using DDEV Drupal projects with Drumkit, see https://drumk.it/usage/drupal/"
 
+# COMPOSER CODEBASE SETUP
 drupal-composer-codebase: composer.json .gitignore .env
 # N.B. Using `composer.json` as a target here may not work in the long run,
 # since there are lots of project types that might want to initialize a
@@ -51,30 +68,17 @@ composer.json:
 	# We presume to install a site-local drush, because it's used to do a `make install`
 	ddev composer require drush/drush
 
-## DRUMKIT SETUP
-
-drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/50_ddev.sh
-
 .env: tmp/composer-cache
 	@echo "COMPOSER_CACHE_DIR=tmp/composer-cache/" > .env
-
-$(BOOTSTRAP_D)/50_ddev.sh: .env
-	@echo "Setting up drumkit directory."
-	@echo 'export $$(cat .env | xargs)' > $(BOOTSTRAP_D)/50_ddev.sh
 
 .gitignore:
 	@echo "Creating .gitignore"
 	@cp $(FILES_DIR)/drupal-project/dotgitignore .gitignore
 
-$(MK_FILES):
-	@echo "Initializing $@"
-	@cp $(FILES_DIR)/drupal-project/$(notdir $@) $@
-
 tmp/composer-cache:
 	@mkdir -p tmp/composer-cache
 
 ## BEHAT SETUP
-
 drupal-behat-deps: $(BEHAT_FILES)
 	@echo "Installing composer package dependencies for Behat."
 	@ddev composer require --dev behat/mink-goutte-driver:"^2.0" drupal/drupal-extension:"^5.1" consensus/behat-drupal-context:"*" consensus/behat-terminal-context:"*"
@@ -101,6 +105,7 @@ features/bootstrap/FeatureContext.php:
 	@mkdir -p features/bootstrap
 	@cp $(FILES_DIR)/drupal-project/$@ $@
 
+## GITLAB CI SETUP
 .gitlab-ci.yml:
 	@echo "Initializing Gitlab CI (.gitlab-ci.yml)."
 	@cp $(FILES_DIR)/drupal-project/gitlab-ci.yml $@
