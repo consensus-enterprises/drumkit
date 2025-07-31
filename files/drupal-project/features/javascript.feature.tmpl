@@ -1,0 +1,49 @@
+@smoke-test @api @selenium
+Feature: Selenium is available to run javascript.
+  In order to test javascript functionality
+  As an Developer
+  I need to be able to run tests through Selenium.
+
+  Scenario: Confirm that the front page works without javascript.
+    Given I am not logged in
+      And I am on the homepage
+     Then I should see "Log in"
+
+  @javascript
+  Scenario: Confirm that the front page works with javascript (via Selenium).
+    Given I am not logged in
+      And I am on the homepage
+      And I wait "3" seconds
+     Then I should see "Log in"
+
+  Scenario: Confirm that we can login without javascript.
+    Given I am not logged in
+     When I am logged in as a "Administrator"
+     Then I should see "{{SITE_NAME}}"
+
+  @javascript
+  Scenario: Confirm that we can login with javascript (via Selenium).
+    Given I am not logged in
+      And I am on the homepage
+     When I am logged in as a "Administrator"
+
+  Scenario: Confirm that we can login manually works without javascript.
+    Given I am not logged in
+     When I am on "/user/login"
+     Then I should see "Log in"
+      And I should see "{{SITE_NAME}}"
+      And I enter "dev" for "Username"
+      And I enter "pwd" for "Password"
+     When I press the "Log in" button
+
+  @javascript
+  Scenario: Confirm that we can login manually works with javascript (via Selenium).
+    Given I am not logged in
+     When I am on "/user/login"
+     Then I should see "Log in"
+      And I should see "{{SITE_NAME}}"
+      And I enter "dev" for "Username"
+      And I enter "pwd" for "Password"
+     When I press the "Log in" button
+
+

@@ -39,19 +39,25 @@ endif
 # Normalize local development and CI commands.
 DDEV = $(shell which ddev)
 ifeq ($(DDEV),)
-    DRUSH_CMD = ./bin/drush
+    DRUSH_CMD = ./bin/drush --ansi
+    BEHAT_CMD = ./bin/behat --colors --strict --stop-on-failure
     APP_PATH  =
-    COMPOSER  =
+    COMPOSER  = composer --ansi
     DDEV_EXEC =
     DDEV_DB_EXEC =
 else
     DRUSH_CMD = $(DDEV) drush
+    BEHAT_CMD = $(DDEV) behat
     APP_PATH  = /app/
     COMPOSER  = ddev composer --ansi
     DDEV_EXEC = $(DDEV) exec
     DDEV_DB_EXEC = $(DDEV) exec --service db
 endif
 DRUSH = $(DRUSH_CMD) --uri=$(SITE_URL) $(DRUSH_VERBOSE) $(DRUSH_DEBUG)
+DRUSH_INSTALL = $(DRUSH_CMD) $(DRUSH_VERBOSE) $(DRUSH_DEBUG)
+BEHAT = $(BEHAT_CMD)
+
+make = $(MAKE) -s
 
 # Colour output. See 'help' for example usage.
 ECHO       = @echo -e
@@ -63,3 +69,5 @@ GREY       = $(strip $(call make_color,241))
 RED        = $(strip $(call make_color,124))
 WHITE      = $(strip $(call make_color,255))
 YELLOW     = $(strip $(call make_color,94))
+LIME       = $(strip $(call make_color,10))
+LEMON      = $(strip $(call make_color,11))

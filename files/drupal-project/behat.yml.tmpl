@@ -1,0 +1,55 @@
+default:
+  suites:
+    default: &default
+      # N.B. Multiple search paths don't appear to work. So we had to symlink
+      # to the Drumkit context. Behat is dumb.
+      paths:
+        - "%paths.base%/features"
+      contexts:
+        - FeatureContext
+        - Consensus\BehatTerminalContext\Context\TerminalContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MarkupContext
+        - Drupal\DrupalExtension\Context\MessageContext
+  extensions:
+    Drupal\MinkExtension: &mink_ext
+      ajax_timeout: 30
+      base_url: http://$(PROJECT_NAME).ddev.site/
+      browser_name: chrome
+      browserkit_http: ~
+      selenium2: ~
+      sessions:
+        default:
+          browserkit_http:
+            guzzle_request_options:
+              verify: false
+        javascript:
+          selenium2:
+            # See: .ddev/config.selenium-standalone-chrome.yaml
+            capabilities:
+              marionette: null
+              browserName: chrome
+              browser: chrome
+              chrome:
+                switches:
+                  - "--disable-gpu"
+            wd_host: http://selenium-chrome:4444/wd/hub
+    Drupal\DrupalExtension: &drupal_ext
+      api_driver: 'drupal'
+      drush:
+        alias: crru.dev
+      drupal:
+        drupal_root: "web"
+      blackbox: ~
+      subcontexts:
+        autoload: 0
+      selectors:
+        message_selector: '.alert, .messages'
+        error_message_selector: '.alert.alert-danger, .messages.messages--error'
+        success_message_selector: '.alert.alert-success, .messages.messages--status'
+
+  gherkin:
+    filters:
+      tags: "~@wip&&~@disabled&&~@maintenance-mode-enabled&&~@fixtures"

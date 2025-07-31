@@ -35,17 +35,18 @@ clean-init-behat:
 	@echo "Removing behat config and example test files."
 	@rm -f behat.yml features/testing.feature
 
-behat.yml:
-	@echo "Creating behat config file."
-	@cp $(FILES_DIR)/behat/behat.yml $(PROJECT_ROOT)
-
-features:
-	@echo "Creating behat test directory."
-	@mkdir -p $(PROJECT_ROOT)/features
-
-features/testing.feature:
-	@echo "Creating behat example test file."
-	@cp $(FILES_DIR)/behat/testing.feature $(PROJECT_ROOT)/features
+# Replaced by the equivalent in mk/projects/ddev_drupal/init-project-drupal
+#behat.yml:
+#	@echo "Creating behat config file."
+#	@cp $(FILES_DIR)/behat/behat.yml $(PROJECT_ROOT)
+#
+#features:
+#	@echo "Creating behat test directory."
+#	@mkdir -p $(PROJECT_ROOT)/features
+#
+#features/testing.feature:
+#	@echo "Creating behat example test file."
+#	@cp $(FILES_DIR)/behat/testing.feature $(PROJECT_ROOT)/features
 
 $(BEHAT_SRC)/composer.json: $(FILES_DIR)/behat/composer.json
 	@mkdir -p $(BEHAT_SRC)

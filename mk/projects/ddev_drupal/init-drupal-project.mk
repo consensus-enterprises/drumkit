@@ -1,4 +1,6 @@
 MK_FILES = $(MK_D)/20_ddev.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk $(MK_D)/50_backup.mk $(MK_D)/60_test.mk
+BEHAT_FILES = behat.yml .ddev/commands/web/behat .ddev/config.selenium-standalone-chrome.yaml
+FEATURE_FILES = features/admin.feature features/javascript.feature features/testing.feature
 
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
 COMPOSER_BASE_PROJECT_VERSION ?= "10.5.1"
@@ -14,7 +16,7 @@ init-project-drupal-user-vars: mustache
 	$(ECHO) "Initializing DDEV config file."
 	ddev config --project-type=drupal10 --project-name=$(PROJECT_NAME) --docroot=web --create-docroot
 
-$(MK_D)/10_variables.mk:
+$(MK_D)/10_variables.mk: mustache
 	@echo "Initializing drumkit variables file."
 	@mkdir -p $(MK_D)
 	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
@@ -22,8 +24,9 @@ $(MK_D)/10_variables.mk:
 init-project-drupal-deps: docker ddev
 	ddev start
 
+# MAIN TARGET entrypoint
 # Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar"
-init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
+init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase drupal-behat-deps ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 	$(ECHO) "Finished initializing Drupal drumkit."
@@ -48,6 +51,8 @@ composer.json:
 	# We presume to install a site-local drush, because it's used to do a `make install`
 	ddev composer require drush/drush
 
+## DRUMKIT SETUP
+
 drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/50_ddev.sh
 
 .env: tmp/composer-cache
@@ -67,3 +72,32 @@ $(MK_FILES):
 
 tmp/composer-cache:
 	@mkdir -p tmp/composer-cache
+
+## BEHAT SETUP
+
+drupal-behat-deps: $(BEHAT_FILES)
+	@echo "Installing composer package dependencies for Behat."
+	@ddev composer require --dev behat/mink-goutte-driver:"^2.0" drupal/drupal-extension:"^5.1" consensus/behat-drupal-context:"*" consensus/behat-terminal-context:"*"
+
+behat.yml: mustache
+	@echo "Initializing behat.yml."
+	@mustache ENV $(FILES_DIR)/drupal-project/behat.yml.tmpl > $@
+
+.ddev/config.selenium-standalone-chrome.yaml:
+	@echo "Installing ddev Selenium add-on."
+	@ddev add-on get ddev/ddev-selenium-standalone-chrome
+
+.ddev/commands/web/behat: mustache
+	@echo "Creating ddev behat command."
+	@mkdir -p .ddev/commands/web
+	@cp $(FILES_DIR)/drupal-project/ddev-behat-command.sh $@
+
+$(FEATURE_FILES): features/bootstrap/FeatureContext.php
+	@echo "Initializing $@."
+	@mustache ENV $(FILES_DIR)/drupal-project/$@.tmpl > $@
+
+features/bootstrap/FeatureContext.php:
+	@echo "Initializing local FeatureContext."
+	@mkdir -p features/bootstrap
+	@cp $(FILES_DIR)/drupal-project/$@ $@
+

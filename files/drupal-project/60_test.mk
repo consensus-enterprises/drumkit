@@ -3,23 +3,26 @@
 .PHONY: tests tests-ci tests-wip tests-js vnc test-steps tests-upstream
 
 tests-complete: tests tests-upstream
-tests: ## Run Behat test suite
-	ddev behat
+
+tests: ## Run functional Behat test suite
+	$(BEHAT) --stop-on-failure
 
 tests-upstream:
-	ddev behat --stop-on-failure --colors --suite=upstream --tags='~@wip'
+	$(BEHAT) --stop-on-failure --colors --suite=upstream --tags='~@wip'
 
 tests-ci:
-	./bin/behat --stop-on-failure --colors --suite=ci
+	$(BEHAT) --stop-on-failure --colors --suite=ci
 
-tests-wip:
-	ddev behat --tags=wip
+tests-wip: test-wip
+
+test-wip:
+	$(BEHAT) --stop-on-failure --tags=wip
 
 tests-js:
-	ddev behat --tags=javascript
+	$(BEHAT) --tags=javascript
 
 test-steps:
-	ddev behat -dl
+	$(BEHAT) -dl
 
 vnc: ## Spawn xvncviewer to see local chromedriver running.
 	@$(ECHO) "$(ORANGE)Consider using the in-browser client: $(BLUE)https://$(SITE_URL):7900/$(RESET)"
