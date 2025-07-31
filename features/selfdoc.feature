@@ -53,7 +53,7 @@ Feature: Selfdoc for Drumkit development
   And I run "make help"
   Then I should get:
   """
-  Start Lando containers.
+  Start DDEV containers.
   """
   And I run "cp .mk/files/test-fixtures/mock.mk drumkit/mk.d/"
   Then the following files should exist:
