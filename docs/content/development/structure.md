@@ -17,7 +17,7 @@ You can use drumkit to initialize the following types of projects:
 	- Inventory
 	- Groups
 	- Hosts
-- Packer 
+- Packer
 - Drupal
 - Hugo docs sites
 - Aegir
@@ -41,7 +41,7 @@ This set of files is primarily for the installation of new tooling software. If 
 
 Some examples include:
 - Hugo
-- Gitlab-runner
-- Lando (only on Linux - must be installed manually for OSX)
+- Gitlab-ci-local
+- DDEV (only on Linux - must be installed manually for OSX)
 - Packer
 - Terraform

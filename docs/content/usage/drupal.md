@@ -1,28 +1,28 @@
 ---
-title: Drupal 8 Project Type
+title: Drupal Project Type
 weight: 10
 
 ---
 
-## Spin up a New Drupal8 Project
+## Spin up a New DDEV Drupal Project
 
 `make init-project-drupal`
 
-This will initialize a [DDEV](https://ddev.com)-based Drupal 8
+This will initialize a [DDEV](https://ddev.com)-based Drupal 10
 project, using the standard [Composer](https://getcomposer.org)
 `composer create-project` workflow to initialize a Drupal codebase from the
 standard
 [`drupal-composer/drupal-project`](https://github.com/drupal-composer/drupal-project)
 
-Lando is a development wrapper around docker, designed to allow you to rapidly spin up local development environments. To use drumkit this way, you need to already have lando and docker installed. (See the [Lando website](https://lando.dev) for instructions.)
+DDEV is a development wrapper around docker, designed to allow you to rapidly
+spin up local development environments. To use drumkit this way, you need to
+already have `ddev` and `docker` installed, although Drumkit will attempt a
+default installation method for both if it detects they are not available in
+your environment. (See the [DDEV](https://ddev.com) or
+[Docker](https://docker.com) websites for installation instructions for your
+OS.)
 
-**NB** As of Drupal 8.8.0, this [composer template is
-deprecated](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies) in favour of
-[`drupal/recommended-project`](https://github.com/drupal/recommended-project).
-Drumkit will shortly update this and/or make the composer template configurable
-with sane defaults.
-
-To bootstrap a Drupal 8 project with Drumkit:
+To bootstrap a Drupal project with Drumkit:
 
 ```
 mkdir myproject
@@ -30,58 +30,91 @@ cd myproject
 git init
 
 wget -O - https://drumk.it/installer | /bin/bash
-. d
-make init-project-drupal
+source d
+make init-project-drupal PROJECT_NAME=mydrupal SITE_NAME="My Drupal Site"
 ```
 
-This will prompt you for some information to populate your project:
+This will configure and start a DDEV [`drupal10` project
+type](https://ddev.readthedocs.io/en/stable/users/configuration/config/#type),
+spinning up Docker containers for your project and proceeding to provision an
+opinionated set of tools into the new project:
 
-* Project name (no spaces, *no underscores*! They are an illegal character in Apache, and will cause silent failures). This will become the first part of the **`https://[projectname].lndo.site`** URL that Lando assigns to your project.
-* Site name, the human-readable name for the site (used for `make install` command, etc.)
-* Database credentials, to feed to Lando to setup and wire into the Drupal install (settings.php)
-* Admin username and password for the site once installed.
+* Drupal Drumkit targets like `make build`, and `make install`
+* Provisions a `composer.json` and builds a stock Drupal 10 codebase
+* Configures and installs Behat and related FeatureContext classes
 
-Each of these has a default value, and once you've entered all of them, Drumkit
-will proceed with ensuring you have the relevant dependencies to initialize the
-project- primarily this is Python3 (for Jinja2 templating), plus Behat, Docker,
-and Lando. [Wait... if you don't have lando and docker, what happens?]
+### On Linux
+If any packages are missing you may be prompted by `sudo` for your user password so `apt` can install them.
 
-#### On Linux
-If any packages are missing you may be prompted by `sudo` for your
-user password so `apt` can install them. 
-
-#### On a Mac
+### On a Mac
 You may need to manually install dependencies using `brew install {package}`.
 
-Then it will call the `composer
-create-project` command to initialize the codebase. Finally it will create a
-handful of default make targets, in the following files, and initialize your
-`.ddev/config.yaml`:
+## Drupal Drumkit targets
 
-* `~myproject/.mk/mk.d/20_ddev.mk` - DDEV targets like `make start` and `make stop`
-* `~myproject/.mk/mk.d/30_build.mk` - composer targets like `make build` and `make update`
-* `~myproject/.mk/mk.d/40_install.mk` - drush targets like `make install`
+Once the DDEV project is configured and started, the `init-drupal-project`
+target calls `make drupal-drumkit-dir`, passing your original `PROJECT_NAME`
+and `SITE_NAME` variables, which primarily provisions a set of Drumkit `make`
+targets that are useful in a Drupal project:
 
-Once complete, you have a fully loaded Drumkit setup to drive your Lando Drupal
+* [`drumkit/mk.d/10_variables.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/10_variables.mk.tmpl) - Foundational variables for the project (eg. `PROJECT_NAME` and `SITE_NAME` etc.)
+* [`drumkit/mk.d/20_ddev.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/20_ddev.mk) - DDEV targets like `make start` and `make stop`
+* [`drumkit/mk.d/30_build.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/30_build.mk) - composer targets like `make build` and `make update`
+* [`drumkit/mk.d/40_install.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/40_install.mk) - drush targets like `make install`
+* [`drumkit/mk.d/50_backup.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/50_backup.mk) database backup targets like `make snapshot` and `make restore-snapshot`
+* [`drumkit/mk.d/60_test.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/60_test.mk) - targets for running Behat tests
+
+## Composer Drupal 10 codebase
+
+Now `init-drupal-project` will call `composer create-project` to initialize a
+Composer codebase for the project. This creates a `composer.json` file as well
+as a fully-built `vendor` and `web` directory with basic Drupal dependencies in
+place. With this stage complete, your project is ready to run Drupal.
+
+## Behat
+
+Having initialized a Composer codebase, we can pull in some development
+dependencies we tend to use heavily, namely [Behat]() (we call `make drupal-behat-deps` as part of `init-project-drupal`).
+
+This creates a series of files, and pulls in some Consensus-grown FeatureContext
+libraries to provide step definitions for typical Drupal projects we work on:
+
+* [`behat.yml`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/behat.yml.tmpl) - the main Behat config file.
+
+
+(eg.  [consensus/behat-terminal-context](https://packagist.org/packages/consensus/behat-terminal-context) and [consensus/behat-drupal-context](https://packagist.org/packages/consensus/behat-drupal-context)).
+
+## Gitlab CI
+
+Finally `init-project-drupal` installs a basic `.gitlab-ci.yml` configuration
+which will leverage a Docker-in-Docker image to run DDEV inside the CI
+environment and simply run a `make start build install tests` to run your test
+suite the same way you would locally.
+
+## Completed Drumkit Drupal project
+
+Once complete, you have a fully loaded Drumkit setup to drive your DDEV Drupal
 local dev site.
 
 ```
-  make start   # Start Lando containers
+  make start   # Start DDEV containers
   make build   # Build composer codebase
   make install # Run Drupal installer (via drush)
 ```
 
 You may need to [roll back your version of PHP](https://stackoverflow.com/questions/34909101/how-can-i-easily-switch-between-php-versions-on-mac-osx) as more recent MacOS ships with PHP 8
 
-This will get you a working site at https://[projectname].lndo.site.
+This will get you a working site at https://[projectname].ddev.site.
 
 ## Development Workflows
 
 Once you have a site instantiated and you begin working on it, there are some
 Drumkit targets that are available to you immediately, such as:
 
+1. `make start` && `make stop` - run the corresponding DDEV commands to start and stop the DDEV containers.
+1. `make build` - run a composer install based on your current `composer.lock` to ensure you have all the latest packages.
+1. `make install` - run a drush site-install with your default PROJECT_NAME and SITE_NAME (and associated variables from `drumkit/mk.d/10_variables.mk`)
+1. `make tests` - run Behat against the installed Drupal site
 1. `make clean-build` - wipe out your composer.json-installs trees under `vendor/` and `web/`
-1. `make devtools` - install a set of development extensions (devel, field_ui, views_ui, etc.)
 1. `make snapshot SNAP=<name>` - take an SQL dump of the database, and optionally give it a name
 1. `make restore-snapshot SNAP=<name>` - restore a previously-taken snapshot (latest, or as named by SNAP)
 1. `make ls-snaps` - show a date-ordered listing of named snapshots in `tmp/backups`
@@ -107,7 +140,7 @@ simple `make snapshot` will do the same as a `make backup` but also create a
 symlink called `[project].lndo.site-database-latest.sql` to point to the
 timestamped `.sql` file just created.
 
-The corresponding `make restore-snapshot` target will run a `lando db-import`
+The corresponding `make restore-snapshot` target will run a `ddev import-db`
 on the "latest" symlink, thus restoring the site to where it was when the most
 recent `make snapshot` was taken.
 
@@ -120,7 +153,7 @@ removing them using `make ls-snaps`, `make rm-snap` and `make rm-all-snaps`.
 
 ## Customizing
 
-Once you have initialized a project with the Drumkit Drupal 8 project template,
+Once you have initialized a project with the Drumkit Drupal project template,
 you can customize the Drumkit targets to suit the specifics of your project's
 needs, by adding or modifying the files in your `[project]/drumkit/mk.d`
 subdirectory.
