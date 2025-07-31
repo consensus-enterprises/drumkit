@@ -1,0 +1,35 @@
+image:
+  name: registry.gitlab.com/consensus.enterprises/drumkit/ddev:24.04-1.24.6
+  entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - tests
+
+tests: &test-defaults
+  stage: tests
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    FF_NETWORK_PER_BUILD: 'true' # Allow service containers to see main build container; see https://docs.gitlab.com/runner/executors/docker.html#networking
+    DEBIAN_FRONTEND: noninteractive
+  services:
+    - name: docker:20-dind
+      alias: docker
+      command: ["--tls=false"]
+	cache:
+			key: default
+			paths:
+				- .composer-cache
+			policy: pull-push
+  before_script:
+    # We must chown the code in our own home dir because we still, after many years, cannot stop Gitlab CI from checking it out as root. See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/2750
+    - sudo chown -R ddev:ddev .
+    - ddev config global --instrumentation-opt-in=true
+    - source d
+    - make start build install
+  script:
+    - make tests

@@ -101,3 +101,6 @@ features/bootstrap/FeatureContext.php:
 	@mkdir -p features/bootstrap
 	@cp $(FILES_DIR)/drupal-project/$@ $@
 
+.gitlab-ci.yml:
+	@echo "Initializing Gitlab CI (.gitlab-ci.yml)."
+	@cp $(FILES_DIR)/drupal-project/gitlab-ci.yml $@

@@ -149,3 +149,4 @@ Feature: Initialize Drupal projects with DDEV.
     | features/admin.feature | Initializing features/admin.feature. |  Then I should see "bar" |
     | features/javascript.feature | Initializing features/javascript.feature. |  And I should see "bar" |
     | features/testing.feature | Initializing features/testing.feature. | Scenario: Check that Behat is installed. |
+    | .gitlab-ci.yml | Initializing Gitlab CI (.gitlab-ci.yml). | registry.gitlab.com/consensus.enterprises/drumkit/ddev:24.04-1.24.6 |
