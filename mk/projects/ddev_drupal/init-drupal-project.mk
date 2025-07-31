@@ -13,7 +13,6 @@ init-project-drupal-user-vars: mustache
 .ddev/config.yaml:
 	$(ECHO) "Initializing DDEV config file."
 	ddev config --project-type=drupal10 --project-name=$(PROJECT_NAME) --docroot=web --create-docroot
-	ddev start
 
 $(MK_D)/10_variables.mk:
 	@echo "Initializing drumkit variables file."
@@ -21,6 +20,7 @@ $(MK_D)/10_variables.mk:
 	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
 
 init-project-drupal-deps: docker ddev
+	ddev start
 
 # Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar"
 init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps drupal-drumkit-dir drupal-composer-codebase ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
