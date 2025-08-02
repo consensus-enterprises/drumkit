@@ -20,11 +20,6 @@ tests: &test-defaults
     - name: docker:20-dind
       alias: docker
       command: ["--tls=false"]
-	cache:
-			key: default
-			paths:
-				- .composer-cache
-			policy: pull-push
   before_script:
     # We must chown the code in our own home dir because we still, after many years, cannot stop Gitlab CI from checking it out as root. See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/2750
     - sudo chown -R ddev:ddev .
