@@ -16,7 +16,7 @@ default:
   extensions:
     Drupal\MinkExtension: &mink_ext
       ajax_timeout: 30
-      base_url: http://$(PROJECT_NAME).ddev.site/
+      base_url: http://{{PROJECT_NAME}}.ddev.site/
       browser_name: chrome
       browserkit_http: ~
       selenium2: ~

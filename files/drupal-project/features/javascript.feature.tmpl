@@ -13,7 +13,7 @@ Feature: Selenium is available to run javascript.
   Scenario: Confirm that the front page works with javascript (via Selenium).
     Given I am not logged in
       And I am on the homepage
-      And I wait "3" seconds
+      And I press "Menu"
      Then I should see "Log in"
 
   Scenario: Confirm that we can login without javascript.
