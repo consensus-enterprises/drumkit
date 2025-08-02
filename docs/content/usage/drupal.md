@@ -22,6 +22,8 @@ your environment. (See the [DDEV](https://ddev.com) or
 [Docker](https://docker.com) websites for installation instructions for your
 OS.)
 
+<script src="https://asciinema.org/a/731196.js" id="asciicast-731196" async="true"></script>
+
 To bootstrap a Drupal project with Drumkit:
 
 ```
@@ -30,7 +32,6 @@ cd myproject
 git init
 
 wget -O - https://drumk.it/installer | /bin/bash
-source d
 make init-project-drupal PROJECT_NAME=mydrupal SITE_NAME="My Drupal Site"
 ```
 
@@ -56,12 +57,21 @@ target calls `make drupal-drumkit-dir`, passing your original `PROJECT_NAME`
 and `SITE_NAME` variables, which primarily provisions a set of Drumkit `make`
 targets that are useful in a Drupal project:
 
+```
+source d
+make start
+make build
+make install
+make tests
+```
+
 * [`drumkit/mk.d/10_variables.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/10_variables.mk.tmpl) - Foundational variables for the project (eg. `PROJECT_NAME` and `SITE_NAME` etc.)
 * [`drumkit/mk.d/20_ddev.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/20_ddev.mk) - DDEV targets like `make start` and `make stop`
 * [`drumkit/mk.d/30_build.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/30_build.mk) - composer targets like `make build` and `make update`
 * [`drumkit/mk.d/40_install.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/40_install.mk) - drush targets like `make install`
 * [`drumkit/mk.d/50_backup.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/50_backup.mk) database backup targets like `make snapshot` and `make restore-snapshot`
 * [`drumkit/mk.d/60_test.mk`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/drupal-project/60_test.mk) - targets for running Behat tests
+
 
 ## Composer Drupal 10 codebase
 
