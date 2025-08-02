@@ -1,0 +1,10 @@
+@admin @api
+Feature: Administrator role.
+  In order to manage site configuration
+  As an Administrator
+  I need to access administrative functions.
+
+  Scenario: Login as user with the "Administrator" role.
+    Given I am not logged in
+     When I am logged in as a "Administrator"
+     Then I should see "{{SITE_NAME}}"

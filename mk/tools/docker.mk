@@ -8,7 +8,7 @@ endif
 docker:
 	@echo "Ensuring Docker is installed."
 ifeq ($(local_OS),Darwin)
-	@which docker > /dev/null || echo "Docker is not intalled. To use Docker with Lando on macOS, check the lando intsallation instructions."
+	@which docker > /dev/null || echo "Docker is not intalled. To use Docker with DDEV on macOS, check the ddev installation instructions."
 else
 	@which docker > /dev/null || (curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && rm get-docker.sh)
 	@echo "Ensuring $(USER) is in docker group."

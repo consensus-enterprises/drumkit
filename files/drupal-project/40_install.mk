@@ -2,18 +2,22 @@
 
 .PHONY: install install-real ci-install uninstall uninstall-real
 
-MYSQL_DATABASE ?= $(DB_NAME)
-MYSQL_USER     ?= $(DB_USER)
-MYSQL_PASSWORD ?= $(DB_PASS)
+SITE_INSTALL_DIR = web/sites/$(SITE_URL)
 
 SITE_INSTALL_CMD = site:install $(INSTALL_PROFILE)\
                        --site-name=$(SITE_NAME) \
                        --yes --locale="en" \
-                       --db-url="mysql://$(MYSQL_USER):$(MYSQL_PASSWORD)@database/$(MYSQL_DATABASE)" \
+                        --yes --locale="en" \
+                       --db-url="mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)" \
                        --sites-subdir=$(SITE_URL) \
                        --account-name="$(ADMIN_USER)" \
                        --account-mail="dev@$(SITE_URL)" \
                        --account-pass="$(ADMIN_PASS)"
+
+site-clean:
+	@$(ECHO) "$(YELLOW)Deleting $(GREY)$(SITE_URL)$(YELLOW) directory.$(RESET)"
+	@[ ! -d $(SITE_INSTALL_DIR) ] || chmod -R 775 $(SITE_INSTALL_DIR)
+	@rm -rf $(SITE_INSTALL_DIR)
 
 install: ## Install Drupal site.
 				@$(MAKE-QUIET) install-real
