@@ -4,3 +4,9 @@ languageCode: "en-us"
 theme: "harmony"
 params:
   editURL: "https://gitlab.com/-/ide/project/consensus.enterprises/drumkit/edit/master/-/content/"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
