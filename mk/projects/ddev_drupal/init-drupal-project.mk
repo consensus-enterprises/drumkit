@@ -2,13 +2,15 @@ MK_FILES = $(MK_D)/20_ddev.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk $(MK_D)/
 BEHAT_FILES = behat.yml .ddev/commands/web/behat .ddev/config.selenium-standalone-chrome.yaml
 FEATURE_FILES = features/admin.feature features/javascript.feature features/testing.feature
 
+MUSTACHE = .mk/.local/bin/mustache
+
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
 COMPOSER_BASE_PROJECT_VERSION ?= "10.5.1"
 
 # We expect the 2 variables PROJECT_NAME and SITE_NAME to be passed in.
 init-project-drupal-user-vars: .checkvar-PROJECT_NAME
 init-project-drupal-user-vars: .checkvar-SITE_NAME
-init-project-drupal-user-vars: mustache
+init-project-drupal-user-vars:
 	make -s .ddev/config.yaml && \
 	make -s $(MK_D)/10_variables.mk
 
@@ -41,7 +43,7 @@ drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/50_ddev.sh
 $(MK_D)/10_variables.mk: mustache
 	@echo "Initializing drumkit variables file."
 	@mkdir -p $(MK_D)
-	@mustache ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
+	@$(MUSTACHE) ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
 
 $(MK_FILES):
 	@echo "Initializing $@"
@@ -85,20 +87,20 @@ drupal-behat-deps: $(BEHAT_FILES)
 
 behat.yml: mustache
 	@echo "Initializing behat.yml."
-	@mustache ENV $(FILES_DIR)/drupal-project/behat.yml.tmpl > $@
+	@$(MUSTACHE) ENV $(FILES_DIR)/drupal-project/behat.yml.tmpl > $@
 
 .ddev/config.selenium-standalone-chrome.yaml:
 	@echo "Installing ddev Selenium add-on."
 	@ddev add-on get ddev/ddev-selenium-standalone-chrome
 
-.ddev/commands/web/behat: mustache
+.ddev/commands/web/behat:
 	@echo "Creating ddev behat command."
 	@mkdir -p .ddev/commands/web
 	@cp $(FILES_DIR)/drupal-project/ddev-behat-command.sh $@
 
-$(FEATURE_FILES): features/bootstrap/FeatureContext.php
+$(FEATURE_FILES): mustache features/bootstrap/FeatureContext.php
 	@echo "Initializing $@."
-	@mustache ENV $(FILES_DIR)/drupal-project/$@.tmpl > $@
+	@$(MUSTACHE) ENV $(FILES_DIR)/drupal-project/$@.tmpl > $@
 
 features/bootstrap/FeatureContext.php:
 	@echo "Initializing local FeatureContext."
