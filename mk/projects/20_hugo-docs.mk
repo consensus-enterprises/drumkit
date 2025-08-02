@@ -41,6 +41,7 @@ hugo-ci-local: gitlab-runner .gitlab-ci.yml ##@hugo@testing Run CI tests for hug
 	@echo "Running gitlab tests for hugo"
 	@gitlab-runner exec docker test
 
-.gitlab-ci.yml:
-	@echo "Copying hugo CI file"
-	@cp $(FILES_DIR)/hugo-docs/.gitlab-ci.yml.tmpl .gitlab-ci.yml
+#@TODO: Re-instate this target in such a way that it doesn't conflict with the corresponding one in mk/project/ddev_drupal/init-project-drupal.mk
+#.gitlab-ci.yml:
+#	@echo "Copying hugo CI file"
+#	@cp $(FILES_DIR)/hugo-docs/.gitlab-ci.yml.tmpl .gitlab-ci.yml
