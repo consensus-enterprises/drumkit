@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    {{ .Hugo.Generator }}
+    {{ hugo.Generator }}
     {{ partial "meta.html" . }}
     {{ partial "favicon.html" . }}
     <title>{{ .Title }} :: {{ .Site.Title }}</title>
@@ -69,7 +69,7 @@
                   <span id="toc-menu"><i class="fa fa-list-ul fa-lg"></i></span>
                   {{ end }}
                   <span class="links">
-                    {{ template "menuTitle_breadcrumb" dict "currentPage" .Page "id" .UniqueID }}
+                    {{ template "menuTitle_breadcrumb" dict "currentPage" .Page "value" .Page.Title }}
                   </span>
                 </div>
                 {{ if $toc }}
@@ -89,14 +89,12 @@
 
 <!-- templates -->
 {{ define "menuTitle_breadcrumb" }}
-  {{ $title := or .currentPage.Params.menutitle .currentPage.Title }}
-  {{ if .currentPage.Parent }}
-    {{ template "menuTitle_breadcrumb" dict "currentPage" .currentPage.Parent }}
+  {{ $parent := .currentPage.Parent }}
+  {{ if $parent }}
+    {{ $value := (printf "<a href='%s'>%s</a> > %s" $parent.RelPermalink $parent.Title .value) }}
+    {{ template "menuTitle_breadcrumb" dict "page" $parent "value" $value }}
+  {{ else }}
+    {{ .value|safeHTML }}
   {{ end }}
-    {{ if eq .id .currentPage.UniqueID }}
-      {{ $title }}
-    {{ else }}
-      <a href="{{ .currentPage.URL }}">{{ $title }}</a> >
-    {{ end }}
 {{ end }}
 
