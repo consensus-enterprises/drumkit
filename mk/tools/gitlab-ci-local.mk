@@ -16,12 +16,12 @@ gitlab-ci-local: docker $(GITLAB_CI_LOCAL_GZ) $(GITLAB_CI_LOCAL) $(GITLAB_CI_LOC
 	@which gitlab-ci-local
 	@$(GITLAB_CI_LOCAL) --version
 
-$(GITLAB_CI_LOCAL_GZ):
+$(GITLAB_CI_LOCAL_GZ): $(SRC_DIR)
 	$(ECHO) "Downloading gitlab-ci-local from $(GITLAB_CI_LOCAL_URL)"
 	@mkdir -p $(BIN_DIR)
 	@curl -L --output $(GITLAB_CI_LOCAL_GZ) $(GITLAB_CI_LOCAL_URL)
 
-$(GITLAB_CI_LOCAL):
+$(GITLAB_CI_LOCAL): $(BIN_DIR)
 	$(ECHO) "Unzipping gitlab-ci-local."
 	@gzip -dc $(GITLAB_CI_LOCAL_GZ) > $(GITLAB_CI_LOCAL)
 	@echo "Making gitlab-ci-local executable."
