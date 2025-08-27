@@ -12,4 +12,5 @@ apt-get install -yqq \
   sudo \
   unzip \
   vim-tiny \
+  wget \
 > /dev/null
