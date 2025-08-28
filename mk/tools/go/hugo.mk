@@ -12,4 +12,4 @@ else
         hugo_OS   = Linux-64bit
 endif
 
-hugo_DOWNLOAD_URL ?= https://github.com/gohugoio/hugo/releases/download/v$(hugo_RELEASE)/hugo_$(hugo_RELEASE)_$(hugo_OS).tar.gz
+hugo_DOWNLOAD_URL ?= https://github.com/gohugoio/hugo/releases/download/v$(hugo_RELEASE)/hugo_extended_$(hugo_RELEASE)_$(hugo_OS).tar.gz
