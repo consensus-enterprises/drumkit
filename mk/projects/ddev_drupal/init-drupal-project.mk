@@ -89,7 +89,7 @@ tmp/composer-cache:
 ## BEHAT SETUP
 drupal-behat-deps: $(BEHAT_FILES) $(FEATURE_FILES)
 	@echo "Installing composer package dependencies for Behat."
-	@ddev composer require --dev behat/mink-goutte-driver:"^2.0" drupal/drupal-extension:"^5.1" consensus/behat-drupal-context:"*" consensus/behat-terminal-context:"*"
+	@ddev composer require --dev drupal/drupal-extension:"^5.1" consensus/behat-drupal-context:"*" consensus/behat-terminal-context:"*"
 
 behat.yml:
 	@echo "Initializing behat.yml."
