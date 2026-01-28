@@ -2,8 +2,6 @@ MK_FILES = $(MK_D)/20_ddev.mk $(MK_D)/30_build.mk $(MK_D)/40_install.mk $(MK_D)/
 BEHAT_FILES = behat.yml .ddev/commands/web/behat .ddev/config.selenium-standalone-chrome.yaml
 FEATURE_FILES = features/admin.feature features/javascript.feature features/testing.feature
 
-MUSTACHE = .mk/.local/bin/mustache
-
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
 COMPOSER_BASE_PROJECT_VERSION ?= "10.5.1"
 
@@ -44,7 +42,7 @@ drupal-drumkit-dir: $(MK_D) $(MK_FILES) $(BOOTSTRAP_D)/50_ddev.sh
 $(MK_D)/10_variables.mk:
 	@echo "Initializing drumkit variables file."
 	@mkdir -p $(MK_D)
-	@$(MUSTACHE) ENV $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
+	@envsubst < $(FILES_DIR)/drupal-project/10_variables.mk.tmpl > $@
 
 $(MK_FILES):
 	@echo "Initializing $@"
@@ -93,7 +91,7 @@ drupal-behat-deps: $(BEHAT_FILES) $(FEATURE_FILES)
 
 behat.yml:
 	@echo "Initializing behat.yml."
-	@$(MUSTACHE) ENV $(FILES_DIR)/drupal-project/behat.yml.tmpl > $@
+	@envsubst < $(FILES_DIR)/drupal-project/behat.yml.tmpl > $@
 
 .ddev/config.selenium-standalone-chrome.yaml:
 	@echo "Installing ddev Selenium add-on."
@@ -106,7 +104,7 @@ behat.yml:
 
 $(FEATURE_FILES): features/bootstrap/FeatureContext.php
 	@echo "Initializing $@."
-	@$(MUSTACHE) ENV $(FILES_DIR)/drupal-project/$@.tmpl > $@
+	@envsubst < $(FILES_DIR)/drupal-project/$@.tmpl > $@
 
 features/bootstrap/FeatureContext.php:
 	@echo "Initializing local FeatureContext."

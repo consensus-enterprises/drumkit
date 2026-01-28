@@ -131,7 +131,7 @@ Feature: Initialize Drupal projects with DDEV.
 
   @unit
   Scenario Outline: Behat config files are provisioned correctly.
-    When I run "unset DRUMKIT && source d && make mustache <TARGET_FILE> PROJECT_NAME=foo SITE_NAME=bar"
+    When I run "unset DRUMKIT && source d && make <TARGET_FILE> PROJECT_NAME=foo SITE_NAME=bar"
     Then I should get:
     """
     <TARGET_OUTPUT>
@@ -143,7 +143,7 @@ Feature: Initialize Drupal projects with DDEV.
     Examples:
     | TARGET_FILE | TARGET_OUTPUT | TARGET_CONTENTS |
     #@TODO: Figure out why behat.yml this doesn't work like the others? Possibly because it's replacing the Drumkit behat.yml from inside the container?
-    #| behat.yml   | Initializing behat.yml | base_url: http://foo.ddev.site/  |
+    | behat.yml   | Initializing behat.yml | base_url: http://foo.ddev.site/  |
     | .ddev/commands/web/behat | Creating ddev behat command. | bin/behat --colors --strict --stop-on-failure $@ |
     | features/bootstrap/FeatureContext.php | Initializing local FeatureContext. | class FeatureContext extends RawDrupalContext |
     | features/admin.feature | Initializing features/admin.feature. |  Then I should see "bar" |

@@ -7,4 +7,4 @@ Feature: Administrator role.
   Scenario: Login as user with the "Administrator" role.
     Given I am not logged in
      When I am logged in as a "Administrator"
-     Then I should see "{{SITE_NAME}}"
+     Then I should see "$SITE_NAME"
