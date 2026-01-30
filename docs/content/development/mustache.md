@@ -4,6 +4,8 @@ weight: 30
 draft: true
 ---
 
+**DEPRECATED**: Consider using [`envsubst`](../templating) instead.
+
 We use `mustache` for templating config or other files with a set of values
 that aren't known until make execution, e.g. initializing config files for new
 project codebases, etc.

@@ -8,6 +8,7 @@ mustache_ZIP          ?= $(mustache_NAME)-$(mustache_RELEASE)-$(mustache_OS).zip
 
 install-mustache: init-mk $(BIN_DIR)/mustache
 mustache: install-mustache
+	$(DEPRECATED)
 
 $(BIN_DIR)/mustache: $(SRC_DIR)/$(mustache_NAME)/$(mustache_RELEASE)/$(mustache_NAME)
 	@echo "Installing mustache $(mustache_RELEASE)."
