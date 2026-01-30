@@ -1,7 +1,6 @@
 # Generic templating method.
 
-.template: mustache
+.template:
 	$(ECHO) "$(YELLOW)Creating file: '$(TEMPLATE_TARGET)'.$(RESET)"
 	@mkdir -p $(TEMPLATE_TARGETDIR)
-	@$(TEMPLATE_VARS) mustache ENV $(TEMPLATE_SOURCE) > $(TEMPLATE_TARGET)
-
+	@$(TEMPLATE_VARS) envsubst < $(TEMPLATE_SOURCE) > $(TEMPLATE_TARGET)

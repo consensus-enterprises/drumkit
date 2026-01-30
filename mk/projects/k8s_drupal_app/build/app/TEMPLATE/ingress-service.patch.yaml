@@ -5,5 +5,5 @@ metadata:
 spec:
   tls:
     - hosts:
-      - {{ DRUPAL_APP_ENVIRONMENT_LC }}.{{ CLIENT_URL }}.{{ HOSTING_DOMAIN }}
-      secretName: {{ DRUPAL_APP_ENVIRONMENT_LC }}-app-env-tls-prod-letsencrypt-server
+      - ${DRUPAL_APP_ENVIRONMENT_LC}.${CLIENT_URL}.${HOSTING_DOMAIN}
+      secretName: ${DRUPAL_APP_ENVIRONMENT_LC}-app-env-tls-prod-letsencrypt-server

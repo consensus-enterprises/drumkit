@@ -12,7 +12,7 @@ init-project-packer-vars:
 	make -s $(MK_D)/20_ci.mk && \
 	make -s $(PACKER_SH_DIR)/$(CONTAINER_PROJECT_NAME).sh
 
-init-project-packer-static: mustache
+init-project-packer-static:
 	@mkdir -p $(PACKER_JSON_DIR) $(PACKER_SH_DIR)
 	@echo "Initializing Packer JSON files and scripts."
 	@cp $(FILES_DIR)/packer/json/*.json $(PACKER_JSON_DIR)
@@ -25,7 +25,7 @@ init-project-packer: init-project-packer-intro init-project-packer-static ##@pro
 $(MK_D)/20_ci.mk: ##@testing Create .gitlab-ci.yml file for new 
 	@echo "Initializing CI makefile."
 	@mkdir -p $(MK_D)
-	@mustache ENV $(FILES_DIR)/packer/20_ci.mk.tmpl > $@
+	@envsubst < $(FILES_DIR)/packer/20_ci.mk.tmpl > $@
 
 $(PACKER_JSON_DIR)/40-$(CONTAINER_PROJECT_NAME).json:
 	@echo "Initializing project-specific Packer JSON file $@"
@@ -36,4 +36,4 @@ $(PACKER_SH_SCRIPTS):
 
 $(PACKER_SH_DIR)/$(CONTAINER_PROJECT_NAME).sh:
 	@echo "Initializing project specific Packer script $@"
-	@mustache ENV $(FILES_DIR)/packer/project.sh.tmpl > $@
+	@envsubst < $(FILES_DIR)/packer/project.sh.tmpl > $@

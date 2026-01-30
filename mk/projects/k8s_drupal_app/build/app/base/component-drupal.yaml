@@ -23,7 +23,7 @@ spec:
             claimName: files-persistent-volume-claim
       containers:
         - name: drupal-container
-          image: {{ DRUPAL_CONTAINER_REGISTRY_URL }}/drupal:latest
+          image: ${DRUPAL_CONTAINER_REGISTRY_URL}/drupal:latest
           ports:
             - containerPort: 80
           volumeMounts:

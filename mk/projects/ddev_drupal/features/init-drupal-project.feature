@@ -63,13 +63,13 @@ Feature: Initialize Drupal projects with DDEV.
      """
      tmpdir
      """
-  
+
   @unit
   Scenario: Test Drumkit setup of .env and drumkit/ directory contents
      When I run "make drupal-drumkit-dir"
      Then I should get:
      """
-	   Setting up drumkit directory.
+     Setting up drumkit directory.
      """
      And the following files should exist:
      """
@@ -78,11 +78,11 @@ Feature: Initialize Drupal projects with DDEV.
      """
      And the file ".env" should contain:
      """
-	   COMPOSER_CACHE_DIR=tmp/composer-cache/
+     COMPOSER_CACHE_DIR=tmp/composer-cache/
      """
      And the file "drumkit/bootstrap.d/50_ddev.sh" should contain:
      """
-	   export $(cat .env | xargs)
+     export $(cat .env | xargs)
      """
      And the following files should exist:
      """
@@ -92,7 +92,7 @@ Feature: Initialize Drupal projects with DDEV.
      drumkit/mk.d/50_backup.mk
      drumkit/mk.d/60_test.mk
      """
-  
+
   # We can't really test this in the web container because it relies on calling ddev commands.
   @unit @wip
   Scenario: Initialize DDEV config file
@@ -109,10 +109,10 @@ Feature: Initialize Drupal projects with DDEV.
      """
      name: hummus
      """
-  
+
   @unit
-  Scenario: Initialize drumkit variables file   
-     When I run "unset DRUMKIT && source d && make mustache drumkit/mk.d/10_variables.mk PROJECT_NAME=hummus SITE_NAME='Hummus is Yummus'"
+  Scenario: Initialize drumkit variables file
+     When I run "unset DRUMKIT && source d && make drumkit/mk.d/10_variables.mk PROJECT_NAME=hummus SITE_NAME='Hummus is Yummus'"
      Then I should get:
      """
      Initializing drumkit variables file.
@@ -131,7 +131,7 @@ Feature: Initialize Drupal projects with DDEV.
 
   @unit
   Scenario Outline: Behat config files are provisioned correctly.
-    When I run "unset DRUMKIT && source d && make mustache <TARGET_FILE> PROJECT_NAME=foo SITE_NAME=bar"
+    When I run "unset DRUMKIT && source d && make <TARGET_FILE> PROJECT_NAME=foo SITE_NAME=bar"
     Then I should get:
     """
     <TARGET_OUTPUT>
@@ -143,7 +143,7 @@ Feature: Initialize Drupal projects with DDEV.
     Examples:
     | TARGET_FILE | TARGET_OUTPUT | TARGET_CONTENTS |
     #@TODO: Figure out why behat.yml this doesn't work like the others? Possibly because it's replacing the Drumkit behat.yml from inside the container?
-    #| behat.yml   | Initializing behat.yml | base_url: http://foo.ddev.site/  |
+    | behat.yml   | Initializing behat.yml | base_url: http://foo.ddev.site/  |
     | .ddev/commands/web/behat | Creating ddev behat command. | bin/behat --colors --strict --stop-on-failure $@ |
     | features/bootstrap/FeatureContext.php | Initializing local FeatureContext. | class FeatureContext extends RawDrupalContext |
     | features/admin.feature | Initializing features/admin.feature. |  Then I should see "bar" |

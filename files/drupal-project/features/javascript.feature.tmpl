@@ -19,7 +19,7 @@ Feature: Selenium is available to run javascript.
   Scenario: Confirm that we can login without javascript.
     Given I am not logged in
      When I am logged in as a "Administrator"
-     Then I should see "{{SITE_NAME}}"
+     Then I should see "${SITE_NAME}"
 
   @javascript
   Scenario: Confirm that we can login with javascript (via Selenium).
@@ -31,7 +31,7 @@ Feature: Selenium is available to run javascript.
     Given I am not logged in
      When I am on "/user/login"
      Then I should see "Log in"
-      And I should see "{{SITE_NAME}}"
+      And I should see "${SITE_NAME}"
       And I enter "dev" for "Username"
       And I enter "pwd" for "Password"
      When I press the "Log in" button
@@ -41,7 +41,7 @@ Feature: Selenium is available to run javascript.
     Given I am not logged in
      When I am on "/user/login"
      Then I should see "Log in"
-      And I should see "{{SITE_NAME}}"
+      And I should see "${SITE_NAME}"
       And I enter "dev" for "Username"
       And I enter "pwd" for "Password"
      When I press the "Log in" button
