@@ -4,6 +4,11 @@ MK_D_EXISTS ?= $(shell if [[ -d $(MK_D) ]]; then echo 1; fi)
 MK_D_NONEMPTY ?= $(shell if [[ `ls -A $(MK_D)` ]]; then echo 1; fi)
 make := $(MAKE) -s
 
+# Provide a simple deprecation warning, and instructions on how to silence them.
+# Usage: Add `$(DEPRECATED)` as the first line of a deprecated target.
+SILENCE_DEPRECATED ?= no
+DEPRECATED = @if [ "$(SILENCE_DEPRECATED)" == "no" ]; then echo -e "\033[1m\033[38;5;9m'$@' has been deprecated, and will be removed in the next major version of Drumkit." && echo -e "\033[38;5;220mSet 'SILENCE_DEPRECATED = yes' to silence deprecation warnings.\033[0m"; fi
+
 drumkit $(MK_D) $(BOOTSTRAP_D):
 	@mkdir -p $@
 
