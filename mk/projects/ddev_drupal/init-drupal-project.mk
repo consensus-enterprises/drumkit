@@ -8,7 +8,7 @@ COMPOSER_BASE_PROJECT_VERSION ?= "10.5.1"
 # We expect the 2 variables PROJECT_NAME and SITE_NAME to be passed in.
 init-project-drupal-user-vars: .checkvar-PROJECT_NAME
 init-project-drupal-user-vars: .checkvar-SITE_NAME
-init-project-drupal-user-vars: mustache
+init-project-drupal-user-vars:
 	make -s .ddev/config.yaml && \
 	make -s $(MK_D)/10_variables.mk
 
