@@ -17,7 +17,7 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
       """
 
   Scenario: Initialize a Packer CI project.
-      When I run "unset DRUMKIT && source d && make mustache && make CONTAINER_REGISTRY_URL=sample.gitlab.repo/uri CONTAINER_PROJECT_NAME=myproj init-project-packer-static drumkit/mk.d/20_ci.mk scripts/packer/scripts/myproj.sh"
+      When I run "unset DRUMKIT && source d && make CONTAINER_REGISTRY_URL=sample.gitlab.repo/uri CONTAINER_PROJECT_NAME=myproj init-project-packer-static drumkit/mk.d/20_ci.mk scripts/packer/scripts/myproj.sh"
       Then I should get:
       """
       Initializing Packer JSON files and scripts.
