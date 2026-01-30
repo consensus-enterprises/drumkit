@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
         - name: job-install-drupal
-          image: {{ DRUPAL_CONTAINER_REGISTRY_URL }}/drupal:latest
+          image: ${DRUPAL_CONTAINER_REGISTRY_URL}/drupal:latest
           command: ["bash", "-c", "/install-drupal.sh"]
           env:
             - name: DB_NAME

@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
         - name: drupal-container
-          image: {{ DRUPAL_CONTAINER_REGISTRY_URL }}/drupal:{{ DRUPAL_CONTAINER_IMAGE_TAG }}
+          image: ${DRUPAL_CONTAINER_REGISTRY_URL}/drupal:${DRUPAL_CONTAINER_IMAGE_TAG}

@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: {{ DRUPAL_APP_ENVIRONMENT_LC }}
+namespace: ${DRUPAL_APP_ENVIRONMENT_LC}
 
 resources:
 - ../base
@@ -21,4 +21,4 @@ patchesJson6902:
   patch: |-
     - op: add
       path: /spec/rules/0/host
-      value: {{ DRUPAL_APP_ENVIRONMENT_LC }}.{{ CLIENT_URL }}.{{ HOSTING_DOMAIN }}
+      value: ${DRUPAL_APP_ENVIRONMENT_LC}.${CLIENT_URL}.${HOSTING_DOMAIN}

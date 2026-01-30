@@ -1,5 +1,5 @@
-CONTAINER_REGISTRY_URL ?= {{ CONTAINER_REGISTRY_URL }}
-CONTAINER_PROJECT_NAME = {{ CONTAINER_PROJECT_NAME }}
+CONTAINER_REGISTRY_URL ?= ${CONTAINER_REGISTRY_URL}
+CONTAINER_PROJECT_NAME = ${CONTAINER_PROJECT_NAME}
 
 local_ref = $(shell git rev-parse HEAD)
 clone_ref = $(shell [ -d .clone ] && (cd .clone && git rev-parse HEAD))

@@ -1,4 +1,4 @@
-FROM {{ DRUPAL_CONTAINER_REGISTRY_URL }}/base:latest
+FROM ${DRUPAL_CONTAINER_REGISTRY_URL}/base:latest
 
 # Install OS-level app dependencies
 COPY ./build/images/scripts/app.sh /tmp/app.sh
