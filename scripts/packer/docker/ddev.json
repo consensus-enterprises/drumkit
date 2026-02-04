@@ -43,7 +43,7 @@
     "image_name": "ddev",
     "ubuntu_version": "24.04",
     "ubuntu_codename": "noble",
-    "ddev_version": "1.24.6",
+    "ddev_version": "1.25.0",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
     "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
     "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
