@@ -33,6 +33,7 @@
   "provisioners": [
     {
       "scripts": [
+        "scripts/packer/scripts/buildx.sh",
         "scripts/packer/scripts/ddev.sh",
         "scripts/packer/scripts/cleanup.sh"
       ],
