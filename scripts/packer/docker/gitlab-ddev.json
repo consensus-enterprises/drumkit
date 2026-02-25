@@ -1,0 +1,44 @@
+{
+  "builders": [
+    {
+      "image": "ghcr.io/ddev/ddev-gitlab-ci:v{{user `ddev_version`}}",
+      "type": "docker",
+      "privileged": "true",
+      "commit": "true"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "repository": "{{user `repo_url`}}/{{user `image_name`}}",
+        "tags": [
+          "{{user `ddev_version`}}-{{isotime `2006-01-02T03-04-05`}}",
+          "{{user `ddev_version`}}"
+        ],
+        "type": "docker-tag"
+      },
+      {
+        "type": "docker-push",
+        "login": "true",
+        "login_server": "{{user `repo_url`}}",
+        "login_username": "{{user `login_username`}}",
+        "login_password": "{{user `login_password`}}"
+      }
+    ]
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/packer/scripts/alpine-make.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "image_name": "gitlab-ddev",
+    "ddev_version": "1.25.1",
+    "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
+    "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
+    "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
+  }
+}

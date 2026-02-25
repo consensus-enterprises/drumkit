@@ -1,6 +1,6 @@
 DRUMKIT_CONTAINER_REGISTRY_URL ?= registry.gitlab.com/consensus.enterprises/drumkit
 CONTAINER_PROJECT_NAME          = drumkit
-DRUMKIT_DOCKER_IMAGES           = docker/ubuntu-24.04 docker/base docker/docker docker/ddev
+DRUMKIT_DOCKER_IMAGES           = docker/ubuntu-24.04 docker/base docker/docker docker/ddev docker/gitlab-ddev
 
 local_ref = $(shell git rev-parse HEAD)
 clone_ref = $(shell [ -d .clone ] && (cd .clone && git rev-parse HEAD))
