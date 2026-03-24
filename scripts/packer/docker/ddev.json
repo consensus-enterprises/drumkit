@@ -36,14 +36,17 @@
         "scripts/packer/scripts/ddev.sh",
         "scripts/packer/scripts/cleanup.sh"
       ],
+      "environment_vars": [
+        "DDEV_VERSION={{user `ddev_version`}}"
+      ],
       "type": "shell"
     }
   ],
   "variables": {
     "image_name": "ddev",
-    "ubuntu_version": "24.04",
-    "ubuntu_codename": "noble",
-    "ddev_version": "1.25.1",
+    "ubuntu_version": "{{env `UBUNTU_VERSION`}}",
+    "ubuntu_codename": "{{ env `UBUNTU_CODENAME`}}",
+    "ddev_version": "{{env `DDEV_VERSION`}}",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
     "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
     "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
