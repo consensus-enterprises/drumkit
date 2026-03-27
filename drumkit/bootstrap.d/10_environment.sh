@@ -10,7 +10,7 @@ WHITE="\033[38;5;255m"
 RESET="\033[0m"
 
 if [[ -f "$ENVFILE" ]]; then
-  export $(cat ${ENVFILE} | xargs)
+  export $(cat "${ENVFILE}" | xargs)
 else
   echo -e "${YELLOW}No ${ENVFILE} file found. Consider copying .env.tmpl and adding GitLab credentials.${RESET}"
   echo -e "${WHITE}Generate a Personal Access Token here: https://gitlab.com/-/user_settings/personal_access_tokens${RESET}"
