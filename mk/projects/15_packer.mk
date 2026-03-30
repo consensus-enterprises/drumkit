@@ -19,11 +19,19 @@ init-project-packer-vars:
 	@make -s $(MK_D)/20_ci.mk
 	@make -s $(PACKER_PROJECT_SH)
 
-init-project-packer-static:
+init-project-packer-static: $(BOOTSTRAP_D)/01_environment.sh .env.tmpl
 	@mkdir -p $(PACKER_JSON_DIR) $(PACKER_SH_DIR)
 	@echo "Initializing Packer JSON files and scripts."
 	@cp $(FILES_DIR)/packer/json/*.json $(PACKER_JSON_DIR)
 	@make -s $(PACKER_SH_SCRIPTS) $(PACKER_PROJECT_JSON)
+
+.env.tmpl:
+	@echo "Initializing $@."
+	@cp $(FILES_DIR)/packer/env.tmpl $@
+
+$(BOOTSTRAP_D)/01_environment.sh:
+	@echo "Initializing $@."
+	@cp $(FILES_DIR)/packer/01_environment.sh $@
 
 $(MK_D)/20_ci.mk: ##@testing Create .gitlab-ci.yml file for new 
 	@echo "Initializing CI makefile."
