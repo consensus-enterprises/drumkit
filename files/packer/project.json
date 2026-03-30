@@ -2,7 +2,7 @@
   "builders": [
     {
       "commit": true,
-      "image": "{{user `repo_url`}}/ddev:latest",
+      "image": "{{user `repo_url`}}/ddev:{{user `ubuntu_version`}}-{{user `ddev_version`}}",
       "type": "docker"
     }
   ],
@@ -12,7 +12,7 @@
         "repository": "{{user `repo_url`}}/{{user `image_name`}}",
         "tags": [
           "0.0.x",
-          "{{user `ubuntu_codename`}}-{{isotime `2006-01-02T03-04-05`}}"
+          "{{user `ubuntu_version`}}-{{isotime `2006-01-02T03-04-05`}}"
         ],
         "type": "docker-tag"
       },
