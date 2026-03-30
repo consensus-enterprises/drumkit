@@ -31,7 +31,6 @@
       "scripts": [
         "scripts/packer/scripts/utils.sh",
         "scripts/packer/scripts/php.sh",
-        "scripts/packer/scripts/python.sh",
         "scripts/packer/scripts/cleanup.sh"
       ],
       "type": "shell"
