@@ -17,11 +17,11 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
       """
 
   Scenario: Initialize a Packer CI project.
-      When I run "unset DRUMKIT && source d && make CONTAINER_REGISTRY_URL=sample.gitlab.repo/uri CONTAINER_PROJECT_NAME=myproj init-project-packer-static drumkit/mk.d/20_ci.mk scripts/packer/scripts/myproj.sh"
+      When I run "unset DRUMKIT && source d && make PROJECT_CONTAINER_REGISTRY_URL=sample.gitlab.repo/uri PROJECT_CONTAINER_NAME=myproj init-project-packer-static drumkit/mk.d/20_ci.mk scripts/packer/scripts/myproj.sh"
       Then I should get:
       """
       Initializing Packer JSON files and scripts.
-      Initializing project-specific Packer JSON file scripts/packer/json/40-myproj.json
+      Initializing project-specific Packer JSON file scripts/packer/json/myproj.json
       Initializing CI makefile.
       Initializing project specific Packer script scripts/packer/scripts/myproj.sh
       """
@@ -34,7 +34,7 @@ Feature: Initialize projects that use Packer to manage docker images for CI.
       And the file "drumkit/mk.d/20_ci.mk" should contain:
       """
       CONTAINER_REGISTRY_URL ?= sample.gitlab.repo/uri
-      CONTAINER_PROJECT_NAME = myproj
+      PROJECT_CONTAINER_NAME = myproj
       """
       Then I run "make clone"
       And I should get:
