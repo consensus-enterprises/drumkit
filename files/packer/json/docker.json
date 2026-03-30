@@ -19,13 +19,6 @@
         "type": "docker-tag"
       },
       {
-        "repository": "{{user `repo_url`}}/{{user `image_name`}}",
-        "tags": [
-          "latest"
-        ],
-        "type": "docker-tag"
-      },
-      {
         "type": "docker-push",
         "login": "true",
         "login_server": "{{user `repo_url`}}",
