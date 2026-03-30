@@ -26,15 +26,15 @@ ci-image: packer
 	@if [ -z $(CONTAINER_REGISTRY_PASSWORD) ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_REGISTRY_PASSWORD$(YELLOW).$(RESET)"; exit 1; fi
 	@echo "Building packer image for CI: $(CONTAINER_SCRIPT)"
 	@echo "Using project name: $(CONTAINER_PROJECT_NAME)"
-	@echo "Using container registry: $(DRUMKIT_CONTAINER_REGISTRY_URL)"
+	@echo "Using container registry: $(CONTAINER_REGISTRY_URL)"
 	@packer build $(CONTAINER_SCRIPT)
 
-ci-images: ci-images-intro $(DRUMKIT_DOCKER_IMAGES)
+ci-images: ci-images-intro $(PROJECT_DOCKER_IMAGES)
 
 ci-images-intro:
 	@echo "Building packer images for CI."
 	@echo "Using project name: $(CONTAINER_PROJECT_NAME)"
 	@echo "Using container registry: $(CONTAINER_REGISTRY_URL)"
 
-$(DOCKER_IMAGES): packer clone
+$(PROJECT_DOCKER_IMAGES): packer clone
 	@make -s ci-image CONTAINER_SCRIPT=scripts/packer/$@.json CONTAINER_PROJECT_NAME=$(CONTAINER_PROJECT_NAME) CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL)

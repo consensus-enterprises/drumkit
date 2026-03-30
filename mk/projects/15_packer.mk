@@ -1,4 +1,4 @@
-PACKER_JSON_DIR = scripts/packer/json
+PACKER_JSON_DIR = scripts/packer/docker
 PACKER_SH_DIR = scripts/packer/scripts
 PACKER_SH_SCRIPTS = $(PACKER_SH_DIR)/apt.sh $(PACKER_SH_DIR)/cleanup.sh $(PACKER_SH_DIR)/ddev.sh $(PACKER_SH_DIR)/docker.sh $(PACKER_SH_DIR)/php.sh $(PACKER_SH_DIR)/purge-extra-packages.sh $(PACKER_SH_DIR)/utils.sh
 PACKER_PROJECT_JSON := $(PACKER_JSON_DIR)/$(CONTAINER_PROJECT_NAME).json
