@@ -3,6 +3,47 @@ title: GitLab CI Images
 weight: 20
 ---
 
+## Drumkit published DDEV CI Docker images
+
+The Drumkit project publishes a set of Docker images which are intended to be
+used in a GitLab CI environment, and primarily targeted at our Drupal or other
+DDEV projects, so that CI pipelines can mirror our development environment as
+closely as possible.
+
+These images are published in our GitLab project [Drumkit container
+registry](https://gitlab.com/consensus.enterprises/drumkit/container_registry).
+See [Building Drumkit CI images](/development/drumkit-ci-images) for more
+details.
+
+### Using Drumkit CI images
+
+To make use of the Drumkit DDEV CI projects, you can incorporate the image into
+your `.gitlab-ci.yml` like so:
+
+```
+image:
+  name: registry.gitlab.com/consensus.enterprises/drumkit/ddev:24.04-1.24.6
+  entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
+```
+
+In many projects, this is sufficient to make your CI environment match your
+local. We have found this to be invaluable, especially in Drupal projects that
+use Selenium and Chromedriver containers, to have our test pipelines behave
+exactly the same as they do locally. This comes with some overhead in starting
+up the CI containers, but it's worth it in time saved troubleshooting flaky CI
+pipelines.
+
+Some projects need a more customized set of images, in which case we can expand
+on the published Drumkit DDEV images and use the technique below to build our
+own Project-customized container images. Drumkit will initialize Packer build
+files into your project to mirror the ones built by Drumkit, after which you
+can tailor them as needed.
+
+The [Rugged project `build/packer/docker`](https://gitlab.com/rugged/rugged/-/tree/main/build/packer/docker)
+scripts are an advanced example of this technique, composing a set of "worker"
+images individually customized for their role in the system.
+
+
 ## Building Docker Images for GitLab CI
 
 We have found it valuable to build project-specific Docker images, using
@@ -16,7 +57,7 @@ from scratch.
 ```
 # In a Drumkit-enabled project, do:
 make init-project-packer              # Initialize packer scripts
-docker login registry.gitlab.com      # Authenticate to GitLab registry
+[add GitLab personal access token to `.env`]
 make ci-images                        # Build and push CI images
 ```
 
@@ -24,7 +65,7 @@ Then use the resulting image in your `.gitlab-ci.yml` jobs:
 
 ```
 image:
-  name: registry.gitlab.com/hres/drupal-sites/submanager/submanager:latest
+  name: registry.gitlab.com/my-org/my-project/my-project:0.0.x
   entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
 ```
 
@@ -37,8 +78,6 @@ pieces are:
 * Helper scripts for packer to call when provisioning images
 
 ### Drumkit Targets
-
-**TBD**: except for the top-level one, these should probably move up into drumkit
 
 Drumkit has a project init target that will bootstrap the Packer-driven build
 scripts described below. Here's how to use it:
@@ -59,12 +98,26 @@ These 2 values will be used to render a couple of templates, and the rest of
 the boilerplate Packer `.json` config files and associated `.sh` provisioning
 scripts for CI images copied into place in your project.
 
-You should review the `scripts/packer/json/40-PROJECT.json` config and
-`scripts/packer/scripts/PROJECT.sh` scripts and tailor them to your project,
-then you can build and push your CI images like so:
+You should review the `scripts/packer/json/PROJECT.json` config and
+`scripts/packer/scripts/PROJECT.sh` scripts and tailor them to your project.
+
+Finally, you'll need to provide GitLab credentials via environment variables
+for Packer to be able to login and push your images to the container registry
+for your project. Drumkit provides a `.env.tmpl` file for this purpose, as well
+as a `drumkit/bootstrap.d/01_environment.sh` bootstrap script when you run
+`init-packer-project`.
+
+Copy the `.env.tmpl` file to `.env` and then edit the file to replace the
+`CONTAINER_REGISTRY_USERNAME` and `CONTAINER_REGISTRY_PASSWORD` values with
+real ones. It is **highly recommended** to generate a [Personal Access
+Token](https://gitlab.com/-/user_settings/personal_access_tokens) to use for
+the password here.
+
+
+With a `.env` file in place, build and push your CI images like so:
 
 ```
-docker login registry.gitlab.com
+undrumkit && source d
 make ci-images
 ```
 
@@ -72,17 +125,18 @@ This will loop over all available `scripts/packer/json/*.json` files in order,
 and run a `packer build` on each, to build and push the successive layers.
 Typically this is:
 
-* `10-bionic.json` - bare bones setup on to of Ubuntu Bionic 18.04
-* `20-base.json` - basic Apt and other OS-level packages
-* `30-php.json` - Apache / PHP
-* `40-project.json` - Project-custom setup - typically building the codebase
+* `ubuntu.json` - Ubuntu with basic Apt and other OS-level packages
+* `base.json` - Apache / PHP
+* `docker.json` - Docker
+* `ddev.json` - DDEV
+* `PROJECT.json` - Project-custom setup - typically building the codebase
 
 Finally, you can use the resulting Docker image in your `.gitlab-ci.yml` jobs
 like this:
 
 ```
 image:
-  name: registry.gitlab.com/hres/drupal-sites/submanager/submanager:latest
+  name: registry.gitlab.com/my-org/my-project/[project-name]:0.0.x
   entrypoint: [""] # We have to override the container entrypoint or else we end up in /bin/sh and `. d` doesn't work. See https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#overriding-the-entrypoint-of-an-image
 ```
 
@@ -90,15 +144,6 @@ image:
 
 Your GitLab project should have a Docker image registry enabled by default,
 assuming your instance has the feature enabled.
-
-While it is possible to automate authenticating to your image registry, the
-simplest solution is to do a `docker login` before building the images below,
-using your regular gitlab credentials. This just authenticates that you have
-access to the project and permission to push container images:
-
-```
-docker login registry.gitlab.com
-```
 
 ### Layered packer build scripts
 
@@ -109,88 +154,21 @@ if you need to customize what a layer does.
 For example, as Drupal developers, we typically want a LAMP stack, which
 the core Drumkit targets provide:
 
-* [`10-bionic.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/docker/10-bionic.json) - base Ubuntu 18.04 image (runs `apt.sh` and `purge-extra-packages.sh`)
-* [`20-base.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/docker/20-base.json) - utilities (runs `utils.sh`)
-* [`30-php.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/docker/30-php.json) - set up Apache, MySQL, PHP, it's libraries, and Composer (runs `php.sh`)
-* `40-project.json` - project-level setup, usually just a `make build` of your project.
-
-Example:
-
-```
-{
-  "builders": [
-    {
-      "type": "docker",
-      "image": "registry.gitlab.com/[GROUP]/[PROJECT]/php:latest",
-      "commit": true
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "inline": "mkdir -p /var/www/[PROJECT]"
-    },
-    {
-      "destination": "/var/www/[PROJECT]",
-      "source": "./.clone/",
-      "type": "file"
-    },
-    {
-      "type": "shell",
-      "scripts": [
-        "scripts/packer/scripts/[PROJECT].sh",
-        "scripts/packer/scripts/cleanup.sh"
-      ]
-    }
-  ],
-  "post-processors": [
-    [
-      {
-        "type": "docker-tag",
-        "repository": "registry.gitlab.com/[GROUP]/[PROJECT]/{{user `image_name`}}",
-        "tag": "0.0.x"
-      },
-      {
-        "type": "docker-tag",
-        "repository": "registry.gitlab.com/[GROUP]/[PROJECT]/{{user `image_name`}}",
-        "tag": "latest"
-      },
-      {
-        "type": "docker-push"
-      }
-    ]
-  ],
-  "variables": {
-    "image_name": "cv"
-  }
-}
-```
+* [`ubuntu.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/packer/json/ubuntu.json) - Ubuntu image (runs `apt.sh` and `purge-extra-packages.sh`)
+* [`base.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/packer/json/base.json) - utilities (runs `utils.sh`)
+* [`ddev.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/packer/json/docker.json) - install Docker
+* [`ddev.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/packer/json/ddev.json) - install DDEV
+* [`project.json`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/files/packer/project.json) - project-level setup, usually just a `make build` of your project.
 
 ### Helper scripts
 
 Scripts:
 
-* [`apt.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/scripts/apt.sh) - configure Apt to install minimal packages, and other housekeeping
-* [`purge-extra-packages.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/scripts/purge-extra-packages.sh) - purge unnecessary packages
-* [`php.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/scripts/php.sh) - install Apache, PHP, and related modules/libraries
-* [`cleanup.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/master/scripts/packer/scripts/cleanup.sh) - runs after each layer, to do an `apt-get autoremove &&
-* `project.sh` - run project-specific build steps, to pre-load the CI image with needed artifacts
-
-Example:
-
-```
-#!/bin/bash
-
-# Steps for setting up CV inside a CI docker image at packer time.
-
-# Run a composer install to pre-populate its cache, which should speed up the process in CI.
-cd /var/www/[PROJECT]
-. d
-make build VERBOSE=1
-```
-
-#### .clone target (**TBD** Dan)
-
-.clone target - for mysterious Packer reasons (that we are sure exist), we need
-to clone the local project working dir into `.clone`, and have Packer work on
-those.
+* [`apt.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/apt.sh) - configure Apt to install minimal packages, and other housekeeping
+* [`cleanup.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/cleanup.sh)  - runs after each layer, to do an `apt-get autoremove &&
+* [`ddev.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/ddev.sh) - install [DDEV](https://ddev.com)
+* [`docker.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/docker.sh) - install [Docker](https://docker.com)
+* [`php.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/php.sh) - install Apache, MySQL, PHP, and related modules/libraries plus Composer
+* [`purge-extra-packages.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/purge-extra-packages.sh) - Remove unnecessary packages
+* [`utils.sh`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/scripts/packer/scripts/utils.sh) - Install some standard utility packages
+* [`project.sh.tmpl`](https://gitlab.com/consensus.enterprises/drumkit/-/blob/main/files/packer/project.sh.tmpl) - Template for project-custom provisioning script

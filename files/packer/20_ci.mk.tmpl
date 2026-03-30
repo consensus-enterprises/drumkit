@@ -1,5 +1,6 @@
 PROJECT_CONTAINER_REGISTRY_URL = ${PROJECT_CONTAINER_REGISTRY_URL}
 PROJECT_CONTAINER_NAME = ${PROJECT_CONTAINER_NAME}
+PROJECT_DOCKER_IMAGES  = docker/ubuntu docker/base docker/docker docker/ddev docker/${PROJECT_CONTAINER_NAME}
 
 local_ref = $(shell git rev-parse HEAD)
 clone_ref = $(shell [ -d .clone ] && (cd .clone && git rev-parse HEAD))
@@ -14,20 +15,26 @@ else
 	@echo ".clone directory is up to date, skipping reclone."
 endif
 
+docker-login:
+	docker login registry.gitlab.com
+
 ci-image: packer
-	@if [ -z ${CONTAINER_SCRIPT} ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_SCRIPT$(YELLOW).$(RESET)"; exit 1; fi
+	@if [ -z $(CONTAINER_SCRIPT) ]; then echo -e "$(YELLOW)Missing required variable $(GREY)CONTAINER_SCRIPT$(YELLOW).$(RESET)"; exit 1; fi
 	@if [ -z $(PROJECT_CONTAINER_NAME) ]; then echo -e "$(YELLOW)Missing required variable $(GREY)PROJECT_CONTAINER_NAME$(YELLOW).$(RESET)"; exit 1; fi
 	@if [ -z $(PROJECT_CONTAINER_REGISTRY_URL) ]; then echo -e "$(YELLOW)Missing required variable $(GREY)PROJECT_CONTAINER_REGISTRY_URL$(YELLOW).$(RESET)"; exit 1; fi
+	@if [ -z $(PROJECT_CONTAINER_REGISTRY_USERNAME) ]; then echo -e "$(YELLOW)Missing required variable $(GREY)PROJECT_CONTAINER_REGISTRY_USERNAME$(YELLOW).$(RESET)"; exit 1; fi
+	@if [ -z $(PROJECT_CONTAINER_REGISTRY_PASSWORD) ]; then echo -e "$(YELLOW)Missing required variable $(GREY)PROJECT_CONTAINER_REGISTRY_PASSWORD$(YELLOW).$(RESET)"; exit 1; fi
 	@echo "Building packer image for CI: $(CONTAINER_SCRIPT)"
-	@packer build $(CONTAINER_SCRIPT)
-
-ci-images: clone
-	@echo "Building packer images for CI."
-<<<<<<< HEAD
 	@echo "Using project name: $(PROJECT_CONTAINER_NAME)"
 	@echo "Using container registry: $(PROJECT_CONTAINER_REGISTRY_URL)"
-	@for script in `ls scripts/packer/json/*.json`; do make -s ci-image
-	CONTAINER_SCRIPT=$$script PROJECT_CONTAINER_NAME=$(PROJECT_CONTAINER_NAME) PROJECT_CONTAINER_REGISTRY_URL=$(PROJECT_CONTAINER_REGISTRY_URL); done
+	@packer build $(CONTAINER_SCRIPT)
 
-ci-local: gitlab-runner
-	gitlab-runner exec docker tests
+ci-images: ci-images-intro $(PROJECT_DOCKER_IMAGES)
+
+ci-images-intro:
+	@echo "Building packer images for CI."
+	@echo "Using project name: $(PROJECT_CONTAINER_NAME)"
+	@echo "Using container registry: $(PROJECT_CONTAINER_REGISTRY_URL)"
+
+$(PROJECT_DOCKER_IMAGES): packer clone
+	@make -s ci-image CONTAINER_SCRIPT=scripts/packer/$@.json PROJECT_CONTAINER_NAME=$(PROJECT_CONTAINER_NAME) PROJECT_CONTAINER_REGISTRY_URL=$(PROJECT_CONTAINER_REGISTRY_URL)
