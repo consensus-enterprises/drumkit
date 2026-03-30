@@ -11,3 +11,4 @@ behat_params.sh
 .DS_Store
 .clone
 .ddev
+.env

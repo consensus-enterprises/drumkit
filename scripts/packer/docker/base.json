@@ -37,8 +37,8 @@
   ],
   "variables": {
     "image_name": "base",
-    "ubuntu_version": "24.04",
-    "ubuntu_codename": "noble",
+    "ubuntu_version": "{{env `UBUNTU_VERSION`}}",
+    "ubuntu_codename": "{{ env `UBUNTU_CODENAME`}}",
     "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
     "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
     "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
