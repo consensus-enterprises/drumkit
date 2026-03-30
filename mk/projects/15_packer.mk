@@ -1,7 +1,7 @@
 PACKER_JSON_DIR = scripts/packer/json
 PACKER_SH_DIR = scripts/packer/scripts
-PACKER_SH_SCRIPTS = $(PACKER_SH_DIR)/apt.sh $(PACKER_SH_DIR)/cleanup.sh $(PACKER_SH_DIR)/php.sh $(PACKER_SH_DIR)/purge-extra-packages.sh  $(PACKER_SH_DIR)/python.sh $(PACKER_SH_DIR)/utils.sh
-PACKER_PROJECT_JSON := $(PACKER_JSON_DIR)/40-$(CONTAINER_PROJECT_NAME).json
+PACKER_SH_SCRIPTS = $(PACKER_SH_DIR)/apt.sh $(PACKER_SH_DIR)/cleanup.sh $(PACKER_SH_DIR)/ddev.sh $(PACKER_SH_DIR)/docker.sh $(PACKER_SH_DIR)/php.sh $(PACKER_SH_DIR)/purge-extra-packages.sh $(PACKER_SH_DIR)/utils.sh
+PACKER_PROJECT_JSON := $(PACKER_JSON_DIR)/$(CONTAINER_PROJECT_NAME).json
 PACKER_PROJECT_SH := $(PACKER_SH_DIR)/$(CONTAINER_PROJECT_NAME).sh
 
 CONTAINER_PROJECT_NAME ?= $(shell bash -c 'read -p "Docker container project name: " container_project_name; echo $$container_project_name')
@@ -32,7 +32,7 @@ $(MK_D)/20_ci.mk: ##@testing Create .gitlab-ci.yml file for new
 
 $(PACKER_PROJECT_JSON):
 	@echo "Initializing project-specific Packer JSON file $@"
-	@cp $(FILES_DIR)/packer/40-project.json $@
+	@cp $(FILES_DIR)/packer/project.json $@
 
 $(PACKER_SH_SCRIPTS):
 	@cd $(PACKER_SH_DIR) && ln -s $(SCRIPTS_DIR)/packer/scripts/$(notdir $@) .
