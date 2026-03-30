@@ -40,8 +40,8 @@
     "image_name": "docker",
     "ubuntu_version": "{{env `UBUNTU_VERSION`}}",
     "ubuntu_codename": "{{ env `UBUNTU_CODENAME`}}",
-    "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
-    "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
-    "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
+    "repo_url": "{{env `PROJECT_CONTAINER_REGISTRY_URL`}}",
+    "login_username": "{{env `PROJECT_CONTAINER_REGISTRY_USERNAME`}}",
+    "login_password": "{{env `PROJECT_CONTAINER_REGISTRY_PASSWORD`}}"
   }
 }

@@ -43,13 +43,13 @@
     }
   ],
   "variables": {
-    "image_name": "{{env `CONTAINER_PROJECT_NAME`}}",
-    "repo_url": "{{env `CONTAINER_REGISTRY_URL`}}",
+    "image_name": "{{env `PROJECT_CONTAINER_NAME`}}",
+    "repo_url": "{{env `PROJECT_CONTAINER_REGISTRY_URL`}}",
     "ubuntu_version": "{{env `UBUNTU_VERSION`}}",
     "ubuntu_codename": "{{ env `UBUNTU_CODENAME`}}",
     "ddev_version": "{{env `DDEV_VERSION`}}",
-    "login_username": "{{env `CONTAINER_REGISTRY_USERNAME`}}",
-    "login_password": "{{env `CONTAINER_REGISTRY_PASSWORD`}}"
+    "login_username": "{{env `PROJECT_CONTAINER_REGISTRY_USERNAME`}}",
+    "login_password": "{{env `PROJECT_CONTAINER_REGISTRY_PASSWORD`}}"
   }
 }
 

@@ -1,14 +1,14 @@
 PACKER_JSON_DIR = scripts/packer/docker
 PACKER_SH_DIR = scripts/packer/scripts
 PACKER_SH_SCRIPTS = $(PACKER_SH_DIR)/apt.sh $(PACKER_SH_DIR)/cleanup.sh $(PACKER_SH_DIR)/ddev.sh $(PACKER_SH_DIR)/docker.sh $(PACKER_SH_DIR)/php.sh $(PACKER_SH_DIR)/purge-extra-packages.sh $(PACKER_SH_DIR)/utils.sh
-PACKER_PROJECT_JSON := $(PACKER_JSON_DIR)/$(CONTAINER_PROJECT_NAME).json
-PACKER_PROJECT_SH := $(PACKER_SH_DIR)/$(CONTAINER_PROJECT_NAME).sh
+PACKER_PROJECT_JSON := $(PACKER_JSON_DIR)/$(PROJECT_CONTAINER_NAME).json
+PACKER_PROJECT_SH := $(PACKER_SH_DIR)/$(PROJECT_CONTAINER_NAME).sh
 
-CONTAINER_PROJECT_NAME ?= $(shell bash -c 'read -p "Docker container project name: " container_project_name; echo $$container_project_name')
-CONTAINER_REGISTRY_URL ?= $(shell bash -c 'read -p "Docker container registry URL (eg. registry.gitlab.com/consensus.enterprises/drumkit): " container_registry_url; echo $$container_registry_url')
+PROJECT_CONTAINER_NAME ?= $(shell bash -c 'read -p "Docker container project name: " project_container_name; echo $$project_container_name')
+PROJECT_CONTAINER_REGISTRY_URL ?= $(shell bash -c 'read -p "Docker container registry URL (eg. registry.gitlab.com/consensus.enterprises/drumkit): " container_registry_url; echo $$container_registry_url')
 
 init-project-packer: init-project-packer-intro ##@projects Initialize a packer project.
-	@make -s init-project-packer-vars init-project-packer-static CONTAINER_PROJECT_NAME=$(CONTAINER_PROJECT_NAME) CONTAINER_REGISTRY_URL=$(CONTAINER_REGISTRY_URL)
+	@make -s init-project-packer-vars init-project-packer-static PROJECT_CONTAINER_NAME=$(PROJECT_CONTAINER_NAME) PROJECT_CONTAINER_REGISTRY_URL=$(PROJECT_CONTAINER_REGISTRY_URL)
 	@echo "Finished initializing Drumkit Packer project."
 
 init-project-packer-intro:
