@@ -11,7 +11,10 @@ GITLAB_CI_LOCAL_GZ=$(SRC_DIR)/gitlab-ci-local.gz
 GITLAB_CI_LOCAL=$(BIN_DIR)/gitlab-ci-local
 GITLAB_CI_LOCAL_CONFIG=.gitlab-ci-local-env
 
-gitlab-ci-local: docker $(GITLAB_CI_LOCAL_GZ) $(GITLAB_CI_LOCAL) $(GITLAB_CI_LOCAL_CONFIG) ## Install and configure gitlab-ci-local.
+gitlab-ci-local:
+	@which gitlab-ci-local > /dev/null || make -s gitlab-ci-local-install
+
+gitlab-ci-local-install: docker $(GITLAB_CI_LOCAL_GZ) $(GITLAB_CI_LOCAL) $(GITLAB_CI_LOCAL_CONFIG) ## Install and configure gitlab-ci-local.
 	$(ECHO) "Checking that gitlab-ci-local is in PATH."
 	@which gitlab-ci-local
 	@$(GITLAB_CI_LOCAL) --version
