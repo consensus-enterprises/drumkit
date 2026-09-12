@@ -20,13 +20,12 @@ init-project-drupal-deps: ddev
 	ddev start
 
 # MAIN TARGET entrypoint
-# Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar"
 init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps
 init-project-drupal: drupal-drumkit-dir
 init-project-drupal: drupal-composer-codebase
 init-project-drupal: drupal-behat-deps
 init-project-drupal: .gitlab-ci.yml
-init-project-drupal: ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
+init-project-drupal: ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV. Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar" to create foo.ddev.site. Optionally add COMPOSER_BASE_PROJECT and COMPOSER_BASE_PROJECT_VERSION to customize composer.json.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 	$(ECHO) "Finished initializing Drupal drumkit."
