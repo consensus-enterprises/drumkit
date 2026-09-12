@@ -68,6 +68,9 @@ composer.json:
 	# Calling exec composer here allows us to initiate the composer.json in a subdirectory (which DDEV disallows)
 	ddev exec composer create-project $(COMPOSER_BASE_PROJECT):$(COMPOSER_BASE_PROJECT_VERSION) tmpdir --no-interaction
 	@mv tmpdir/composer.* .
+	if [ -d tmpdir/assets ] ; then mv tmpdir/assets .; fi
+	if [ -d tmpdir/config ] ; then mv tmpdir/config .; fi
+	if [ -d tmpdir/recipes ] ; then mv tmpdir/recipes .; fi
 	@rm -rf tmpdir
 	ddev composer config bin-dir bin
 	# We presume to install a site-local drush, because it's used to do a `make install`
