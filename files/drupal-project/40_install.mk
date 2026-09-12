@@ -2,14 +2,14 @@
 
 .PHONY: install install-real ci-install uninstall uninstall-real
 
-SITE_INSTALL_DIR = web/sites/$(SITE_URL)
+SITE_INSTALL_DIR = web/sites/default
 
 SITE_INSTALL_CMD = site:install $(INSTALL_PROFILE)\
                        --site-name=$(SITE_NAME) \
                        --yes --locale="en" \
-                        --yes --locale="en" \
+                       --yes --locale="en" \
                        --db-url="mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)" \
-                       --sites-subdir=$(SITE_URL) \
+                       --sites-subdir=$(SITE_INSTALL_DIR) \
                        --account-name="$(ADMIN_USER)" \
                        --account-mail="dev@$(SITE_URL)" \
                        --account-pass="$(ADMIN_PASS)"
@@ -30,9 +30,9 @@ uninstall: ## Uninstall Drupal site.
 				@$(MAKE-QUIET) uninstall-real
 uninstall-real:
 				-$(DRUSH) -y sql:drop $(QUIET)
-				chmod 700 web/sites/$(SITE_URL)/
-				rm -rf web/sites/$(SITE_URL)/files/config*
-				rm -f web/sites/$(SITE_URL)/settings.php
+				chmod 700 $(SITE_INSTALL_DIR)
+				rm -rf $(SITE_INSTALL_DIR)/files/config*
+				rm -f $(SITE_INSTALL_DIR)/settings.php
 				$(ECHO) "$(YELLOW)Deleted $(GREY)$(SITE_URL).$(RESET)"
 
 locale: ## Check and update Locale module for translation updates.

@@ -3,7 +3,7 @@ BEHAT_FILES = behat.yml .ddev/commands/web/behat .ddev/config.selenium-standalon
 FEATURE_FILES = features/admin.feature features/javascript.feature features/testing.feature
 
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
-COMPOSER_BASE_PROJECT_VERSION ?= "10.5.1"
+COMPOSER_BASE_PROJECT_VERSION ?= "11.4.6"
 
 # We expect the 2 variables PROJECT_NAME and SITE_NAME to be passed in.
 init-project-drupal-user-vars: .checkvar-PROJECT_NAME
@@ -14,19 +14,18 @@ init-project-drupal-user-vars:
 
 .ddev/config.yaml:
 	$(ECHO) "Initializing DDEV config file."
-	ddev config --project-type=drupal10 --project-name=$(PROJECT_NAME) --docroot=web
+	ddev config --project-type=drupal11 --project-name=$(PROJECT_NAME) --docroot=web
 
 init-project-drupal-deps: ddev
 	ddev start
 
 # MAIN TARGET entrypoint
-# Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar"
 init-project-drupal: init-project-drupal-user-vars init-project-drupal-deps
 init-project-drupal: drupal-drumkit-dir
 init-project-drupal: drupal-composer-codebase
 init-project-drupal: drupal-behat-deps
 init-project-drupal: .gitlab-ci.yml
-init-project-drupal: ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV.
+init-project-drupal: ##@projects@drupal Initialize a project for developing Drupal 8 with DDEV. Call as: make init-project-drupal PROJECT_NAME=foo SITE_NAME="foo bar" to create foo.ddev.site. Optionally add COMPOSER_BASE_PROJECT and COMPOSER_BASE_PROJECT_VERSION to customize composer.json.
 	@grep "all:" Makefile > /dev/null || echo "all: start build install" >> Makefile
 	@groups|grep docker > /dev/null || echo "NOTE: it looks like you are not in the docker group. You probably need to log out and log back in again before proceeding."
 	$(ECHO) "Finished initializing Drupal drumkit."
@@ -69,6 +68,9 @@ composer.json:
 	# Calling exec composer here allows us to initiate the composer.json in a subdirectory (which DDEV disallows)
 	ddev exec composer create-project $(COMPOSER_BASE_PROJECT):$(COMPOSER_BASE_PROJECT_VERSION) tmpdir --no-interaction
 	@mv tmpdir/composer.* .
+	if [ -d tmpdir/assets ] ; then mv tmpdir/assets .; fi
+	if [ -d tmpdir/config ] ; then mv tmpdir/config .; fi
+	if [ -d tmpdir/recipes ] ; then mv tmpdir/recipes .; fi
 	@rm -rf tmpdir
 	ddev composer config bin-dir bin
 	# We presume to install a site-local drush, because it's used to do a `make install`
