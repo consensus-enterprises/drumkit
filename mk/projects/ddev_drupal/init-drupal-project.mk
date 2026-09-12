@@ -3,7 +3,7 @@ BEHAT_FILES = behat.yml .ddev/commands/web/behat .ddev/config.selenium-standalon
 FEATURE_FILES = features/admin.feature features/javascript.feature features/testing.feature
 
 COMPOSER_BASE_PROJECT         ?= drupal/recommended-project
-COMPOSER_BASE_PROJECT_VERSION ?= "10.5.1"
+COMPOSER_BASE_PROJECT_VERSION ?= "11.4.6"
 
 # We expect the 2 variables PROJECT_NAME and SITE_NAME to be passed in.
 init-project-drupal-user-vars: .checkvar-PROJECT_NAME
@@ -14,7 +14,7 @@ init-project-drupal-user-vars:
 
 .ddev/config.yaml:
 	$(ECHO) "Initializing DDEV config file."
-	ddev config --project-type=drupal10 --project-name=$(PROJECT_NAME) --docroot=web
+	ddev config --project-type=drupal11 --project-name=$(PROJECT_NAME) --docroot=web
 
 init-project-drupal-deps: ddev
 	ddev start
